@@ -11,6 +11,7 @@ namespace AssistVente.Models
         public string Nom { get; set; }
         public double PrixAchat { get; set; }
         public double PrixVente { get; set; }
+        public double PrixLocation { get; set; }
         public bool ALouer { get; set; }
         public double StockDisponible { get; set; }
         public TimeSpan DureeDeLocationParDefaut { get; set; }
