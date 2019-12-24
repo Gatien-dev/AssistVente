@@ -11,13 +11,14 @@ namespace AssistVente.Models
         public string Nom { get; set; }
         public double PrixAchat { get; set; }
         public double PrixVente { get; set; }
-        public double PrixLocation { get; set; }
+        public double PrixLocationParDefaut { get; set; }
         public bool ALouer { get; set; }
         public double StockDisponible { get; set; }
         public TimeSpan DureeDeLocationParDefaut { get; set; }
         public string Description { get; set; }
         public DateTime DateCreation { get; set; }
-        public string CreatorId { get; set; }
+        public Guid CreatorId { get; set; }
+        
 
     }
 }

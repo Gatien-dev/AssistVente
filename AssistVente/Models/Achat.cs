@@ -20,13 +20,14 @@ namespace AssistVente.Models
     {
         public Guid ID { get; set; }
         [ForeignKey("Achats")]
-        public Guid VenteId { get; set; }
+        public Guid AchatId { get; set; }
+        public virtual Achat Achat { get; set; }
         [ForeignKey("Produits")]
         public Guid ProduitID { get; set; }
-        public virtual Achat Achat { get; set; }
+        public virtual Produit Produit { get; set; }
         public double PrixAchat { get; set; }
-        public double QuantiteVendue { get; set; }
-        public double QuantiteLivree { get; set; }
+        public double QuantiteAchetee { get; set; }
+       // public double QuantiteLivree { get; set; }
 
     }
 }

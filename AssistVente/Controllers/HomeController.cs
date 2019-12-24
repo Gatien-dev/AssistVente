@@ -10,6 +10,7 @@ namespace AssistVente.Controllers
     {
         public ActionResult Index()
         {
+            ViewBag.currentPage = "l'accueil";
             return View();
         }
 

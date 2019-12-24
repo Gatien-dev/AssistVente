@@ -15,12 +15,13 @@ namespace AssistVente.Models
         public DateTime DateDebut { get; set; }
         public DateTime DateFin { get; set; }
         public DateTime DateSuspension { get; set; }
-        public DateTime Suspendu { get; set; }
+        public bool Suspendu { get; set; }
     }
     public class Forfait
     {
         public Guid Id { get; set; }
         public String Nom { get; set; }
+        public string Description { get; set; }
         public TimeSpan Duree { get; set; }
         public List<Abonnement> Abonnements { get; set; }
     }
