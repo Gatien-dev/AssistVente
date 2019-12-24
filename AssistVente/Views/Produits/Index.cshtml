@@ -1,0 +1,109 @@
+﻿@model IEnumerable<AssistVente.Models.Produit>
+
+@{
+    ViewBag.Title = "Index";
+    ViewBag.position = "Produits";
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card strpied-tabled-with-hover">
+            <div class="card-header ">
+                <h4 class="card-title">Produits vendus</h4>
+                <p class="card-category">Enregistrez vos produits pour effectuer des ventes</p>
+            </div>
+            <div class="card-body table-full-width table-responsive">
+                @if (Model.Count() <= 0)
+                {
+                    <div class="placeholder col-md-10">
+                        <span>
+                            Aucun produit enregistré pour l'instant
+                        </span>
+                        <hr />
+                        <h5>
+                            <a href="@Url.Action("Create")" class="btn btn-default"><i class="nc-icon nc-simple-add"></i> Nouveau Produit</a>
+                        </h5>
+                    </div>
+
+                }
+                else
+                {
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nom)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PrixAchat)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PrixVente)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.ALouer)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.StockDisponible)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DureeDeLocationParDefaut)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DateCreation)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.CreatorId)
+                        </th>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nom)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PrixAchat)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PrixVente)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.ALouer)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.StockDisponible)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DureeDeLocationParDefaut)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateCreation)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.CreatorId)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
+                                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
+                                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
