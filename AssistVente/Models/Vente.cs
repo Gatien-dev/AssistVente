@@ -6,14 +6,11 @@ using System.Web;
 
 namespace AssistVente.Models
 {
-    public class Vente
+    public class Vente:Operation
     {
-        public Guid ID { get; set; }
+
         public Guid ClientId { get; set; }
         public virtual Client Client { get; set; }
-        public Guid UserId { get; set; }
-        public DateTime Date { get; set; }
-        public double Montant { get; set; }
         public double MontantRegle { get; set; }
         public double MontantRestant { get; set; }
 

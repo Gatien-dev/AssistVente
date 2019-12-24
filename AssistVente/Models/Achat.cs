@@ -6,15 +6,12 @@ using System.Web;
 
 namespace AssistVente.Models
 {
-    public class Achat
+    public class Achat:Operation
     {
-        public Guid ID { get; set; }
+
         public string Fournisseur { get; set; }
         public string NumFacture { get; set; }
 
-        public Guid UserId { get; set; }
-        public DateTime Date { get; set; }
-        public double Montant { get; set; }
     }
     public class DetailAchat
     {

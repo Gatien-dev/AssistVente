@@ -148,9 +148,11 @@
     <Compile Include="Models\Abonnement.cs" />
     <Compile Include="Models\Achat.cs" />
     <Compile Include="Models\AssistVenteContext.cs" />
+    <Compile Include="Models\Caisse.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Magasin.cs" />
+    <Compile Include="Models\Operation.cs" />
     <Compile Include="Models\Produit.cs" />
     <Compile Include="Models\Reglement.cs" />
     <Compile Include="Models\Vente.cs" />

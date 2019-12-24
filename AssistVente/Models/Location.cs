@@ -5,9 +5,9 @@ using System.Web;
 
 namespace AssistVente.Models
 {
-    public class Location
+    public class Location:Operation
     {
-        public Guid Id { get; set; }
+
         public Guid ProduitId { get; set; }
         public virtual Produit Produit { get; set; }
         public DateTime DateLocation { get; set; }
@@ -20,6 +20,6 @@ namespace AssistVente.Models
         public bool LocationRendue { get; set; }
         public double QuantitePrise { get; set; }
         public double QuantiteRendue { get; set; }
-        public double Montant { get; set; }
+
     }
 }

@@ -5,9 +5,9 @@ using System.Web;
 
 namespace AssistVente.Models
 {
-    public class Abonnement
+    public class Abonnement:Operation
     {
-        public Guid Id { get; set; }
+
         public Guid ClientId{ get; set; }
         public virtual Client Client { get; set; }
         public Guid ForfaitId { get; set; }
@@ -24,5 +24,6 @@ namespace AssistVente.Models
         public string Description { get; set; }
         public TimeSpan Duree { get; set; }
         public List<Abonnement> Abonnements { get; set; }
+        public double Montant { get; set; }
     }
 }
