@@ -49,8 +49,7 @@ namespace IdentitySample.Models
     public class LoginViewModel
     {
         [Required]
-        [Display(Name = "Email")]
-        [EmailAddress]
+        [Display(Name = "Nom d'utilisateur")]
         public string Email { get; set; }
 
         [Required]
@@ -64,20 +63,36 @@ namespace IdentitySample.Models
 
     public class RegisterViewModel
     {
+
+        public string Entreprise { get; set; }
+        [Required]
+        public string Nom { get; set; }
+        [Required]
+        public string Prenoms { get; set; }
+        public string Adresse { get; set; }
+        [Required]
+        public string Ville { get; set; }
+        public string Pays { get; set; }
+        public string BoitePostale { get; set; }
+        public string Description { get; set; }
+        [Required]
+        [Display(Name ="Pseudo")]
+        public string UserName { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Le {0} doit avoir au moins {2} lettres/chiffres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Mot de passe")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
-        [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+        [Display(Name = "Confirmez le mot de passe")]
+        [Compare("Password", ErrorMessage = "Le mot de passe et la confirmation ne correspondent pas.")]
         public string ConfirmPassword { get; set; }
     }
 
@@ -89,13 +104,13 @@ namespace IdentitySample.Models
         public string Email { get; set; }
 
         [Required]
-        [StringLength(100, ErrorMessage = "The {0} must be at least {2} characters long.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Le {0} doit avoir au moins {2} lettres/chiffres.", MinimumLength = 6)]
         [DataType(DataType.Password)]
-        [Display(Name = "Password")]
+        [Display(Name = "Mot de passe")]
         public string Password { get; set; }
 
         [DataType(DataType.Password)]
-        [Display(Name = "Confirm password")]
+        [Display(Name = "Confirmez le mot de passe")]
         [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 

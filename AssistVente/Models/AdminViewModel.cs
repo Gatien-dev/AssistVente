@@ -21,6 +21,20 @@ namespace IdentitySample.Models
         [EmailAddress]
         public string Email { get; set; }
 
+        public string Entreprise { get; set; }
+        [Required]
+        public string Nom { get; set; }
+        [Required]
+        public string Prenoms { get; set; }
+        public string Adresse { get; set; }
+        [Required]
+        public string Ville { get; set; }
+        public string Pays { get; set; }
+        public string BoitePostale { get; set; }
+        public string Description { get; set; }
+        [Required]
+        [Display(Name = "Pseudo")]
+        public string UserName { get; set; }
         public IEnumerable<SelectListItem> RolesList { get; set; }
     }
 }

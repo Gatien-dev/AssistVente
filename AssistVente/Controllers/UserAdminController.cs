@@ -90,7 +90,18 @@ namespace IdentitySample.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = userViewModel.Email, Email = userViewModel.Email };
+                var user = new ApplicationUser
+                {
+                    UserName = userViewModel.UserName,
+                    Email = userViewModel.Email,
+                    Description = userViewModel.Description,
+                    Entreprise = userViewModel.Entreprise,
+                    Nom = userViewModel.Nom,
+                    Prenoms = userViewModel.Prenoms,
+                    Ville = userViewModel.Ville,
+                    Pays = userViewModel.Pays,
+                    BoitePostale = userViewModel.BoitePostale
+                };
                 var adminresult = await UserManager.CreateAsync(user, userViewModel.Password);
 
                 //Add User to the selected Roles 
@@ -141,6 +152,15 @@ namespace IdentitySample.Controllers
             {
                 Id = user.Id,
                 Email = user.Email,
+                Entreprise = user.Entreprise,
+                Description = user.Description,
+                Adresse = user.Adresse,
+                BoitePostale = user.BoitePostale,
+                Pays = user.Pays,
+                Nom = user.Nom,
+                Prenoms = user.Prenoms,
+                Ville = user.Ville,
+                UserName = user.UserName,
                 RolesList = RoleManager.Roles.ToList().Select(x => new SelectListItem()
                 {
                     Selected = userRoles.Contains(x.Name),
@@ -154,7 +174,7 @@ namespace IdentitySample.Controllers
         // POST: /Users/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Email,Id")] EditUserViewModel editUser, params string[] selectedRole)
+        public async Task<ActionResult> Edit(EditUserViewModel editUser, params string[] selectedRole)
         {
             if (ModelState.IsValid)
             {
@@ -164,7 +184,7 @@ namespace IdentitySample.Controllers
                     return HttpNotFound();
                 }
 
-                user.UserName = editUser.Email;
+                user.UserName = editUser.UserName;
                 user.Email = editUser.Email;
 
                 var userRoles = await UserManager.GetRolesAsync(user.Id);
@@ -188,7 +208,8 @@ namespace IdentitySample.Controllers
                 return RedirectToAction("Index");
             }
             ModelState.AddModelError("", "Something failed.");
-            return View();
+
+            return View(editUser);
         }
 
         //

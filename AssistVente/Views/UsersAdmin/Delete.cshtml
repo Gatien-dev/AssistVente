@@ -4,15 +4,13 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete.</h2>
-
-<h3>Are you sure you want to delete this User?</h3>
+<h3>Suppression d'utilisateur</h3>
 <div>
-    <h4>User.</h4>
+    <h4>Etes vous sur de vouloir supprimer l'utilisateur @Model.UserName</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
-            @Html.DisplayNameFor(model => model.UserName)
+            Nom d'utilisateur
         </dt>
 
         <dd>
@@ -24,8 +22,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <input type="submit" value="Oui, supprimer" class="btn btn-danger" /> |
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
         </div>
     }
 </div>
