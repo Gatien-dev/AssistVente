@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssistVente.Models;
+using Microsoft.AspNet.Identity;
 
 namespace AssistVente.Controllers
 {
@@ -51,6 +52,9 @@ namespace AssistVente.Controllers
             if (ModelState.IsValid)
             {
                 produit.ID = Guid.NewGuid();
+                produit.DureeDeLocationParDefaut = TimeSpan.Zero;
+                produit.DateCreation = DateTime.Now;
+                produit.CreatorId = User.Identity.GetUserId();
                 db.Produits.Add(produit);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -84,6 +88,7 @@ namespace AssistVente.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(produit).State = EntityState.Modified;
+                
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -93,6 +98,7 @@ namespace AssistVente.Controllers
         // GET: Produits/Delete/5
         public ActionResult Delete(Guid? id)
         {
+            ViewBag.currentPage = "Suppression de produit";
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

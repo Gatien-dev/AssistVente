@@ -18,6 +18,7 @@
     <link href="~/Content/Site.css" rel="stylesheet" />
     <!-- CSS Just for demo purpose, don't include it in your project -->
     <link href="~/assets/css/demo.css" rel="stylesheet" />
+    <link href="~/Content/custom-checkboxes.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -42,9 +43,9 @@
                         </a>
                     </li>
                     <li>
-                        <a class="nav-link" href="./user.html">
-                            <i class="nc-icon nc-bell-55"></i>
-                            <p>Nouvelle Location</p>
+                        <a class="nav-link" href="@Url.Action("Index","Produits")">
+                            <i class="nc-icon nc-bullet-list-67"></i>
+                            <p>Produits</p>
                         </a>
                     </li>
 
@@ -61,7 +62,14 @@
             <!-- Navbar -->
             <nav class="navbar navbar-expand-lg " color-on-scroll="500">
                 <div class="container-fluid">
-                    <a class="navbar-brand" href="#pablo">Vous etes a... @ViewBag.currentPage</a>
+                    @if (ViewBag.currentPage == null)
+                    {
+                        <a class="navbar-brand" href="#pablo"><span class="fas fa-arrows-alt"></span></a>
+                    }
+                    else
+                    {
+                        <a class="navbar-brand" href="#pablo"><span class="fas fa-arrows-alt"></span> @ViewBag.currentPage</a>
+                    }
                     <button href="" class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" aria-controls="navigation-index" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-bar burger-lines"></span>
                         <span class="navbar-toggler-bar burger-lines"></span>
@@ -189,7 +197,7 @@
     </div>
     <script type="text/javascript">
         function submitMainForm() {
-            alert();
+            //alert();
             document.getElementById("mainForm").submit();
         }
     </script>
