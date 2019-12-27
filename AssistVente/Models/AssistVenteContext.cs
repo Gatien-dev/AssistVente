@@ -20,5 +20,6 @@ namespace AssistVente.Models
         }
 
         public System.Data.Entity.DbSet<AssistVente.Models.Produit> Produits { get; set; }
+        public System.Data.Entity.DbSet<AssistVente.Models.Client> Clients { get; set; }
     }
 }

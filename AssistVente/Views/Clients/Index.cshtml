@@ -1,0 +1,53 @@
+﻿@model IEnumerable<AssistVente.Models.Client>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="card strpied-tabled-with-hover">
+    <div class="card-header ">
+        <h4 class="card-title ">Liste des clients</h4>
+        <p class="pull-right">
+            <a href="@Url.Action("Create")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouveau client</a>
+        </p>
+        <p class="card-category  pull-left">Creez, modifiez ou supprimez des clients</p>
+
+    </div>
+    <div class="card-body table-full-width table-responsive">
+        <table class="table table-hover table-striped">
+            <thead>
+                <th>Nom</th>
+                <th>Adresse</th>
+                <th>Email</th>
+                <th>Solde</th>
+            </thead>
+            <tbody>
+
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Nom)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Adresse)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Solde)
+                    </td>
+
+                    <td>
+                        <a href="@Url.Action("Details", new { id = item.ID })" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
+                        <a href="@Url.Action("Edit", new { id = item.ID })" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-edit"></i></a>
+                        <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger"><span class="fas fa-remove"></span></a>
+
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
