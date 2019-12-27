@@ -51,6 +51,8 @@ namespace AssistVente.Controllers
             if (ModelState.IsValid)
             {
                 produit.ID = Guid.NewGuid();
+                produit.DureeDeLocationParDefaut = TimeSpan.Zero;
+                produit.DateCreation = DateTime.Now;
                 db.Produits.Add(produit);
                 db.SaveChanges();
                 return RedirectToAction("Index");
