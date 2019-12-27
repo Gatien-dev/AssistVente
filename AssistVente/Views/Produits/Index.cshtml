@@ -50,9 +50,9 @@
                         <th>
                             @Html.DisplayNameFor(model => model.StockDisponible)
                         </th>
-                        <th>
+                        @*<th>
                             @Html.DisplayNameFor(model => model.DureeDeLocationParDefaut)
-                        </th>
+                        </th>*@
                         <th>
                             @Html.DisplayNameFor(model => model.Description)
                         </th>
@@ -83,9 +83,9 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.StockDisponible)
                                     </td>
-                                    <td>
+                                    @*<td>
                                         @Html.DisplayFor(modelItem => item.DureeDeLocationParDefaut)
-                                    </td>
+                                    </td>*@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Description)
                                     </td>
@@ -96,9 +96,10 @@
                                         @Html.DisplayFor(modelItem => item.CreatorId)
                                     </td>
                                     <td>
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+                                       
+                                        <a href="@Url.Action("Details", new { id = item.ID })" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
+                                        <a href="@Url.Action("Edit", new { id = item.ID })" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-edit"></i></a>
+                                        <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger"><span class="fas fa-remove"></span></a>
                                     </td>
                                 </tr>
                             }

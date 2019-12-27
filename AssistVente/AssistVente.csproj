@@ -276,6 +276,7 @@
     <Content Include="Content\css\svg-with-js.min.css" />
     <Content Include="Content\css\v4-shims.css" />
     <Content Include="Content\css\v4-shims.min.css" />
+    <Content Include="Content\custom-checkboxes.css" />
     <Content Include="Content\demo.css" />
     <Content Include="Content\light-bootstrap-dashboard.css" />
     <Content Include="Content\webfonts\fa-brands-400.svg" />
