@@ -7,17 +7,19 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssistVente.Models;
+using AssistVente.DAO;
 
 namespace AssistVente.Controllers
 {
     public class ClientsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();
+        private ClientDAO ClientManager = new ClientDAO();
 
         // GET: Clients
         public ActionResult Index()
         {
-            return View(db.Clients.ToList());
+            return View(ClientManager.GetAllClients());
         }
 
         // GET: Clients/Details/5
@@ -27,7 +29,7 @@ namespace AssistVente.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = db.Clients.Find(id);
+            Client client = ClientManager.GetClientById(id);
             if (client == null)
             {
                 return HttpNotFound();
@@ -50,10 +52,11 @@ namespace AssistVente.Controllers
         {
             if (ModelState.IsValid)
             {
-                client.ID = Guid.NewGuid();
-                db.Clients.Add(client);
-                db.SaveChanges();
-                return RedirectToAction("Index");
+                if (ClientManager.AddClient(client))
+                {
+                    return RedirectToAction("Index");
+                }
+                
             }
 
             return View(client);
@@ -66,7 +69,7 @@ namespace AssistVente.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = db.Clients.Find(id);
+            Client client = ClientManager.GetClientById(id);
             if (client == null)
             {
                 return HttpNotFound();
@@ -83,8 +86,7 @@ namespace AssistVente.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(client).State = EntityState.Modified;
-                db.SaveChanges();
+                ClientManager.UpdateClient(client);
                 return RedirectToAction("Index");
             }
             return View(client);
@@ -97,7 +99,7 @@ namespace AssistVente.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Client client = db.Clients.Find(id);
+            Client client = ClientManager.GetClientById(id);
             if (client == null)
             {
                 return HttpNotFound();
@@ -110,9 +112,7 @@ namespace AssistVente.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Client client = db.Clients.Find(id);
-            db.Clients.Remove(client);
-            db.SaveChanges();
+            ClientManager.DeleteClient(id);
             return RedirectToAction("Index");
         }
 
