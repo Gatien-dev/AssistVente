@@ -22,7 +22,7 @@ namespace AssistVente.Models
         public Guid Id { get; set; }
         public String Nom { get; set; }
         public string Description { get; set; }
-        public TimeSpan Duree { get; set; }
+        public int Duree { get; set; }
         public List<Abonnement> Abonnements { get; set; }
         public double Montant { get; set; }
     }

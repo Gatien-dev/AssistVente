@@ -1,0 +1,91 @@
+﻿@model IEnumerable<AssistVente.Models.Forfait>
+
+@{
+    ViewBag.Title = "Index";
+    ViewBag.position = "Forfaits";
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card strpied-tabled-with-hover">
+            <div class="card-header ">
+                <p class="pull-right">
+                    <a href="@Url.Action("Create")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouveau Forfait</a>
+                </p>
+                <h4 class="card-title">Forfaits disponibles</h4>
+                <p class="card-category">Enregistrez vos Forfaits pour effectuer des abonnements</p>
+            </div>
+            <div class="card-body table-full-width table-responsive">
+                @if (Model.Count() <= 0)
+                {
+                    <div class="placeholder col-md-10">
+                        <span>
+                            Aucun Forfait enregistré pour l'instant
+                        </span>
+                        <hr />
+                        <h5>
+                            <a href="@Url.Action("Create")" class="btn btn-default"><i class="nc-icon nc-simple-add"></i> Nouveau Forfait</a>
+                        </h5>
+                    </div>
+
+                }
+                else
+                {
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nom)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Duree)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Montant)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        <th>
+                            <label>Nombre d'abonnements</label>
+                        </th>
+
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nom)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Duree)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Montant)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Abonnements.Count)
+                                    </td>
+
+                                    <td>
+
+                                        <a href="@Url.Action("Details", new { id = item.Id })" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
+                                        <a href="@Url.Action("Edit", new { id = item.Id })" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-edit"></i></a>
+                                        <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger"><span class="fas fa-remove"></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
