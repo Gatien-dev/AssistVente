@@ -9,7 +9,7 @@
 
     <div class="form-horizontal">
         <h4>Modification du Produit @Model.Nom</h4>
-        <h4 class="small">@Model.Description</h4>
+        <h4 class="small">@Html.LabelFor(model => model.Description) : @Model.Description</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.ID)
