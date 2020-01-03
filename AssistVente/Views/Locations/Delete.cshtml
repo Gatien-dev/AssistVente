@@ -1,0 +1,112 @@
+﻿@model AssistVente.Models.Location
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Location</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Produit.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Produit.Nom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateFinLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateFinLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateSuspensionLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateSuspensionLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateArretLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateArretLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationRendue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LocationRendue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuantitePrise)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuantitePrise)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuantiteRendue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuantiteRendue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Montant)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Montant)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserId)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserId)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

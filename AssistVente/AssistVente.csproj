@@ -198,6 +198,7 @@
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\ForfaitsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\ProduitsController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
@@ -262,6 +263,7 @@
     <Content Include="assets\js\plugins\bootstrap-switch.js" />
     <Content Include="assets\js\plugins\chartist.min.js" />
     <Content Include="assets\js\plugins\nouislider.min.js" />
+    <Content Include="Content\bootstrap-datepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -291,6 +293,7 @@
     <Content Include="fonts\nucleo-icons.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\nucleo-icons.eot" />
@@ -425,6 +428,11 @@
     <Content Include="Views\Caisses\Details.cshtml" />
     <Content Include="Views\Caisses\Edit.cshtml" />
     <Content Include="Views\Caisses\Index.cshtml" />
+    <Content Include="Views\Locations\Create.cshtml" />
+    <Content Include="Views\Locations\Delete.cshtml" />
+    <Content Include="Views\Locations\Details.cshtml" />
+    <Content Include="Views\Locations\Edit.cshtml" />
+    <Content Include="Views\Locations\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

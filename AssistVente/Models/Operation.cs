@@ -10,6 +10,6 @@ namespace AssistVente.Models
         public Guid Id { get; set; }
         public double Montant { get; set; }
         public DateTime Date { get; set; }
-        public Guid UserId { get; set; }
+        public string UserId { get; set; }
     }
 }
