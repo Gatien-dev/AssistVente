@@ -55,6 +55,12 @@
                             <p>Forfaits</p>
                         </a>
                     </li>
+                    <li>
+                        <a class="nav-link" href="@Url.Action("Index","Locations")">
+                            <i class="nc-icon nc-bullet-list-67"></i>
+                            <p>Locations</p>
+                        </a>
+                    </li>
                     <li class="nav-item active active-pro">
                         <a class="nav-link active" href="javascript:;">
                             <i class="nc-icon nc-alien-33"></i>
@@ -206,6 +212,9 @@
             //alert();
             document.getElementById("mainForm").submit();
         }
+        $(function () {
+            $('.datetimepicker').datetimepicker();
+        });
     </script>
     <!--   Core JS Files   -->
     <script src="~/Scripts/jquery-3.3.1.min.js"></script>
@@ -227,6 +236,10 @@
     <script src="~/assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
     <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
     <script src="~/assets/js/demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">*@
 </body>
 
 

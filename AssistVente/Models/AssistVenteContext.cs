@@ -23,5 +23,7 @@ namespace AssistVente.Models
         public System.Data.Entity.DbSet<AssistVente.Models.Client> Clients { get; set; }
 
         public System.Data.Entity.DbSet<AssistVente.Models.Forfait> Forfaits { get; set; }
+
+        public System.Data.Entity.DbSet<AssistVente.Models.Location> Locations { get; set; }
     }
 }
