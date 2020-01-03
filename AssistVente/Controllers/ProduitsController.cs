@@ -90,7 +90,7 @@ namespace AssistVente.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(produit).State = EntityState.Modified;
-                
+                produit.CreatorId = User.Identity.GetUserId();
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
