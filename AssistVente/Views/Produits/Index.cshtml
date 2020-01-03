@@ -59,9 +59,9 @@
                         <th>
                             @Html.DisplayNameFor(model => model.DateCreation)
                         </th>
-                        <th>
+                        @*<th>
                             @Html.DisplayNameFor(model => model.CreatorId)
-                        </th>
+                        </th>*@
                         </thead>
 
                         <tbody>
@@ -92,9 +92,9 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.DateCreation)
                                     </td>
-                                    <td>
+                                    @*<td>
                                         @Html.DisplayFor(modelItem => item.CreatorId)
-                                    </td>
+                                    </td>*@
                                     <td>
                                        
                                         <a href="@Url.Action("Details", new { id = item.ID })" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
