@@ -262,6 +262,7 @@
     <Content Include="assets\js\plugins\bootstrap-switch.js" />
     <Content Include="assets\js\plugins\chartist.min.js" />
     <Content Include="assets\js\plugins\nouislider.min.js" />
+    <Content Include="Content\bootstrap-datepicker.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -291,6 +292,7 @@
     <Content Include="fonts\nucleo-icons.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="fonts\nucleo-icons.eot" />

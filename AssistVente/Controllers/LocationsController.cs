@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssistVente.Models;
+using Microsoft.AspNet.Identity;
 
 namespace AssistVente.Controllers
 {
@@ -53,6 +54,7 @@ namespace AssistVente.Controllers
             if (ModelState.IsValid)
             {
                 location.Id = Guid.NewGuid();
+                location.UserId = User.Identity.GetUserId();
                 db.Locations.Add(location);
                 db.SaveChanges();
                 return RedirectToAction("Index");

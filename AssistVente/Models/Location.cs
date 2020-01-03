@@ -11,9 +11,9 @@ namespace AssistVente.Models
         [Display(Name ="Produit")]
         public Guid ProduitId { get; set; }
         public virtual Produit Produit { get; set; }
-        [Display(Name ="Début")]
+        [Display(Name ="Date de Location")]
         public DateTime DateLocation { get; set; }
-        [Display(Name ="Fin")]
+        [Display(Name ="Date de Retour")]
         public DateTime DateFinLocation { get; set; }
         //En cas de suspension momentanee de la location
         //public DateTime DateSuspensionLocation { get; set; }

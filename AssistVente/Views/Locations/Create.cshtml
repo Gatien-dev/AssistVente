@@ -43,7 +43,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateArretLocation, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.DateArretLocation, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.EditorFor(model => model.DateArretLocation, new { htmlAttributes = new { @class = "form-control datepicker" } })
                 @Html.ValidationMessageFor(model => model.DateArretLocation, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -88,6 +88,7 @@
                 @Html.EditorFor(model => model.Date, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
             </div>
+
         </div>
 
         <div class="form-group">
