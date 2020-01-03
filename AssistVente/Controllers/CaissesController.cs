@@ -7,119 +7,111 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssistVente.Models;
-using Microsoft.AspNet.Identity;
 
 namespace AssistVente.Controllers
 {
-    public class ProduitsController : Controller
+    public class CaissesController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();
 
-        //TODO : index des produits afficher le nom du createur pas son ID ou le cacher
-
-        // GET: Produits
+        // GET: Caisses
         public ActionResult Index()
         {
-            return View(db.Produits.ToList());
+            return View(db.Caisses.ToList());
         }
 
-        // GET: Produits/Details/5
+        // GET: Caisses/Details/5
         public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Produit produit = db.Produits.Find(id);
-            if (produit == null)
+            Caisse caisse = db.Caisses.Find(id);
+            if (caisse == null)
             {
                 return HttpNotFound();
             }
-            return View(produit);
+            return View(caisse);
         }
 
-        // GET: Produits/Create
+        // GET: Caisses/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Produits/Create
+        // POST: Caisses/Create
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nom,PrixAchat,PrixVente,ALouer,StockDisponible,DureeDeLocationParDefaut,Description,DateCreation,CreatorId")] Produit produit)
+        public ActionResult Create([Bind(Include = "ID,Solde")] Caisse caisse)
         {
             if (ModelState.IsValid)
             {
-                produit.ID = Guid.NewGuid();
-                produit.DureeDeLocationParDefaut = TimeSpan.Zero;
-                produit.DateCreation = DateTime.Now;
-                produit.CreatorId = User.Identity.GetUserId();
-                db.Produits.Add(produit);
+                caisse.ID = Guid.NewGuid();
+                db.Caisses.Add(caisse);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(produit);
+            return View(caisse);
         }
 
-        // GET: Produits/Edit/5
+        // GET: Caisses/Edit/5
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Produit produit = db.Produits.Find(id);
-            if (produit == null)
+            Caisse caisse = db.Caisses.Find(id);
+            if (caisse == null)
             {
                 return HttpNotFound();
             }
-            return View(produit);
+            return View(caisse);
         }
 
-        // POST: Produits/Edit/5
+        // POST: Caisses/Edit/5
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nom,PrixAchat,PrixVente,ALouer,StockDisponible,DureeDeLocationParDefaut,Description,DateCreation,CreatorId")] Produit produit)
+        public ActionResult Edit([Bind(Include = "ID,Solde")] Caisse caisse)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(produit).State = EntityState.Modified;
-                
+                db.Entry(caisse).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(produit);
+            return View(caisse);
         }
 
-        // GET: Produits/Delete/5
+        // GET: Caisses/Delete/5
         public ActionResult Delete(Guid? id)
         {
-            ViewBag.currentPage = "Suppression de produit";
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Produit produit = db.Produits.Find(id);
-            if (produit == null)
+            Caisse caisse = db.Caisses.Find(id);
+            if (caisse == null)
             {
                 return HttpNotFound();
             }
-            return View(produit);
+            return View(caisse);
         }
 
-        // POST: Produits/Delete/5
+        // POST: Caisses/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Produit produit = db.Produits.Find(id);
-            db.Produits.Remove(produit);
+            Caisse caisse = db.Caisses.Find(id);
+            db.Caisses.Remove(caisse);
             db.SaveChanges();
             return RedirectToAction("Index");
         }
