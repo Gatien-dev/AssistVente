@@ -9,8 +9,6 @@ namespace AssistVente.Models
     public class Vente:Operation
     {
 
-        public Guid ClientId { get; set; }
-        public virtual Client Client { get; set; }
         public double MontantRegle { get; set; }
         public double MontantRestant { get; set; }
 

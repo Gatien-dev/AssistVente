@@ -18,7 +18,7 @@ namespace AssistVente.Controllers
         // GET: Locations
         public ActionResult Index()
         {
-            var locations = db.Locations.Include(l => l.Produit);
+            var locations = db.Operations.OfType<Location>().Include(l => l.Produit);
             return View(locations.ToList());
         }
 
@@ -29,7 +29,7 @@ namespace AssistVente.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Location location = db.Locations.Find(id);
+            Location location = (Location)db.Operations.Find(id);
             if (location == null)
             {
                 return HttpNotFound();
@@ -55,7 +55,7 @@ namespace AssistVente.Controllers
             {
                 location.Id = Guid.NewGuid();
                 location.UserId = User.Identity.GetUserId();
-                db.Locations.Add(location);
+                db.Operations.Add(location);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -71,7 +71,7 @@ namespace AssistVente.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Location location = db.Locations.Find(id);
+            Location location = (Location)db.Operations.Find(id);
             if (location == null)
             {
                 return HttpNotFound();
@@ -104,7 +104,7 @@ namespace AssistVente.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Location location = db.Locations.Find(id);
+            Location location = (Location)db.Operations.Find(id);
             if (location == null)
             {
                 return HttpNotFound();
@@ -117,8 +117,8 @@ namespace AssistVente.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Location location = db.Locations.Find(id);
-            db.Locations.Remove(location);
+            Location location = (Location)db.Operations.Find(id);
+            db.Operations.Remove(location);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

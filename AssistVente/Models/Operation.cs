@@ -11,5 +11,7 @@ namespace AssistVente.Models
         public double Montant { get; set; }
         public DateTime Date { get; set; }
         public string UserId { get; set; }
+        public Guid? ClientId { get; set; }
+        public virtual Client Client { get; set; }
     }
 }

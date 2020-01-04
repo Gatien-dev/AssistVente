@@ -9,8 +9,8 @@ namespace AssistVente.Models
     public class Abonnement:Operation
     {
 
-        public Guid ClientId{ get; set; }
-        public virtual Client Client { get; set; }
+        //public Guid ClientId{ get; set; }
+        //public virtual Client Client { get; set; }
         public Guid ForfaitId { get; set; }
         public virtual Forfait Forfait { get; set; }
         [Display(Name ="Début")]

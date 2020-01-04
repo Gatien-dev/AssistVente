@@ -18,6 +18,11 @@ namespace AssistVente.Models
         public AssistVenteContext() : base("name=AssistVenteContext")
         {
         }
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            //Write Fluent API configurations here
+            //modelBuilder.Entity<Client>().HasMany(c=>c.Adresse)
+        }
 
         public System.Data.Entity.DbSet<AssistVente.Models.Produit> Produits { get; set; }
 
@@ -33,7 +38,7 @@ namespace AssistVente.Models
 
         //public System.Data.Entity.DbSet<AssistVente.Models.Location> Locations { get; set; }
 
-        public System.Data.Entity.DbSet<AssistVente.Models.Magasin> Magasins { get; set; }
+        //public System.Data.Entity.DbSet<AssistVente.Models.Magasin> Magasins { get; set; }
 
         public System.Data.Entity.DbSet<AssistVente.Models.Operation> Operations { get; set; }
 
