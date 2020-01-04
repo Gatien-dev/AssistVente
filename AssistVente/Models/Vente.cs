@@ -8,8 +8,7 @@ namespace AssistVente.Models
 {
     public class Vente:Operation
     {
-        //public Guid ClientId { get; set; }
-        //public virtual Client Client { get; set; }
+
         public double MontantRegle { get; set; }
         public double MontantRestant { get; set; }
 
@@ -25,6 +24,6 @@ namespace AssistVente.Models
         public virtual Produit Produit { get; set; }
         public double QuantiteVendue { get; set; }
         //public double QuantiteLivree { get; set; }
-        
+
     }
 }
