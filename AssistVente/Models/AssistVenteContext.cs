@@ -27,18 +27,18 @@ namespace AssistVente.Models
 
         public System.Data.Entity.DbSet<AssistVente.Models.Caisse> Caisses { get; set; }
 
-        //public System.Data.Entity.DbSet<AssistVente.Models.Abonnement> Abonnements { get; set; }
+        public System.Data.Entity.DbSet<AssistVente.Models.Abonnement> Abonnements { get; set; }
 
-        //public System.Data.Entity.DbSet<AssistVente.Models.Achat> Achats { get; set; }
+        public System.Data.Entity.DbSet<AssistVente.Models.Achat> Achats { get; set; }
 
-        //public System.Data.Entity.DbSet<AssistVente.Models.Location> Locations { get; set; }
+        public System.Data.Entity.DbSet<AssistVente.Models.Location> Locations { get; set; }
 
-        public System.Data.Entity.DbSet<AssistVente.Models.Magasin> Magasins { get; set; }
+        //public System.Data.Entity.DbSet<AssistVente.Models.Magasin> Magasins { get; set; }
 
-        public System.Data.Entity.DbSet<AssistVente.Models.Operation> Operations { get; set; }
+        //public System.Data.Entity.DbSet<AssistVente.Models.Operation> Operations { get; set; }
 
-        //public System.Data.Entity.DbSet<AssistVente.Models.Reglement> Reglements { get; set; }
+        public System.Data.Entity.DbSet<AssistVente.Models.Reglement> Reglements { get; set; }
 
-        //public System.Data.Entity.DbSet<AssistVente.Models.Vente> Ventes { get; set; }
+        public System.Data.Entity.DbSet<AssistVente.Models.Vente> Ventes { get; set; }
     }
 }
