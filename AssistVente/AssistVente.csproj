@@ -222,6 +222,7 @@
     <Compile Include="Models\Operation.cs" />
     <Compile Include="Models\Produit.cs" />
     <Compile Include="Models\Reglement.cs" />
+    <Compile Include="Models\StockManager.cs" />
     <Compile Include="Models\Vente.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
