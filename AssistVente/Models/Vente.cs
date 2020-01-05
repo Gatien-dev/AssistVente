@@ -16,10 +16,10 @@ namespace AssistVente.Models
     public class DetailVente
     {
         public Guid ID { get; set; }
-        [ForeignKey("Ventes")]
+        [ForeignKey("Vente")]
         public Guid VenteId { get; set; }
         public virtual Vente Vente { get; set; }
-        [ForeignKey("Produits")]
+        [ForeignKey("Produit")]
         public Guid ProduitID { get; set; }
         public virtual Produit Produit { get; set; }
         public double QuantiteVendue { get; set; }

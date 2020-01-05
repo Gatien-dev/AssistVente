@@ -9,6 +9,7 @@ namespace AssistVente.Models
     {
         Achat, Vente, Location
     }
+
     public class StockManager
     {
         AssistVenteContext db;
@@ -17,6 +18,7 @@ namespace AssistVente.Models
         {
             db = new AssistVenteContext();
         }
+
         public void AddStock(Guid ProdId, double Amount, OperationType type)
         {
             db.Produits.Find(ProdId).StockDisponible += Amount;
@@ -24,6 +26,7 @@ namespace AssistVente.Models
             db.StockLogs.Add(new StockLog() { Amount = Amount, Date = DateTime.Now, Id = Guid.NewGuid(), Type = type });
             db.SaveChanges();
         }
+
         public void RemoveStock(Guid ProdId, double Amount, OperationType type)
         {
             db.Produits.Find(ProdId).StockDisponible -= Amount;

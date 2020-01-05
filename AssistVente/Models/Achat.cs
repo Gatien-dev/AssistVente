@@ -11,15 +11,16 @@ namespace AssistVente.Models
 
         public string Fournisseur { get; set; }
         public string NumFacture { get; set; }
-
+        public virtual List<DetailAchat> Details { get; set; }
     }
+
     public class DetailAchat
     {
         public Guid ID { get; set; }
-        [ForeignKey("Achats")]
+        [ForeignKey("Achat")]
         public Guid AchatId { get; set; }
         public virtual Achat Achat { get; set; }
-        [ForeignKey("Produits")]
+        [ForeignKey("Produit")]
         public Guid ProduitID { get; set; }
         public virtual Produit Produit { get; set; }
         public double PrixAchat { get; set; }

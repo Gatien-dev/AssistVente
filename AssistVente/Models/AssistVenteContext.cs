@@ -47,5 +47,9 @@ namespace AssistVente.Models
         public System.Data.Entity.DbSet<AssistVente.Models.Reglement> Reglements { get; set; }
 
         public System.Data.Entity.DbSet<AssistVente.Models.Vente> Ventes { get; set; }
+
+        public DbSet<DetailAchat> DetailsAchat { get; set; }
+
+        public DbSet<DetailVente> DetailsVente { get; set; }
     }
 }

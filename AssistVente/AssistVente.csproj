@@ -194,6 +194,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\AchatsController.cs" />
     <Compile Include="Controllers\CaissesController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\ForfaitsController.cs" />
@@ -284,6 +285,7 @@
     <Content Include="Content\css\v4-shims.css" />
     <Content Include="Content\css\v4-shims.min.css" />
     <Content Include="Content\custom-checkboxes.css" />
+    <Content Include="Content\dataTables.bootstrap4.min.css" />
     <Content Include="Content\demo.css" />
     <Content Include="Content\light-bootstrap-dashboard.css" />
     <Content Include="Content\webfonts\fa-brands-400.svg" />
@@ -351,11 +353,13 @@
     <Content Include="Content\webfonts\fa-solid-900.woff" />
     <Content Include="Content\webfonts\fa-solid-900.woff2" />
     <None Include="Scripts\jquery-3.3.1.intellisense.js" />
+    <Content Include="Scripts\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\jquery-3.3.1.js" />
     <Content Include="Scripts\jquery-3.3.1.min.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.js" />
     <Content Include="Scripts\jquery-3.3.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.dataTables.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -434,6 +438,7 @@
     <Content Include="Views\Caisses\Details.cshtml" />
     <Content Include="Views\Caisses\Edit.cshtml" />
     <Content Include="Views\Caisses\Index.cshtml" />
+    <Content Include="Views\Achats\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
