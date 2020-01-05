@@ -46,7 +46,7 @@ namespace AssistVente.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Solde")] Caisse caisse)
+        public ActionResult Create([Bind(Include = "ID,Nom,Solde")] Caisse caisse)
         {
             if (ModelState.IsValid)
             {
@@ -79,7 +79,7 @@ namespace AssistVente.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Solde")] Caisse caisse)
+        public ActionResult Edit([Bind(Include = "ID,Nom,Solde")] Caisse caisse)
         {
             if (ModelState.IsValid)
             {
@@ -90,6 +90,7 @@ namespace AssistVente.Controllers
             return View(caisse);
         }
 
+        // TODO: veiller a ne pas supprimer les caisses qui ont une historiqueou qui ont une operation
         // GET: Caisses/Delete/5
         public ActionResult Delete(Guid? id)
         {

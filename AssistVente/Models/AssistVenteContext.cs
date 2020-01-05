@@ -44,7 +44,6 @@ namespace AssistVente.Models
         
         public System.Data.Entity.DbSet<AssistVente.Models.StockLog> StockLogs { get; set; }
 
-
         public System.Data.Entity.DbSet<AssistVente.Models.Reglement> Reglements { get; set; }
 
         public System.Data.Entity.DbSet<AssistVente.Models.Vente> Ventes { get; set; }

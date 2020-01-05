@@ -12,6 +12,7 @@ namespace AssistVente.Models
     public class StockManager
     {
         AssistVenteContext db;
+
         public StockManager(AssistVenteContext db)
         {
             db = new AssistVenteContext();

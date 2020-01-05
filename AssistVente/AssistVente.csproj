@@ -424,16 +424,16 @@
     <Content Include="Views\Forfaits\Details.cshtml" />
     <Content Include="Views\Forfaits\Edit.cshtml" />
     <Content Include="Views\Forfaits\Index.cshtml" />
-    <Content Include="Views\Caisses\Create.cshtml" />
-    <Content Include="Views\Caisses\Delete.cshtml" />
-    <Content Include="Views\Caisses\Details.cshtml" />
-    <Content Include="Views\Caisses\Edit.cshtml" />
-    <Content Include="Views\Caisses\Index.cshtml" />
     <Content Include="Views\Locations\Create.cshtml" />
     <Content Include="Views\Locations\Delete.cshtml" />
     <Content Include="Views\Locations\Details.cshtml" />
     <Content Include="Views\Locations\Edit.cshtml" />
     <Content Include="Views\Locations\Index.cshtml" />
+    <Content Include="Views\Caisses\Create.cshtml" />
+    <Content Include="Views\Caisses\Delete.cshtml" />
+    <Content Include="Views\Caisses\Details.cshtml" />
+    <Content Include="Views\Caisses\Edit.cshtml" />
+    <Content Include="Views\Caisses\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
