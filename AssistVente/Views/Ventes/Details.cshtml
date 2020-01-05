@@ -4,63 +4,81 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
 
-<div>
-    <h4>Vente</h4>
+<h4>Détails de la vente</h4>
+<div class="row">
     <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Client.Nom)
-        </dt>
+    <div class="col-md-6">
+        <h4>Informations générales</h4>
+        <dl class="dl-horizontal">
+            <dt>
+                Client
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Client.Nom)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Client.Nom)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Montant)
-        </dt>
+            <dt>
+                Montant total de la vente
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Montant)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Montant)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
+            <dt>
+                Date
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
+            
+            <dt>
+                @Html.DisplayNameFor(model => model.MontantRegle)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.MontantRegle)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MontantRegle)
-        </dt>
+            <dt>
+                @Html.DisplayNameFor(model => model.MontantRestant)
+            </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.MontantRegle)
-        </dd>
+            <dd>
+                @Html.DisplayFor(model => model.MontantRestant)
+            </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.MontantRestant)
-        </dt>
+        </dl>
+    </div>
+    <div class="col-md-6">
 
-        <dd>
-            @Html.DisplayFor(model => model.MontantRestant)
-        </dd>
+        <h4>Produits Vendus</h4>
+        <table class="table table-condensed table-hover">
+            <thead>
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th>total</th>
+            </thead>
+            <tbody>
+                @foreach (var detail in Model.Details)
+                {
+                    <tr>
+                        <td>@detail.Produit.Nom.ToString()</td>
+                        <td>@detail.QuantiteVendue.ToString()</td>
+                        <td>@(detail.QuantiteVendue * @detail.Produit.PrixVente)</td>
 
-    </dl>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
+<p class="pull-right">
+    <a href="@Url.Action("Delete", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-danger"><i class="fas fa-remove"></i> Supprimer la vente</a>
+    <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
 </p>

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -9,6 +10,8 @@ namespace AssistVente.Models.ViewModels
     {
         public Guid ClientId { get; set; }
         public List<DetailVenteVM> Details { get; set; }
+        [Display(Name ="Montant payé")]
+        public double MontantPaye { get; set; }
     }
     public class DetailVenteVM
     {

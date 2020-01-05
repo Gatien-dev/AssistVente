@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
@@ -8,8 +9,9 @@ namespace AssistVente.Models
 {
     public class Vente:Operation
     {
-
+        [Display(Name ="Montant Réglé")]
         public double MontantRegle { get; set; }
+        [Display(Name = "Reste à payer")]
         public double MontantRestant { get; set; }
         public List<DetailVente> Details { get; set; }
 

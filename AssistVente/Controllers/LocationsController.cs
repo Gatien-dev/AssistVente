@@ -11,6 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace AssistVente.Controllers
 {
+    [Authorize]
     public class LocationsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();

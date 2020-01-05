@@ -8,9 +8,11 @@ using System.Web;
 using System.Web.Mvc;
 using AssistVente.Models;
 using AssistVente.Models.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace AssistVente.Controllers
 {
+    [Authorize]
     public class VentesController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();
@@ -18,7 +20,8 @@ namespace AssistVente.Controllers
         // GET: Ventes
         public ActionResult Index()
         {
-            var operations = db.Operations.OfType<Vente>().Include(v => v.Client);
+            var operations = db.Operations.OfType<Vente>().Include(v => v.Client).OrderByDescending(v => v.Date);
+            ViewBag.caisseDefined = db.Caisses.Any();
             return View(operations.ToList());
         }
 
@@ -29,7 +32,7 @@ namespace AssistVente.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vente vente = (Vente)db.Operations.Find(id);
+            Vente vente = db.Operations.OfType<Vente>().Include(v => v.Details).First(v => v.Id == id);
             if (vente == null)
             {
                 return HttpNotFound();
@@ -40,6 +43,7 @@ namespace AssistVente.Controllers
         // GET: Ventes/Create
         public ActionResult Create()
         {
+            if (!db.Caisses.Any()) return RedirectToAction("Index");
             ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom");
             var venteVM = new VenteVM()
             {
@@ -74,25 +78,30 @@ namespace AssistVente.Controllers
                     Client = db.Clients.Find(clientId),
                     Date = DateTime.Now,
                     Id = Guid.NewGuid(),
-                    ClientId = clientId, MontantRegle = 0
+                    ClientId = clientId,
+                    MontantRegle = 0,
+                    UserId = User.Identity.GetUserId()
                 };
                 double total = 0;
                 foreach (var detail in vente.Details)
                 {
-                    if(detail.Quantite>0)
-                    newVente.Details.Add(new DetailVente()
-                    {
-                        Produit=db.Produits.Find(detail.ProduitId),
-                        QuantiteVendue=detail.Quantite,
-                        ProduitID=detail.ProduitId,
-                        ID=Guid.NewGuid()
-                    });
+                    if (detail.Quantite > 0)
+                        newVente.Details.Add(new DetailVente()
+                        {
+                            Produit = db.Produits.Find(detail.ProduitId),
+                            QuantiteVendue = detail.Quantite,
+                            ProduitID = detail.ProduitId,
+                            ID = Guid.NewGuid()
+                        });
                     total += detail.Quantite * db.Produits.Find(detail.ProduitId).PrixVente;
                 }
                 newVente.Montant = total;
                 newVente.MontantRestant = total;
+
                 db.Operations.Add(newVente);
                 db.SaveChanges();
+                new CaisseManager(db).reglerVente(vente.MontantPaye, newVente);
+
                 return RedirectToAction("Index");
             }
 
@@ -147,7 +156,28 @@ namespace AssistVente.Controllers
             }
             return View(vente);
         }
-
+        public ActionResult Reglement(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Vente vente = (Vente)db.Operations.Find(id);
+            if (vente == null)
+            {
+                return HttpNotFound();
+            }
+            return View(vente);
+        }
+        [HttpPost, ActionName("Reglement")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReglementConfirmed(Guid id, double mtRegle)
+        {
+            Vente vente = (Vente)db.Operations.Find(id);
+            new CaisseManager(db).reglerVente(mtRegle, vente);
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         // POST: Ventes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
