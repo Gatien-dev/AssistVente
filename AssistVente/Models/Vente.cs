@@ -11,15 +11,14 @@ namespace AssistVente.Models
 
         public double MontantRegle { get; set; }
         public double MontantRestant { get; set; }
+        public List<DetailVente> Details { get; set; }
 
     }
     public class DetailVente
     {
         public Guid ID { get; set; }
-        [ForeignKey("Ventes")]
         public Guid VenteId { get; set; }
         public virtual Vente Vente { get; set; }
-        [ForeignKey("Produits")]
         public Guid ProduitID { get; set; }
         public virtual Produit Produit { get; set; }
         public double QuantiteVendue { get; set; }
