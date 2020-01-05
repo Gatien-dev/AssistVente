@@ -10,6 +10,7 @@ namespace AssistVente.Models
         public Guid ID { get; set; }
         public string Nom { get; set; }
         public List<Operation> Operations { get; set; }
+        public List<Reglement> Reglements { get; set; }
         public double Solde { get; set; }
     }
 

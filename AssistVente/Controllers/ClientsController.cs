@@ -11,6 +11,7 @@ using AssistVente.DAO;
 
 namespace AssistVente.Controllers
 {
+    [Authorize]
     public class ClientsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();

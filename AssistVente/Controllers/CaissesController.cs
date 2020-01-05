@@ -10,6 +10,7 @@ using AssistVente.Models;
 
 namespace AssistVente.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class CaissesController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();

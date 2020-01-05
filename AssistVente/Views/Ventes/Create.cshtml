@@ -1,0 +1,73 @@
+﻿@model AssistVente.Models.ViewModels.VenteVM
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Nouvelle vente</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Client</label>
+            <div class="col-md-6">
+                @Html.DropDownList("ClientId", null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Montant payé</label>
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => Model.MontantPaye, htmlAttributes: new { @class = "form-control", @type = "number" })
+                @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label id="total_label" class="control-label col-md-2">Total: </label>
+            <div class="col-md-6">
+                <input type="number" id="total_input" class="form-control text-align-right" value="0" disabled />
+            </div>
+
+        </div>
+        <hr />
+        <div class="table-responsive">
+            <table class="table table-condensed table-bordered">
+                <thead>
+                <th class="col-md-3">Produit</th>
+                <th class="col-md-3">Quantite</th>
+                <th class="col-md-3">Prix</th>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Details.Count; i++)
+                    {
+                        <tr>
+                            <td class="col-md-3">@Model.Details[i].NomProduit</td>
+                            @Html.HiddenFor(model => Model.Details[i].ProduitId)
+                            <td class="col-md-3">@Html.TextBoxFor(model => Model.Details[i].Quantite, htmlAttributes: new { @class = "form-control text-align-right qtefield", @type = "number", @onblur = "updatetotal" })</td>
+                            <td class="col-md-3">@Html.TextBoxFor(model => Model.Details[i].PU, htmlAttributes: new { @class = "form-control text-align-right", @type = "number" })</td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+        <div style="margin-bottom:30px;">
+            <div class="col-md-5 pull-right">
+                <input type="submit" class="btn btn-primary" value="Enregistrer" />
+                <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+            </div>
+        </div>
+
+    </div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}

@@ -6,6 +6,20 @@ using System.Web;
 
 namespace AssistVente.Models
 {
+    public class MainDbInitializer : DropCreateDatabaseIfModelChanges<AssistVenteContext>
+    {
+        protected override void Seed(AssistVenteContext context)
+        {
+            context.Caisses.Add(new Caisse()
+            {
+                ID = Guid.NewGuid(),
+                Nom = "Caisse Principale",
+                Operations = new List<Operation>(),
+                Solde = 0
+            });
+            base.Seed(context);
+        }
+    }
     public class AssistVenteContext : DbContext
     {
         // You can add custom code to this file. Changes will not be overwritten.

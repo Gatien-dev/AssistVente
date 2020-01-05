@@ -1,0 +1,63 @@
+﻿@model AssistVente.Models.Vente
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+
+<div>
+    <h4>Etes vous sur de vouloir supprimer la vente?</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Client.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Client.Nom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Montant)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Montant)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MontantRegle)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MontantRegle)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MontantRestant)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MontantRestant)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color pull-right">
+            <input type="submit" value="Oui, supprimer" class="btn btn-danger" /> |
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+        </div>
+    }
+</div>
