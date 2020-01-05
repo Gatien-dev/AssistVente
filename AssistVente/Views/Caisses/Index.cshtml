@@ -4,30 +4,69 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.Solde)
-        </th>
-        <th></th>
-    </tr>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="card strpied-tabled-with-hover">
+                <div class="card-header ">
+                    <p class="pull-right">
+                        <a href="@Url.Action("Create")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouvelle Caisse</a>
+                    </p>
+                    <h4 class="card-title">Liste des caisses</h4>
+                    <p class="card-category">Enregistrement des caisses</p>
+                </div>
+                <div class="card-body table-full-width table-responsive">
+                    @if (Model.Count() <= 0)
+                    {
+                        <div class="placeholder col-md-10">
+                            <span>
+                                Aucune Caisse enregistré pour l'instant
+                            </span>
+                            <hr />
+                            <h5>
+                                <a href="@Url.Action("Create")" class="btn btn-default"><i class="nc-icon nc-simple-add"></i> Nouvelle Caisse</a>
+                            </h5>
+                        </div>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.Solde)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.ID }) |
-            @Html.ActionLink("Details", "Details", new { id=item.ID }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.ID })
-        </td>
-    </tr>
-}
+                    }
+                    else
+                    {
+                        <table class="table table-hover table-striped">
+                            <thead>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Nom)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Solde)
+                                </th>
+                            </thead>
 
-</table>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Nom)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Solde)
+                                        </td>
+
+                                        <td>
+
+                                            <a href="@Url.Action("Details", new { id = item.ID })" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
+                                            <a href="@Url.Action("Edit", new { id = item.ID })" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-edit"></i></a>
+                                            <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger"><span class="fas fa-remove"></span></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+

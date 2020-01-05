@@ -23,6 +23,6 @@ namespace AssistVente.Models
         public virtual Produit Produit { get; set; }
         public double QuantiteVendue { get; set; }
         //public double QuantiteLivree { get; set; }
-        
+
     }
 }
