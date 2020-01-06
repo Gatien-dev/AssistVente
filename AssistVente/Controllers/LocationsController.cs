@@ -47,7 +47,7 @@ namespace AssistVente.Controllers
         }
 
         // POST: Locations/Create
-        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
+        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -64,7 +64,7 @@ namespace AssistVente.Controllers
                     ViewBag.ProduitId = new SelectList(db.Produits, "ID", "Nom", location.ProduitId);
                     return View(location);
                 }
-                new StockManager(db).RemoveStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
+                new StockManager().RemoveStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
                 location.Date = DateTime.Now;
                 location.DateArretLocation = location.DateFinLocation;
                 location.LocationRendue = false;
@@ -102,7 +102,7 @@ namespace AssistVente.Controllers
         }
 
         // POST: Locations/Edit/5
-        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
+        // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
