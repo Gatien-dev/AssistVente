@@ -48,8 +48,29 @@
                         }
                         else
                         {
-                            <span class="badge badge-danger">NON RENDUE</span>
+                            <span class="badge badge-danger">NON RENDU</span>
                         }
+                        @if (Model.Montant <= Model.MontantPaye)
+                        {
+                            <span class="badge badge-success">Payé</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">NON Payé</span>if ((Model.DateFinLocation - DateTime.Now).TotalDays < -1)
+                            {
+                                <span class="badge badge-danger">Expiré</span>
+                            }
+                            else if ((Model.DateFinLocation - DateTime.Now).TotalDays < 0)
+                            {
+                                <span class="badge badge-warning">Expire aujourd'hui</span>
+                            }
+                            else if ((Model.DateFinLocation - DateTime.Now).TotalDays < 1)
+                            {
+                                <span class="badge badge-warning">Expire demain</span>
+                            }
+                        }
+                        
+
                     </td>
                 </tr>
                 <tr>
@@ -71,6 +92,12 @@
                     </td>
                 </tr>
                 <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.MontantPaye)</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.MontantPaye)
+                    </td>
+                </tr>
+                <tr>
                     <td><b>@Html.DisplayNameFor(model => model.Date)</b></td>
                     <td>
                         @Html.DisplayFor(model => model.Date)
@@ -79,7 +106,9 @@
             </tbody>
         </table>
         <p class="pull-right">
-            <a href="@Url.Action("Edit", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Rendre la location</a>
+            <a href="@Url.Action("Rendre", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-primary @if (Model.LocationRendue) { @("disabled")} "><i class="fas fa-calendar-check"></i> Rendre la location</a>
+            <a href="@Url.Action("Reglement", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-default @if (Model.Montant<=Model.MontantPaye) { @("disabled")} "><i class="fas fa-money"></i> Payer la location</a>
+            <a href="@Url.Action("Delete", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-danger "><i class="fas fa-remove"></i> Supprimer la location</a>
             <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
         </p>
     </div>

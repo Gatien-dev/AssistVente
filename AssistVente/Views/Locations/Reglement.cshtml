@@ -5,7 +5,7 @@
 }
 
 <div class="card container">
-    <h4>Rendre la location du produit @Model.Produit.Nom</h4>
+    <h4>Reglement de la location du produit @Model.Produit.Nom</h4>
     <hr />
     @using (Html.BeginForm())
     {
@@ -60,12 +60,18 @@
                         </td>
                     </tr>
                     <tr>
+                        <td><b>@Html.DisplayNameFor(model => model.MontantPaye)</b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.MontantPaye)
+                        </td>
+                    </tr>
+                    <tr>
                         <td><b>@Html.DisplayNameFor(model => model.Date)</b></td>
                         <td>
                             @Html.DisplayFor(model => model.Date)
                         </td>
                     </tr>
-                   
+
                 </tbody>
             </table>
             <hr />
@@ -73,9 +79,9 @@
                 <thead><tr><th></th><th></th></tr></thead>
                 <tbody>
                     <tr>
-                        <td><b>Quantité à rendre</b></td>
+                        <td><b>Somme à payer</b></td>
                         <td width="100%">
-                            <input type="number" id="qteRendue" max="@Model.QuantitePrise-@Model.QuantiteRendue" name="qteRendue" class="form-control" />
+                            <input type="number" id="montantPaye" max="@(Model.Montant-@Model.MontantPaye)" name="montantPaye" class="form-control" />
                         </td>
                     </tr>
                 </tbody>
@@ -94,7 +100,7 @@
         <div class="form-actions no-color pull-right" style="margin-bottom:20px;">
 
 
-            <input type="submit" value="Rendre le stock" class="btn btn-danger" />
+            <input type="submit" value="Regler la location" class="btn btn-danger" />
 
             <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
         </div>

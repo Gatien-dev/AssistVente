@@ -31,6 +31,11 @@ namespace AssistVente.Models
         public double QuantitePrise { get; set; }
         [Display(Name = "Quantité Rendue")]
         public double QuantiteRendue { get; set; }
+        [Display(Name = "Montant payé")]
+        public double MontantPaye { get; set; }
+        [Display(Name = "Montant restant")]
+        public double MontantRestant { get; set; }
+
 
     }
 }
