@@ -71,7 +71,7 @@ namespace IdentitySample.Models
     // Configure the RoleManager used in the application. RoleManager is defined in the ASP.NET Identity core assembly
     public class ApplicationRoleManager : RoleManager<IdentityRole>
     {
-        public ApplicationRoleManager(IRoleStore<IdentityRole,string> roleStore)
+        public ApplicationRoleManager(IRoleStore<IdentityRole, string> roleStore)
             : base(roleStore)
         {
         }
@@ -103,15 +103,17 @@ namespace IdentitySample.Models
     // This is useful if you do not want to tear down the database each time you run the application.
     // public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
     // This example shows you how to create a new database if the Model changes
-    public class ApplicationDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext> 
+    public class ApplicationDbInitializer : DropCreateDatabaseIfModelChanges<ApplicationDbContext>
     {
-        protected override void Seed(ApplicationDbContext context) {
+        protected override void Seed(ApplicationDbContext context)
+        {
             InitializeIdentityForEF(context);
             base.Seed(context);
         }
 
         //Create User=Admin@Admin.com with password=Admin@123456 in the Admin role        
-        public static void InitializeIdentityForEF(ApplicationDbContext db) {
+        public static void InitializeIdentityForEF(ApplicationDbContext db)
+        {
             var userManager = HttpContext.Current.GetOwinContext().GetUserManager<ApplicationUserManager>();
             var roleManager = HttpContext.Current.GetOwinContext().Get<ApplicationRoleManager>();
             const string name = "admin@example.com";
@@ -120,13 +122,68 @@ namespace IdentitySample.Models
 
             //Create Role Admin if it does not exist
             var role = roleManager.FindByName(roleName);
-            if (role == null) {
+            if (role == null)
+            {
                 role = new IdentityRole(roleName);
                 var roleresult = roleManager.Create(role);
             }
+            var roleProduits = roleManager.FindByName("Produits");
+            if (roleProduits == null)
+            {
+                roleProduits = new IdentityRole("Produits");
+                var roleresult = roleManager.Create(roleProduits);
+            }
 
+            var roleVente = roleManager.FindByName("Ventes");
+            if (roleVente == null)
+            {
+                roleVente = new IdentityRole("Ventes");
+                var roleresult = roleManager.Create(roleVente);
+            }
+            var roleAchat = roleManager.FindByName("Achats");
+            if (roleAchat == null)
+            {
+                roleAchat = new IdentityRole("Achats");
+                var roleresult = roleManager.Create(roleAchat);
+            }
+
+            var roleCaisse = roleManager.FindByName("Caisses");
+            if (roleCaisse == null)
+            {
+                roleCaisse = new IdentityRole("Caisses");
+                var roleresult = roleManager.Create(roleCaisse);
+            }
+
+
+            var roleAbo = roleManager.FindByName("Abonnements");
+            if (roleAbo == null)
+            {
+                roleAbo = new IdentityRole("Abonnements");
+                var roleresult = roleManager.Create(roleAbo);
+            }
+
+            var roleLocations = roleManager.FindByName("Locations");
+            if (roleLocations == null)
+            {
+                roleLocations = new IdentityRole("Locations");
+                var roleresult = roleManager.Create(roleLocations);
+            }
+
+            var roleStock = roleManager.FindByName("Stocks");
+            if (roleStock == null)
+            {
+                roleStock = new IdentityRole("Stocks");
+                var roleresult = roleManager.Create(roleStock);
+            }
+            var roleForfaits = roleManager.FindByName("Forfaits");
+            if (roleForfaits == null)
+            {
+                roleForfaits = new IdentityRole("Forfaits");
+                var roleresult = roleManager.Create(roleForfaits);
+            }
             var user = userManager.FindByName(name);
-            if (user == null) {
+            if (user == null)
+            {
                 user = new ApplicationUser { UserName = name, Email = name };
                 var result = userManager.Create(user, password);
                 result = userManager.SetLockoutEnabled(user.Id, false);
@@ -134,7 +191,8 @@ namespace IdentitySample.Models
 
             // Add user admin to Role Admin if not already added
             var rolesForUser = userManager.GetRoles(user.Id);
-            if (!rolesForUser.Contains(role.Name)) {
+            if (!rolesForUser.Contains(role.Name))
+            {
                 var result = userManager.AddToRole(user.Id, role.Name);
             }
         }
@@ -142,8 +200,9 @@ namespace IdentitySample.Models
 
     public class ApplicationSignInManager : SignInManager<ApplicationUser, string>
     {
-        public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager) : 
-            base(userManager, authenticationManager) { }
+        public ApplicationSignInManager(ApplicationUserManager userManager, IAuthenticationManager authenticationManager) :
+            base(userManager, authenticationManager)
+        { }
 
         public override Task<ClaimsIdentity> CreateUserIdentityAsync(ApplicationUser user)
         {

@@ -10,7 +10,7 @@ using AssistVente.Models;
 
 namespace AssistVente.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,Forfaits")]
     public class ForfaitsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();

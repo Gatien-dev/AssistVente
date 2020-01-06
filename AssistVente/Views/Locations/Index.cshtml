@@ -64,9 +64,6 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Date)
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.UserId)
-                        </th>
                         </thead>
 
                         <tbody>
@@ -86,7 +83,13 @@
                                     @Html.DisplayFor(modelItem => item.DateArretLocation)
                                 </td>
                                 <td>
-                                    @Html.DisplayFor(modelItem => item.LocationRendue)
+                                    @if (item.LocationRendue)
+                                    {
+                                        @("OUI")
+                                    }else
+                                    {
+                                        @("NON")
+                                    }
                                 </td>
                                 <td>
                                     @Html.DisplayFor(modelItem => item.QuantitePrise)
@@ -100,9 +103,7 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Date)
                                 </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.UserId)
-                                </td>
+                               
                                 <td>
                                     @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
                                     @Html.ActionLink("Details", "Details", new { id = item.Id }) |

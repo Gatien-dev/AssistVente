@@ -11,7 +11,7 @@ using Microsoft.AspNet.Identity;
 
 namespace AssistVente.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,Produits")]
     public class ProduitsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();
@@ -97,6 +97,34 @@ namespace AssistVente.Controllers
             }
             return View(produit);
         }
+
+        public ActionResult Ajustement(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Produit produit = db.Produits.Find(id);
+            if (produit == null)
+            {
+                return HttpNotFound();
+            }
+            return View(produit);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Ajustement([Bind(Include = "ID,ecartStock")] Guid ID, double ecartStock)
+        {
+            if (ModelState.IsValid)
+            {
+                var produit = db.Produits.Find(ID);
+                new StockManager(db).AddStock(ID, -ecartStock, OperationType.Ajustement);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+                return RedirectToAction("Ajustement",new { id = ID });
+        }
+
 
         // GET: Produits/Delete/5
         public ActionResult Delete(Guid? id)

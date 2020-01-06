@@ -99,6 +99,8 @@
                                        
                                         <a href="@Url.Action("Details", new { id = item.ID })" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
                                         <a href="@Url.Action("Edit", new { id = item.ID })" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-edit"></i></a>
+                                        <a href="@Url.Action("Ajustement", new { id = item.ID })" style="margin-right:5px;" title="Ajuster le stock" class="btn btn-default"><i class="fas fa-wrench"></i></a>
+                                        <a href="@Url.Action("Index","stocklogs", new { id = item.ID })" style="margin-right:5px;" title="Historique du stock" class="btn btn-default"><i class="fas fa-history"></i></a>
                                         <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger"><span class="fas fa-remove"></span></a>
                                     </td>
                                 </tr>

@@ -25,10 +25,11 @@ namespace AssistVente.Models
         [DataType(DataType.Date)]
         public DateTime DateArretLocation { get; set; }
         //Indique si le stock alloue est rendu
+        [Display(Name ="Rendue")]
         public bool LocationRendue { get; set; }
-        [Display(Name ="Qte Prise")]
+        [Display(Name ="Quantité Prise")]
         public double QuantitePrise { get; set; }
-        [Display(Name ="Qte Rendue")]
+        [Display(Name = "Quantité Rendue")]
         public double QuantiteRendue { get; set; }
 
     }

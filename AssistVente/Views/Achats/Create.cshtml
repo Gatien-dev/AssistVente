@@ -1,4 +1,4 @@
-﻿@model AssistVente.Models.ViewModels.VenteVM
+﻿@model AssistVente.Models.ViewModels.AchatCreateVM
 
 @{
     ViewBag.Title = "Create";
@@ -9,26 +9,33 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Nouvelle vente</h4>
+        <h4 style="margin-top:0px;">Nouvel Achat</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
         <div class="form-group">
-            <label class="control-label col-md-2">Client</label>
+            <label class="control-label col-md-4">Fournisseur</label>
             <div class="col-md-6">
-                @Html.DropDownList("ClientId", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ClientId, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(Model=>Model.Fournisseur, null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Fournisseur, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-2">Montant payé</label>
+            @Html.LabelFor(model => model.NumFactureFournisseur, htmlAttributes: new { @class= "control-label col-md-4" })
+            <div class="col-md-6">
+                @Html.TextBoxFor(Model => Model.Fournisseur, null, htmlAttributes: new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Fournisseur, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-4">Montant payé</label>
             <div class="col-md-6">
                 @Html.TextBoxFor(model => Model.MontantPaye, htmlAttributes: new { @class = "form-control", @type = "number" })
                 @Html.ValidationMessageFor(model => model.MontantPaye, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group">
-            <label id="total_label" class="control-label col-md-2">Total: </label>
+            <label id="total_label" class="control-label col-md-4">Total: </label>
             <div class="col-md-6">
                 <input type="number" id="total_input" class="form-control text-align-right" value="0" disabled />
             </div>
