@@ -12,11 +12,11 @@ namespace AssistVente.Models
 
     public class StockManager
     {
-        AssistVenteContext db;
+        public AssistVenteContext db = new AssistVenteContext();
 
-        public StockManager(AssistVenteContext db)
+        public StockManager()
         {
-            db = new AssistVenteContext();
+            
         }
 
         public void AddStock(Guid ProdId, double Amount, OperationType type)

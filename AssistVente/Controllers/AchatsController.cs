@@ -11,6 +11,7 @@ namespace AssistVente.Controllers
     public class AchatsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();
+        private StockManager stockManager = new StockManager();
 
         // GET: Achats
         public ActionResult Index()
@@ -47,6 +48,75 @@ namespace AssistVente.Controllers
         public ActionResult Details()
         {
             return null;
+        }
+
+        // GET: Achats/Create
+        public ActionResult CreateAchat()
+        {
+            var achat = new Achat() { Details = new List<DetailAchat>() };
+
+            foreach (var produit in db.Produits.ToList())
+            {
+                achat.Details.Add(new DetailAchat() { 
+                    ProduitID = produit.ID,
+                    Produit = produit,
+                    QuantiteAchetee = 0
+                });
+            }
+            return View(achat);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateAchat(Achat achat)
+        {
+            if (ModelState.IsValid)
+            {
+                //Mettre a jour les infos vides et affecter le stock
+                achat.Id = Guid.NewGuid();
+                //achat.Date = null;
+                achat.Date = DateTime.Now;
+
+                foreach (var detail in achat.Details)
+                {
+                    if (detail.QuantiteAchetee > 0)
+                    {
+                        var produit = db.Produits.Find(detail.Produit.ID);
+
+                        detail.ID = Guid.NewGuid();
+                        detail.AchatId = achat.Id;
+                        detail.Achat = achat;
+                        detail.ProduitID = detail.Produit.ID;
+                        detail.Produit = produit;
+
+                        //db.DetailsAchat.Add(detail);
+                        //db.SaveChanges();
+
+                        stockManager.AddStock(produit.ID, detail.QuantiteAchetee, OperationType.Achat);
+                    }
+                }
+
+                db.Operations.Add(achat);
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            foreach (var detail in achat.Details)
+            {
+                detail.Produit = db.Produits.Find(detail.Produit.ID);
+            }
+
+            return View(achat);
+            
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                db.Dispose();
+            }
+            base.Dispose(disposing);
         }
     }
 }
