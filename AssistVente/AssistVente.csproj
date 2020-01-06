@@ -449,6 +449,7 @@
     <Content Include="Views\Caisses\Index.cshtml" />
     <Content Include="Views\Achats\Index.cshtml" />
     <Content Include="Views\Ventes\Reglement.cshtml" />
+    <Content Include="Views\Produits\Ajustement.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

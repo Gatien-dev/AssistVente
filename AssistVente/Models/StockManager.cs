@@ -7,7 +7,7 @@ namespace AssistVente.Models
 {
     public enum OperationType
     {
-        Achat, Vente, Location
+        Achat, Vente, Location, Ajustement
     }
 
     public class StockManager
@@ -16,28 +16,30 @@ namespace AssistVente.Models
 
         public StockManager(AssistVenteContext db)
         {
-            db = new AssistVenteContext();
+            this.db = db;
         }
 
         public void AddStock(Guid ProdId, double Amount, OperationType type)
         {
-            db.Produits.Find(ProdId).StockDisponible += Amount;
+            var allProduits = db.Produits.ToList();
+            db.Produits.First(p=>p.ID==ProdId).StockDisponible += Amount;
             //Log operation in stockHistory
-            db.StockLogs.Add(new StockLog() { Amount = Amount, Date = DateTime.Now, Id = Guid.NewGuid(), Type = type });
+            db.StockLogs.Add(new StockLog() { Amount = Amount,ProduitId=ProdId, Date = DateTime.Now, Id = Guid.NewGuid(), Type = type });
             db.SaveChanges();
         }
 
         public void RemoveStock(Guid ProdId, double Amount, OperationType type)
         {
-            db.Produits.Find(ProdId).StockDisponible -= Amount;
+            db.Produits.First(p=>p.ID==ProdId).StockDisponible -= Amount;
             //Log operation in stockHistory
-            db.StockLogs.Add(new StockLog() { Amount = -Amount, Date = DateTime.Now, Id = Guid.NewGuid(), Type = type });
+            db.StockLogs.Add(new StockLog() { Amount = -Amount,ProduitId=ProdId, Date = DateTime.Now, Id = Guid.NewGuid(), Type = type });
             db.SaveChanges();
         }
     }
     public class StockLog
     {
         public Guid Id { get; set; }
+        public Guid ProduitId { get; set; }
         public OperationType Type { get; set; }
         public double Amount { get; set; }
         public DateTime Date { get; set; }
