@@ -14,8 +14,12 @@ namespace AssistVente.Controllers
     public class AchatsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();
-        private StockManager stockManager = new StockManager();
+        private StockManager stockManager;
 
+        public AchatsController()
+        {
+            stockManager = new StockManager(db);
+        }
         // GET: Achats
         public ActionResult Index()
         {
@@ -79,7 +83,7 @@ namespace AssistVente.Controllers
                     Details = new List<DetailAchat>(),
                     Fournisseur = achat.Fournisseur,
                     Date = DateTime.Now,
-                    NumFacture=achat.NumFactureFournisseur,
+                    NumFacture = achat.NumFactureFournisseur,
                     Id = Guid.NewGuid(),
                     UserId = User.Identity.GetUserId()
                 };
@@ -105,7 +109,7 @@ namespace AssistVente.Controllers
 
                 return RedirectToAction("Index");
             }
-            
+
             return View(achat);
         }
 
@@ -116,7 +120,8 @@ namespace AssistVente.Controllers
 
             foreach (var produit in db.Produits.ToList())
             {
-                achat.Details.Add(new DetailAchat() { 
+                achat.Details.Add(new DetailAchat()
+                {
                     ProduitID = produit.ID,
                     Produit = produit,
                     QuantiteAchetee = 0
@@ -166,7 +171,7 @@ namespace AssistVente.Controllers
             }
 
             return View(achat);
-            
+
         }
 
         protected override void Dispose(bool disposing)

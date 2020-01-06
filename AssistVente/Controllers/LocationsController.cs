@@ -42,6 +42,7 @@ namespace AssistVente.Controllers
         public ActionResult Create()
         {
             ViewBag.ProduitId = new SelectList(db.Produits, "ID", "Nom");
+            ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom");
             return View();
         }
 
@@ -50,7 +51,7 @@ namespace AssistVente.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ProduitId,DateLocation,DateFinLocation,DateSuspensionLocation,DateArretLocation,LocationRendue,QuantitePrise,QuantiteRendue,Montant,Date,UserId")] Location location)
+        public ActionResult Create([Bind(Include = "Id,ProduitId,ClientId,DateLocation,DateFinLocation,DateSuspensionLocation,DateArretLocation,LocationRendue,QuantitePrise,QuantiteRendue,Montant,Date,UserId")] Location location)
         {
             if (ModelState.IsValid)
             {
@@ -111,6 +112,35 @@ namespace AssistVente.Controllers
             ViewBag.ProduitId = new SelectList(db.Produits, "ID", "Nom", location.ProduitId);
             return View(location);
         }
+        public ActionResult Rendre(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Location location = (Location)db.Operations.Find(id);
+            if (location == null)
+            {
+                return HttpNotFound();
+            }
+            return View(location);
+        }
+        [HttpPost, ActionName("Rendre")]
+        [ValidateAntiForgeryToken]
+        public ActionResult RendreConfirmed(Guid id,double qteRendue)
+        {
+            Location location = (Location)db.Operations.Find(id);
+            if (qteRendue >= location.QuantitePrise - location.QuantiteRendue)
+            {
+                location.LocationRendue = true;
+            }
+            location.QuantiteRendue += qteRendue;
+            //Restitution du stock qui a ete pris
+            new StockManager(db).AddStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
+            
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
 
         // GET: Locations/Delete/5
         public ActionResult Delete(Guid? id)
@@ -134,6 +164,7 @@ namespace AssistVente.Controllers
         {
             Location location = (Location)db.Operations.Find(id);
             //Restitution du stock qui a ete pris
+            if(!location.LocationRendue)
             new StockManager(db).AddStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
             db.Operations.Remove(location);
             db.SaveChanges();
