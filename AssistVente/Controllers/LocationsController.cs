@@ -15,7 +15,7 @@ namespace AssistVente.Controllers
     public class LocationsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();
-
+        //TODO: Rendre les locations et reglement des locations
         // GET: Locations
         public ActionResult Index()
         {
