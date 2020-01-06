@@ -17,11 +17,9 @@ namespace AssistVente.Models
     public class DetailAchat
     {
         public Guid ID { get; set; }
-        [ForeignKey("Achat")]
         public Guid AchatId { get; set; }
         public virtual Achat Achat { get; set; }
-        [ForeignKey("Produit")]
-        public Guid ProduitID { get; set; }
+        public Guid? ProduitID { get; set; }
         public virtual Produit Produit { get; set; }
         public double PrixAchat { get; set; }
         public double QuantiteAchetee { get; set; }

@@ -19,7 +19,7 @@ namespace AssistVente.Models
     public class DetailVente
     {
         public Guid ID { get; set; }
-        public Guid VenteId { get; set; }
+        public Guid? VenteId { get; set; }
         public virtual Vente Vente { get; set; }
         public Guid ProduitID { get; set; }
         public virtual Produit Produit { get; set; }

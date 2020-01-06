@@ -1,0 +1,90 @@
+﻿@model AssistVente.Models.Achat
+@{
+    ViewBag.Title = "Create";
+}
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <h4>Nouvel achat</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-md-6">Numéro facture</label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => Model.NumFacture, htmlAttributes: new { @class = "form-control", @type = "text" })
+                        @Html.ValidationMessageFor(model => model.NumFacture, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-md-6">Fournisseur</label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => Model.Fournisseur, htmlAttributes: new { @class = "form-control", @type = "text" })
+                        @Html.ValidationMessageFor(model => model.Fournisseur, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label col-md-6">Date</label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => Model.Date, htmlAttributes: new { @class = "form-control text-center", @type = "date" })
+                        @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+                @*@Html.HiddenFor(model => Model.Date)*@
+                <div class="form-group">
+                    <label class="control-label col-md-6">Montant</label>
+                    <div class="col-md-6">
+                        @Html.TextBoxFor(model => Model.Montant, htmlAttributes: new { @class = "form-control datetimepicker text-align-right", @type = "number" })
+                        @Html.ValidationMessageFor(model => model.Montant, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-condensed table-bordered col-md-12">
+                <thead>
+                <th>Produit</th>
+                <th class="text-align-right">Quantite</th>
+                <th class="text-align-right">Prix d'achat</th>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Details.Count; i++)
+                    {
+                        <tr>
+                            <td>@Model.Details[i].Produit.Nom</td>
+                            @Html.HiddenFor(model => Model.Details[i].Produit.ID)
+                            <td>@Html.TextBoxFor(model => Model.Details[i].QuantiteAchetee, htmlAttributes: new { @class = "form-control text-align-right qtefield", @type = "number", @onblur = "updatetotal" })</td>
+                            <td>@Html.TextBoxFor(model => Model.Details[i].PrixAchat, htmlAttributes: new { @class = "form-control text-align-right", @type = "number" })</td>
+                        </tr>
+                    }
+                </tbody>
+
+            </table>
+        </div>
+
+        <div style="margin-bottom:30px;">
+            <div class="col-md-5 pull-right">
+                <input type="submit" class="btn btn-primary" value="Enregistrer" />
+                <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+            </div>
+        </div>
+
+    </div>
+
+}
+
+@*datetimepicker*@
+@*, @type = "datetime"*@
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+}
+
