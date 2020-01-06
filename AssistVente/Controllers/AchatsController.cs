@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace AssistVente.Controllers
 {
+    [Authorize(Roles = "Admin,Achats")]
     public class AchatsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();

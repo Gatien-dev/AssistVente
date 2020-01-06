@@ -12,7 +12,7 @@ using Microsoft.AspNet.Identity;
 
 namespace AssistVente.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Admin,Ventes")]
     public class VentesController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();

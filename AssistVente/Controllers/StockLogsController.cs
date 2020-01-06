@@ -14,7 +14,7 @@ namespace AssistVente.Controllers
     public class StockLogsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();
-
+        [Authorize(Roles ="Admin,Stocks")]
         // GET: StockLogs
         public ActionResult Index(Guid id)
         {

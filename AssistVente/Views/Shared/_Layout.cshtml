@@ -34,7 +34,7 @@
             <div class="sidebar-wrapper">
                 <div class="logo">
                     <a href="javascript:;" class="simple-text">
-                        AssistVente
+                        Assist-Vente
                     </a>
                 </div>
                 <ul class="nav">
@@ -44,29 +44,35 @@
                             <p>Nouvelle Vente</p>
                         </a>
                     </li>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="@Url.Action("Create","Achats")">
+                            <i class="nc-icon nc-icon nc-paper-2"></i>
+                            <p>Nouvel Achat</p>
+                        </a>
+                    </li>
                     <li>
                         <a class="nav-link" href="@Url.Action("Index","Produits")">
-                            <i class="nc-icon nc-bullet-list-67"></i>
+                            <i class="fa fa-shopping-bag"></i>
                             <p>Produits</p>
                         </a>
                     </li>
 
                     <li>
                         <a class="nav-link" href="@Url.Action("Index","Forfaits")">
-                            <i class="nc-icon nc-bullet-list-67"></i>
+                            <i class="fa fa-building"></i>
                             <p>Forfaits</p>
                         </a>
                     </li>
                     <li>
                         <a class="nav-link" href="@Url.Action("Index","Locations")">
-                            <i class="nc-icon nc-bullet-list-67"></i>
+                            <i class="fa fa-calendar-check"></i>
                             <p>Locations</p>
                         </a>
                     </li>
 
                     <li>
                         <a class="nav-link" href="@Url.Action("Index","Caisses")">
-                            <i class="nc-icon nc-bullet-list-67"></i>
+                            <i class="fa fa-money-bill"></i>
                             <p>Caisses</p>
                         </a>
                     </li>
@@ -98,13 +104,13 @@
                     </button>
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
                         <ul class="nav navbar-nav mr-auto">
-                            <li class="nav-item">
+                            @*<li class="nav-item">
                                 <a href="#" class="nav-link" data-toggle="dropdown">
                                     <i class="nc-icon nc-palette"></i>
                                     <span class="d-lg-none">Dashboard</span>
                                 </a>
-                            </li>
-                            <li class="dropdown nav-item">
+                            </li>*@
+                            @*<li class="dropdown nav-item">
                                 <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                                     <i class="nc-icon nc-planet"></i>
                                     <span class="notification">5</span>
@@ -117,17 +123,17 @@
                                     <a class="dropdown-item" href="#">Notification 4</a>
                                     <a class="dropdown-item" href="#">Another notification</a>
                                 </ul>
-                            </li>
-                            <li class="nav-item">
+                            </li>*@
+                            @*<li class="nav-item">
                                 <a href="#" class="nav-link">
                                     <i class="nc-icon nc-zoom-split"></i>
                                     <span class="d-lg-block">&nbsp;Search</span>
                                 </a>
-                            </li>
+                            </li>*@
                         </ul>
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
-                                <a class="nav-link" href="#pablo">
+                                <a class="nav-link" href="@Url.Action("index","Manage")">
                                     <span class="no-icon">Mon compte</span>
                                 </a>
                             </li>
@@ -151,15 +157,15 @@
                             }
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    <span class="no-icon">Paramétrage</span>
+                                    <span class="no-icon">Configuration</span>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                     <a class="dropdown-item" href="@Url.Action("Index","Produits")">Produits</a>
                                     <a class="dropdown-item" href="@Url.Action("Index","Caisses")">Caisses</a>
                                     <a class="dropdown-item" href="@Url.Action("Index","Stock")">Stock</a>
-                                    <a class="dropdown-item" href="@Url.Action("Index","Parametres")">Paramètres</a>
-                                    <div class="divider"></div>
-                                    <a class="dropdown-item" href="#">Separated link</a>
+                                    @*<a class="dropdown-item" href="@Url.Action("Index","Parametres")">Paramètres</a>*@
+                                    @*<div class="divider"></div>
+                                    <a class="dropdown-item" href="#">Separated link</a>*@
                                 </div>
                             </li>
                             <li class="nav-item">
