@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -11,7 +12,7 @@ namespace AssistVente.Models
         public Guid Id { get; set; }
         [DisplayFormat(DataFormatString = "{0:### ### ### ### ### ###}")]
         public double Montant { get; set; }
-        [DataType(DataType.Date)]
+        [Column(TypeName = "datetime2")]
         [Display(Name ="Date d'enregistrement")]
         public DateTime Date { get; set; }
         public string UserId { get; set; }

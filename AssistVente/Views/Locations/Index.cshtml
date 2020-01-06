@@ -51,7 +51,7 @@
                             @Html.DisplayNameFor(model => model.DateArretLocation)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.LocationRendue)
+                            Etat
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.QuantitePrise)
@@ -89,11 +89,27 @@
                                     <td>
                                         @if (item.LocationRendue)
                                         {
-                                            <span class="badge badge-success">RENDUE</span>
+                                            <span class="badge badge-success">RENDU</span>
                                         }
                                         else
                                         {
-                                            <span class="badge badge-danger">NON RENDUE</span>
+                                            <span class="badge badge-danger">NON RENDU</span>
+                                            if ((item.DateFinLocation - DateTime.Now).TotalDays < -1)
+                                            {
+                                                <span class="badge badge-danger">Expiré</span>
+                                            }
+                                            else if ((item.DateFinLocation - DateTime.Now).TotalDays < 0)
+                                            {
+                                                <span class="badge badge-warning">Expire aujourd'hui</span>
+                                            }
+                                            else if ((item.DateFinLocation - DateTime.Now).TotalDays < 1)
+                                            {
+                                                <span class="badge badge-warning">Expire demain</span>
+                                            }
+                                        }
+                                        @if (item.Montant <= item.MontantPaye)
+                                        {
+                                            <span class="badge badge-success">Payé</span>
                                         }
                                     </td>
                                     <td>
@@ -111,8 +127,8 @@
 
                                     <td>
 
-                                        <a href="@Url.Action("Rendre", new { id = item.Id })" title="Restituer la location" style="margin-right:5px;" class="btn btn-primary @if (item.LocationRendue) { @("disabled")} "><i class="fas fa-calendar-check"></i></a>
-<a href="@Url.Action("reglement", new { id = item.Id })" title="Payer la location" style="margin-right:5px;" class="btn btn-default"><span class="fas fa-money"></span></a>
+                                        <a href="@Url.Action("Rendre", new { id = item.Id })" title="Restituer la location" style="margin-right:5px;" class="btn btn-primary @if (item.LocationRendue) { @("disabled")} "><i class="fas fa-arrow-alt-circle-down"></i></a>
+<a href="@Url.Action("reglement", new { id = item.Id })" title="Payer la location" style="margin-right:5px;" class="btn btn-default @if (item.Montant<=item.MontantPaye) { @("disabled")}"><span class="fas fa-money"></span></a>
                                         <a href="@Url.Action("Details", new { id = item.Id })" title="Détails de la location" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
                                         <a href="@Url.Action("Delete", new { id = item.Id })" title="Supprimer la location" class="btn btn-danger"><span class="fas fa-remove"></span></a>
                                     </td>

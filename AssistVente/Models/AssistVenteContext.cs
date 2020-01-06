@@ -17,6 +17,7 @@ namespace AssistVente.Models
                 Operations = new List<Operation>(),
                 Solde = 0
             });
+            context.SaveChanges();
             base.Seed(context);
         }
     }

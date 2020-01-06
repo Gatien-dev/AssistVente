@@ -41,7 +41,7 @@ namespace AssistVente.Controllers
         // GET: Locations/Create
         public ActionResult Create()
         {
-            ViewBag.ProduitId = new SelectList(db.Produits, "ID", "Nom");
+            ViewBag.ProduitId = new SelectList(db.Produits.Where(p => p.ALouer), "ID", "Nom");
             ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom");
             return View();
         }
@@ -51,7 +51,7 @@ namespace AssistVente.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ProduitId,ClientId,DateLocation,DateFinLocation,DateSuspensionLocation,DateArretLocation,LocationRendue,QuantitePrise,QuantiteRendue,Montant,Date,UserId")] Location location)
+        public ActionResult Create([Bind(Include = "Id,ProduitId,ClientId,DateLocation,DateFinLocation,MontantPaye,DateSuspensionLocation,DateArretLocation,LocationRendue,QuantitePrise,QuantiteRendue,Montant,Date,UserId")] Location location)
         {
             if (ModelState.IsValid)
             {
@@ -70,7 +70,11 @@ namespace AssistVente.Controllers
                 location.LocationRendue = false;
                 location.UserId = User.Identity.GetUserId();
                 location.QuantiteRendue = 0;
-
+                location.MontantRestant = location.Montant - location.MontantPaye;
+                if (location.MontantRestant < 0)
+                {
+                    location.MontantRestant = 0;
+                }
                 db.Operations.Add(location);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -79,6 +83,7 @@ namespace AssistVente.Controllers
             ViewBag.ProduitId = new SelectList(db.Produits, "ID", "Nom", location.ProduitId);
             return View(location);
         }
+
 
         // GET: Locations/Edit/5
         public ActionResult Edit(Guid? id)
@@ -127,7 +132,7 @@ namespace AssistVente.Controllers
         }
         [HttpPost, ActionName("Rendre")]
         [ValidateAntiForgeryToken]
-        public ActionResult RendreConfirmed(Guid id,double qteRendue)
+        public ActionResult RendreConfirmed(Guid id, double qteRendue)
         {
             Location location = (Location)db.Operations.Find(id);
             if (qteRendue >= location.QuantitePrise - location.QuantiteRendue)
@@ -137,11 +142,44 @@ namespace AssistVente.Controllers
             location.QuantiteRendue += qteRendue;
             //Restitution du stock qui a ete pris
             new StockManager(db).AddStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
-            
+
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult Reglement(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Location location = (Location)db.Operations.Find(id);
+            if (location == null)
+            {
+                return HttpNotFound();
+            }
+            return View(location);
+        }
+        [HttpPost, ActionName("Reglement")]
+        [ValidateAntiForgeryToken]
+        public ActionResult ReglementConfirmed(Guid id, double montantPaye)
+        {
+            Location location = (Location)db.Operations.Find(id);
+            location.MontantPaye += montantPaye;
+            if (location.MontantPaye > location.Montant)
+            {
 
+                location.MontantPaye = location.Montant;
+            }
+            location.MontantRestant = location.Montant - location.MontantPaye;
+            if (location.MontantRestant < 0)
+            {
+                location.MontantRestant = 0;
+            }
+            new CaisseManager(db).reglerLocation(montantPaye, location, montantPaye);
+
+            db.SaveChanges();
+            return RedirectToAction("Index");
+        }
         // GET: Locations/Delete/5
         public ActionResult Delete(Guid? id)
         {
@@ -164,8 +202,8 @@ namespace AssistVente.Controllers
         {
             Location location = (Location)db.Operations.Find(id);
             //Restitution du stock qui a ete pris
-            if(!location.LocationRendue)
-            new StockManager(db).AddStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
+            if (!location.LocationRendue)
+                new StockManager(db).AddStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
             db.Operations.Remove(location);
             db.SaveChanges();
             return RedirectToAction("Index");

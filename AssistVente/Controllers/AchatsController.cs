@@ -160,7 +160,7 @@ namespace AssistVente.Controllers
                     }
                 }
 
-                db.Operations.Add(achat);
+                //db.Operations.Add(achat);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
