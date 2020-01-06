@@ -39,6 +39,7 @@ namespace AssistVente.Controllers
             }
             return View(vente);
         }
+
         public ActionResult Confirmer(Guid? id)
         {
             if (id == null)
@@ -52,6 +53,7 @@ namespace AssistVente.Controllers
             }
             return View(vente);
         }
+
         // GET: Ventes/Create
         public ActionResult Create()
         {
@@ -84,7 +86,7 @@ namespace AssistVente.Controllers
         {
             if (ModelState.IsValid)
             {
-                StockManager stockManager = new StockManager();
+                StockManager stockManager = new StockManager(db);
                 Vente newVente = new Vente()
                 {
                     Details = new List<DetailVente>(),
@@ -173,6 +175,7 @@ namespace AssistVente.Controllers
 
             return View(vente);
         }
+
         public ActionResult Reglement(Guid? id)
         {
             if (id == null)
@@ -186,6 +189,7 @@ namespace AssistVente.Controllers
             }
             return View(vente);
         }
+
         [HttpPost, ActionName("Reglement")]
         [ValidateAntiForgeryToken]
         public ActionResult ReglementConfirmed(Guid id, double mtRegle)
@@ -195,12 +199,13 @@ namespace AssistVente.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
         // POST: Ventes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            StockManager manager = new StockManager();
+            StockManager manager = new StockManager(db);
             Vente vente = db.Operations.OfType<Vente>().Include(v => v.Details).FirstOrDefault(o => o.Id == id);
             foreach (var detail in vente.Details)
             {

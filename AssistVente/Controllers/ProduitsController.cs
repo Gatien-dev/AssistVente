@@ -118,7 +118,7 @@ namespace AssistVente.Controllers
             if (ModelState.IsValid)
             {
                 var produit = db.Produits.Find(ID);
-                new StockManager().AddStock(ID, -ecartStock, OperationType.Ajustement);
+                new StockManager(db).AddStock(ID, -ecartStock, OperationType.Ajustement);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }

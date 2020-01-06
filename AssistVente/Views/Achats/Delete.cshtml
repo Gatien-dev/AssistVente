@@ -1,0 +1,60 @@
+﻿@model AssistVente.Models.Achat
+@{
+    ViewBag.Title = "Delete";
+}
+
+    <div class="card strpied-tabled-with-hover">
+        <div class="card-header ">
+            <h4 class="card-title " style="color : #bb2124"><b>Voulez-vous supprimer la facture "@Model.NumFacture"</b></h4>
+
+            <p class="card-category  pull-left">Confirmer la suppression d'une facture</p>
+        </div>
+
+        <div class="card-body table-full-width table-responsive">
+            <div class="row">
+                <div class="col-md-6">
+                    <table class="table table-hover table-striped">
+                        <tr>
+                            <td><b>Fourniseur</b></td>
+                            <td>
+                                @Html.DisplayFor(model => model.Fournisseur)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Date</b></td>
+                            <td>
+                                @Html.DisplayFor(model => model.Date)
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+                <div class="col-md-6">
+                    <table class="table table-hover table-striped">
+                        <tr>
+                            <td><b>Numéro facture</b></td>
+                            <td>
+                                @Html.DisplayFor(model => model.NumFacture)
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><b>Montant</b></td>
+                            <td>
+                                @Html.DisplayFor(model => model.Montant)
+                            </td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+
+                <div class="form-actions no-color pull-right">
+                    <input type="submit" value="Oui, supprimer" class="btn btn-danger" /> |
+                    <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+                </div>
+            }
+        </div>
+        
+    </div>

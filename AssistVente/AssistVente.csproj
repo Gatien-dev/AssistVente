@@ -452,16 +452,18 @@
     <Content Include="Views\Caisses\Index.cshtml" />
     <Content Include="Views\Achats\Index.cshtml" />
     <Content Include="Views\Ventes\Reglement.cshtml" />
-    <Content Include="Views\Achats\CreateAchat.cshtml" />
+    <Content Include="Views\Achats\Create.cshtml" />
     <Content Include="Views\Produits\Ajustement.cshtml" />
     <Content Include="Views\StockLogs\Create.cshtml" />
     <Content Include="Views\StockLogs\Delete.cshtml" />
     <Content Include="Views\StockLogs\Details.cshtml" />
     <Content Include="Views\StockLogs\Edit.cshtml" />
     <Content Include="Views\StockLogs\Index.cshtml" />
-    <Content Include="Views\Achats\Create.cshtml" />
+    <Content Include="Views\Achats\CreateAchat.cshtml" />
     <Content Include="Views\Ventes\Confirmer.cshtml" />
     <Content Include="Views\Locations\Rendre.cshtml" />
+    <Content Include="Views\Achats\Details.cshtml" />
+    <Content Include="Views\Achats\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

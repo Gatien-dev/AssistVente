@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
@@ -21,6 +22,7 @@ namespace AssistVente.Controllers
             stockManager = new StockManager(db);
         }
         // GET: Achats
+        //TODO : Ajouter les datatables bootstrap
         public ActionResult Index()
         {
             var achats = db.Operations.OfType<Achat>().ToList();
@@ -52,7 +54,7 @@ namespace AssistVente.Controllers
             //}
         }
 
-        public ActionResult Create()
+        public ActionResult CreateAchat()
         {
             var achatVM = new AchatCreateVM()
             {
@@ -65,7 +67,7 @@ namespace AssistVente.Controllers
                 {
                     NomProduit = produit.Nom,
                     ProduitId = produit.ID,
-                    PU = produit.PrixAchat,
+                    //PU = produit.PrixAchat,
                     Quantite = 0
                 });
             }
@@ -74,7 +76,7 @@ namespace AssistVente.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(AchatCreateVM achat)
+        public ActionResult CreateAchat(AchatCreateVM achat)
         {
             if (ModelState.IsValid)
             {
@@ -114,47 +116,59 @@ namespace AssistVente.Controllers
         }
 
         // GET: Achats/Create
-        public ActionResult CreateAchat()
+        public ActionResult Create()
         {
-            var achat = new Achat() { Details = new List<DetailAchat>() };
+            var achatVM = new AchatCreateVM() { Details = new List<DetailAchatVM>() };
 
             foreach (var produit in db.Produits.ToList())
             {
-                achat.Details.Add(new DetailAchat()
+                achatVM.Details.Add(new DetailAchatVM()
                 {
-                    ProduitID = produit.ID,
-                    Produit = produit,
-                    QuantiteAchetee = 0
+                    NomProduit = produit.Nom,
+                    ProduitId = produit.ID,
+                    Prix = 0,
+                    Quantite = 0
                 });
             }
-            return View(achat);
+            return View(achatVM);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateAchat(Achat achat)
+        public ActionResult Create(AchatCreateVM achatVM)
         {
             if (ModelState.IsValid)
             {
                 //Mettre a jour les infos vides et affecter le stock
-                achat.Id = Guid.NewGuid();
-                //achat.Date = null;
-                achat.Date = DateTime.Now;
 
-                foreach (var detail in achat.Details)
+                var achat = new Achat()
                 {
-                    if (detail.QuantiteAchetee > 0)
+                    Id = Guid.NewGuid(),
+                    Montant = achatVM.MontantPaye,
+                    Date = DateTime.Now,
+                    Fournisseur = achatVM.Fournisseur,
+                    NumFacture = achatVM.NumFactureFournisseur,
+                    Details = new List<DetailAchat>(),
+                    UserId = User.Identity.GetUserId()
+                };
+
+                foreach (var detailVM in achatVM.Details)
+                {
+                    if (detailVM.Quantite > 0)
                     {
-                        var produit = db.Produits.Find(detail.Produit.ID);
+                        var produit = db.Produits.Find(detailVM.ProduitId);
 
-                        detail.ID = Guid.NewGuid();
-                        detail.AchatId = achat.Id;
-                        detail.Achat = achat;
-                        detail.ProduitID = detail.Produit.ID;
-                        detail.Produit = produit;
+                        var detail = new DetailAchat()
+                        {
+                            ID = Guid.NewGuid(),
+                            AchatId = achat.Id,
+                            ProduitID = produit.ID,
+                            Produit = produit,
+                            PrixAchat = detailVM.Prix,
+                            QuantiteAchetee = detailVM.Quantite
+                        };
 
-                        //db.DetailsAchat.Add(detail);
-                        //db.SaveChanges();
+                        achat.Details.Add(detail);
 
                         stockManager.AddStock(produit.ID, detail.QuantiteAchetee, OperationType.Achat);
                     }
@@ -165,13 +179,52 @@ namespace AssistVente.Controllers
                 return RedirectToAction("Index");
             }
 
-            foreach (var detail in achat.Details)
+            return View(achatVM);
+
+        }
+
+        public ActionResult Details(Guid id)
+        {
+            if (id == null)
             {
-                detail.Produit = db.Produits.Find(detail.Produit.ID);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Achat achat = db.Operations.OfType<Achat>().Include(a => a.Details).First(a => a.Id == id);
+            if (achat == null)
+            {
+                return HttpNotFound();
+            }
+            return View(achat);
+        }
+
+        public ActionResult Delete (Guid id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            Achat achat = db.Operations.OfType<Achat>().Include(a => a.Details).First(a => a.Id == id);
+            if (achat == null)
+            {
+                return HttpNotFound();
             }
 
             return View(achat);
+        }
 
+        [HttpPost, ActionName("Delete")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(Guid id)
+        {
+            Achat achat = db.Operations.OfType<Achat>().Include(a => a.Details).FirstOrDefault(a => a.Id == id);
+            foreach (var detail in achat.Details)
+            {
+                stockManager.RemoveStock(detail.Produit.ID, detail.QuantiteAchetee, OperationType.Vente);
+            }
+            db.Operations.Remove(achat);
+            db.SaveChanges();
+            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

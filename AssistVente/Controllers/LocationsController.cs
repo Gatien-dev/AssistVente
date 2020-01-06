@@ -64,7 +64,7 @@ namespace AssistVente.Controllers
                     ViewBag.ProduitId = new SelectList(db.Produits, "ID", "Nom", location.ProduitId);
                     return View(location);
                 }
-                new StockManager().RemoveStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
+                new StockManager(db).RemoveStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
                 location.Date = DateTime.Now;
                 location.DateArretLocation = location.DateFinLocation;
                 location.LocationRendue = false;

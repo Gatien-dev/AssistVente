@@ -11,8 +11,8 @@ namespace AssistVente.Models
         public Guid Id { get; set; }
         [DisplayFormat(DataFormatString = "{0:### ### ### ### ### ###}")]
         public double Montant { get; set; }
-        [DataType(DataType.Date)]
-        [Display(Name ="Date d'enregistrement")]
+        //[DataType(DataType.Date)]
+        //[Display(Name ="Date d'enregistrement")]
         public DateTime Date { get; set; }
         public string UserId { get; set; }
         public Guid? ClientId { get; set; }
