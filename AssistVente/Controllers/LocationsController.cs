@@ -19,7 +19,7 @@ namespace AssistVente.Controllers
         // GET: Locations
         public ActionResult Index()
         {
-            var locations = db.Operations.OfType<Location>().Include(l => l.Produit);
+            var locations = db.Operations.OfType<Location>().Include(l => l.Produit).OrderByDescending(l => l.LocationRendue).OrderByDescending(l => l.Date);
             return View(locations.ToList());
         }
 
@@ -56,6 +56,20 @@ namespace AssistVente.Controllers
             {
                 location.Id = Guid.NewGuid();
                 location.UserId = User.Identity.GetUserId();
+                var produit = db.Produits.Find(location.ProduitId);
+                if (produit == null || produit.StockDisponible < location.QuantitePrise)
+                {
+                    ModelState.AddModelError("QuantitePrise", "La quantité de produit à louer n'est pas disponible");
+                    ViewBag.ProduitId = new SelectList(db.Produits, "ID", "Nom", location.ProduitId);
+                    return View(location);
+                }
+                new StockManager(db).RemoveStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
+                location.Date = DateTime.Now;
+                location.DateArretLocation = location.DateFinLocation;
+                location.LocationRendue = false;
+                location.UserId = User.Identity.GetUserId();
+                location.QuantiteRendue = 0;
+
                 db.Operations.Add(location);
                 db.SaveChanges();
                 return RedirectToAction("Index");
@@ -119,6 +133,8 @@ namespace AssistVente.Controllers
         public ActionResult DeleteConfirmed(Guid id)
         {
             Location location = (Location)db.Operations.Find(id);
+            //Restitution du stock qui a ete pris
+            new StockManager(db).AddStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
             db.Operations.Remove(location);
             db.SaveChanges();
             return RedirectToAction("Index");

@@ -72,6 +72,7 @@ namespace AssistVente.Controllers
         {
             if (ModelState.IsValid)
             {
+                StockManager stockManager = new StockManager(db);
                 Vente newVente = new Vente()
                 {
                     Details = new List<DetailVente>(),
@@ -93,6 +94,7 @@ namespace AssistVente.Controllers
                             ProduitID = detail.ProduitId,
                             ID = Guid.NewGuid()
                         });
+                    stockManager.RemoveStock(detail.ProduitId, detail.Quantite, OperationType.Vente);
                     total += detail.Quantite * db.Produits.Find(detail.ProduitId).PrixVente;
                 }
                 newVente.Montant = total;
@@ -101,7 +103,6 @@ namespace AssistVente.Controllers
                 db.Operations.Add(newVente);
                 db.SaveChanges();
                 new CaisseManager(db).reglerVente(vente.MontantPaye, newVente);
-
                 return RedirectToAction("Index");
             }
 
@@ -149,11 +150,13 @@ namespace AssistVente.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vente vente = (Vente)db.Operations.Find(id);
+
+            Vente vente = db.Operations.OfType<Vente>().Include(v => v.Details).FirstOrDefault(o => o.Id == id);
             if (vente == null)
             {
                 return HttpNotFound();
             }
+
             return View(vente);
         }
         public ActionResult Reglement(Guid? id)
@@ -183,7 +186,12 @@ namespace AssistVente.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Vente vente = (Vente)db.Operations.Find(id);
+            StockManager manager = new StockManager(db);
+            Vente vente = db.Operations.OfType<Vente>().Include(v => v.Details).FirstOrDefault(o => o.Id == id);
+            foreach (var detail in vente.Details)
+            {
+                manager.AddStock(detail.ProduitID, detail.QuantiteVendue, OperationType.Vente);
+            }
             db.Operations.Remove(vente);
             db.SaveChanges();
             return RedirectToAction("Index");
