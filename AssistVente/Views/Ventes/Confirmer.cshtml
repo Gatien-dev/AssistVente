@@ -1,0 +1,84 @@
+﻿@model AssistVente.Models.Vente
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<h4>Confirmation de la vente</h4>
+<div class="row">
+    <hr />
+    <div class="col-md-6">
+        <h4>Informations générales</h4>
+        <dl class="dl-horizontal">
+            <dt>
+                Client
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Client.Nom)
+            </dd>
+
+            <dt>
+                Montant total de la vente
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Montant)
+            </dd>
+
+            <dt>
+                Date
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Date)
+            </dd>
+
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MontantRegle)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MontantRegle)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.MontantRestant)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.MontantRestant)
+            </dd>
+
+        </dl>
+    </div>
+    <div class="col-md-6">
+
+        <h4>Produits Vendus</h4>
+        <table class="table table-condensed table-hover">
+            <thead>
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th>total</th>
+            </thead>
+            <tbody>
+                @foreach (var detail in Model.Details)
+                {
+                    <tr>
+                        <td>@detail.Produit.Nom.ToString()</td>
+                        <td>@detail.QuantiteVendue.ToString()</td>
+                        <td>@(detail.QuantiteVendue * @detail.Produit.PrixVente)</td>
+
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
+<p class="pull-right">
+    <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-primary"><i class="fa fa-check"></i> Oui, la vente est conforme</a>
+    <a href="@Url.Action("Delete", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-danger"><i class="fas fa-remove"></i> Non, supprimer la vente</a>
+</p>

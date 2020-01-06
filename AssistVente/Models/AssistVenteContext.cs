@@ -34,8 +34,8 @@ namespace AssistVente.Models
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            //Write Fluent API configurations here
-            //modelBuilder.Entity<Client>().HasMany(c=>c.Adresse)
+            modelBuilder.Entity<Produit>().HasMany(p => p.DetailsAchat).WithRequired(d => d.Produit).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Produit>().HasMany(p => p.DetailsVente).WithRequired(d => d.Produit).WillCascadeOnDelete(false);
         }
 
         public System.Data.Entity.DbSet<AssistVente.Models.Produit> Produits { get; set; }

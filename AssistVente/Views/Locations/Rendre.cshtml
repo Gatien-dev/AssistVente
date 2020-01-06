@@ -1,0 +1,102 @@
+﻿@model AssistVente.Models.Location
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div class="card container">
+    <h4>Rendre la location du produit @Model.Produit.Nom</h4>
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="card-body  table-responsive">
+            <table class="table table-hover table-striped">
+                <tbody>
+                    <tr>
+                        <td><b>Produit</b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.Produit.Nom)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Date de location</b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.DateLocation)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Date de Retour</b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.DateFinLocation)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Etat de la location</b></td>
+                        <td>
+                            @if (Model.LocationRendue)
+                            {@("Rendue")}
+                        else
+                        { @("Non rendue")}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>@Html.DisplayNameFor(model => model.QuantitePrise)</b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.QuantitePrise)
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><b>@Html.DisplayNameFor(model => model.QuantiteRendue)</b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.QuantiteRendue)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>@Html.DisplayNameFor(model => model.Montant)</b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.Montant)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>@Html.DisplayNameFor(model => model.Date)</b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.Date)
+                        </td>
+                    </tr>
+                   
+                </tbody>
+            </table>
+            <hr />
+            <table class="table table-bordered">
+                <thead><tr><th></th><th></th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><b>Quantité à rendre</b></td>
+                        <td width="100%">
+                            <input type="number" id="qteRendue" name="qteRendue" class="form-control" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        @*<dt>
+                @Html.DisplayNameFor(model => model.UserId)
+            </dt>*@
+
+        @*<dd>
+                @Html.DisplayFor(model => model.UserId)
+            </dd>*@
+
+
+
+        <div class="form-actions no-color pull-right" style="margin-bottom:20px;">
+
+
+            <input type="submit" value="Rendre le stock" class="btn btn-danger" />
+
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+        </div>
+    }
+</div>

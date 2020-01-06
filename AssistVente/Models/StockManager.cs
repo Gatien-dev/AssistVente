@@ -14,7 +14,7 @@ namespace AssistVente.Models
     {
         public AssistVenteContext db = new AssistVenteContext();
 
-        public StockManager()
+        public StockManager(AssistVenteContext db)
         {
             this.db = db;
         }

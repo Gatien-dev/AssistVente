@@ -4,11 +4,8 @@
     ViewBag.Title = "Delete";
 }
 
-<h2>Delete</h2>
-
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Location</h4>
+    <h6>Suppression de la location du produit @Model.Produit.Nom</h6>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -36,14 +33,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.DateSuspensionLocation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateSuspensionLocation)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.DateArretLocation)
         </dt>
 
@@ -56,7 +45,10 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.LocationRendue)
+            @if (Model.LocationRendue)
+            {@("Oui")}
+        else
+        { @("Non")}
         </dd>
 
         <dt>
@@ -91,22 +83,30 @@
             @Html.DisplayFor(model => model.Date)
         </dd>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
+        @*<dt>
+                @Html.DisplayNameFor(model => model.UserId)
+            </dt>*@
 
-        <dd>
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
+        @*<dd>
+                @Html.DisplayFor(model => model.UserId)
+            </dd>*@
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
+        <div class="form-actions no-color pull-right" style="margin-bottom:20px;">
+            @if (Model.LocationRendue)
+            {
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+                <input type="submit" value="Supprimer" class="btn btn-danger" />
+            }
+            else
+            {
+                <input type="submit" value="Supprimer et rendre le stock" class="btn btn-danger" />
+            }
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
         </div>
     }
 </div>

@@ -1,106 +1,86 @@
-﻿@model AssistVente.Models.Location
+﻿
+@model AssistVente.Models.Location
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+<div class="card strpied-tabled-with-hover">
+    <div class="card-header ">
+        <h4 class="card-title ">Details de la location du produit "@Model.Produit.Nom"</h4>
 
-<div>
-    <h4>Location</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Produit.Nom)
-        </dt>
+        <p class="card-category  pull-left">Voir les informations détaillées d'une location</p>
 
-        <dd>
-            @Html.DisplayFor(model => model.Produit.Nom)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateLocation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateLocation)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateFinLocation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateFinLocation)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateSuspensionLocation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateSuspensionLocation)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.DateArretLocation)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.DateArretLocation)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.LocationRendue)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.LocationRendue)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.QuantitePrise)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.QuantitePrise)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.QuantiteRendue)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.QuantiteRendue)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Montant)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Montant)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Date)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Date)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.UserId)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.UserId)
-        </dd>
-
-    </dl>
+    </div>
+    <div class="card-body table-full-width table-responsive">
+        <table class="table table-hover table-striped">
+            <tbody>
+                <tr>
+                    <td><b>Produit</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.Produit.Nom)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Date de Location</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.DateLocation)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Date de retour</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.DateFinLocation)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Date d'arret</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.DateArretLocation)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Etat</b></td>
+                    <td>
+                        @if (Model.LocationRendue)
+                        {
+                            <span class="badge badge-success">RENDUE</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">NON RENDUE</span>
+                        }
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.QuantitePrise)</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.QuantitePrise)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.QuantiteRendue)</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.QuantiteRendue)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.Montant)</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.Montant)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.Date)</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.Date)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="pull-right">
+            <a href="@Url.Action("Edit", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-primary"><i class="fas fa-calendar-check"></i> Rendre la location</a>
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+        </p>
+    </div>
 </div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>

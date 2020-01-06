@@ -35,7 +35,8 @@
                 }
                 else
                 {
-                    <table class="table table-hover table-striped">
+                    
+                    <table class="table table-hover table-striped dataTable">
                         <thead>
                         <th>
                             @Html.DisplayNameFor(model => model.Produit.Nom)
@@ -64,52 +65,58 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Date)
                         </th>
+                        <th>
+                            Actions
+                        </th>
                         </thead>
 
                         <tbody>
                             @foreach (var item in Model)
                             {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Produit.Nom)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DateLocation)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DateFinLocation)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DateArretLocation)
-                                </td>
-                                <td>
-                                    @if (item.LocationRendue)
-                                    {
-                                        @("OUI")
-                                    }else
-                                    {
-                                        @("NON")
-                                    }
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.QuantitePrise)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.QuantiteRendue)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Montant)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Date)
-                                </td>
-                               
-                                <td>
-                                    @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
-                                    @Html.ActionLink("Details", "Details", new { id = item.Id }) |
-                                    @Html.ActionLink("Delete", "Delete", new { id = item.Id })
-                                </td>
-                            </tr>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Produit.Nom)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateLocation)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateFinLocation)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateArretLocation)
+                                    </td>
+                                    <td>
+                                        @if (item.LocationRendue)
+                                        {
+                                            <span class="badge badge-success">RENDUE</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-danger">NON RENDUE</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.QuantitePrise)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.QuantiteRendue)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Montant)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Date)
+                                    </td>
+
+                                    <td>
+
+                                        <a href="@Url.Action("Rendre", new { id = item.Id })" title="Restituer la location" style="margin-right:5px;" class="btn btn-primary @if (item.LocationRendue) { @("disabled")} "><i class="fas fa-calendar-check"></i></a>
+<a href="@Url.Action("reglement", new { id = item.Id })" title="Payer la location" style="margin-right:5px;" class="btn btn-default"><span class="fas fa-money"></span></a>
+                                        <a href="@Url.Action("Details", new { id = item.Id })" title="Détails de la location" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
+                                        <a href="@Url.Action("Delete", new { id = item.Id })" title="Supprimer la location" class="btn btn-danger"><span class="fas fa-remove"></span></a>
+                                    </td>
+                                </tr>
                             }
                         </tbody>
                     </table>
