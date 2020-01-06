@@ -39,7 +39,19 @@ namespace AssistVente.Controllers
             }
             return View(vente);
         }
-
+        public ActionResult Confirmer(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Vente vente = db.Operations.OfType<Vente>().Include(v => v.Details).First(v => v.Id == id);
+            if (vente == null)
+            {
+                return HttpNotFound();
+            }
+            return View(vente);
+        }
         // GET: Ventes/Create
         public ActionResult Create()
         {
@@ -103,7 +115,7 @@ namespace AssistVente.Controllers
                 db.Operations.Add(newVente);
                 db.SaveChanges();
                 new CaisseManager(db).reglerVente(vente.MontantPaye, newVente);
-                return RedirectToAction("Index");
+                return RedirectToAction("Confirmer", new { id = newVente.Id });
             }
 
             ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom", vente.ClientId);
@@ -142,6 +154,8 @@ namespace AssistVente.Controllers
             ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom", vente.ClientId);
             return View(vente);
         }
+
+
 
         // GET: Ventes/Delete/5
         public ActionResult Delete(Guid? id)

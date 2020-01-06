@@ -29,7 +29,9 @@ namespace AssistVente.Models
         public DateTime DateCreation { get; set; }
         [Display(Name ="Createur")]
         public string CreatorId { get; set; }
-        
+        public List<DetailAchat> DetailsAchat { get; set; }
+        public List<DetailVente> DetailsVente { get; set; }
+
 
     }
 }

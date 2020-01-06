@@ -459,6 +459,7 @@
     <Content Include="Views\StockLogs\Edit.cshtml" />
     <Content Include="Views\StockLogs\Index.cshtml" />
     <Content Include="Views\Achats\Create.cshtml" />
+    <Content Include="Views\Ventes\Confirmer.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

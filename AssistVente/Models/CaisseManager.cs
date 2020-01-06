@@ -19,7 +19,8 @@ namespace AssistVente.Models
         public void reglerVente(double montant, Vente vente, double montantRecu = 0, double montantRendu = 0)
         {
             var caisseParDefaut = getCaisseParDefaut();
-            if (montant > vente.MontantRestant || montant <= 0) return;
+            if (montant <= 0) return;
+            if (vente.MontantRestant < montant) montant = vente.MontantRestant;
             caisseParDefaut.Solde += montant;
             if (caisseParDefaut.Reglements == null) caisseParDefaut.Reglements = new List<Reglement>();
             caisseParDefaut.Reglements.Add(new Reglement()
