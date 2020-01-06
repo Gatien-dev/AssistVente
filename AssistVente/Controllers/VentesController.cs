@@ -72,7 +72,7 @@ namespace AssistVente.Controllers
         {
             if (ModelState.IsValid)
             {
-                StockManager stockManager = new StockManager(db);
+                StockManager stockManager = new StockManager();
                 Vente newVente = new Vente()
                 {
                     Details = new List<DetailVente>(),
@@ -186,7 +186,7 @@ namespace AssistVente.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            StockManager manager = new StockManager(db);
+            StockManager manager = new StockManager();
             Vente vente = db.Operations.OfType<Vente>().Include(v => v.Details).FirstOrDefault(o => o.Id == id);
             foreach (var detail in vente.Details)
             {

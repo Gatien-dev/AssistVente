@@ -63,7 +63,7 @@ namespace AssistVente.Controllers
                     ViewBag.ProduitId = new SelectList(db.Produits, "ID", "Nom", location.ProduitId);
                     return View(location);
                 }
-                new StockManager(db).RemoveStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
+                new StockManager().RemoveStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
                 location.Date = DateTime.Now;
                 location.DateArretLocation = location.DateFinLocation;
                 location.LocationRendue = false;
@@ -134,7 +134,7 @@ namespace AssistVente.Controllers
         {
             Location location = (Location)db.Operations.Find(id);
             //Restitution du stock qui a ete pris
-            new StockManager(db).AddStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
+            new StockManager().AddStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
             db.Operations.Remove(location);
             db.SaveChanges();
             return RedirectToAction("Index");
