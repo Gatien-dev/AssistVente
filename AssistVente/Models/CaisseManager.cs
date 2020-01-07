@@ -16,6 +16,7 @@ namespace AssistVente.Models
             else
                 db = context;
         }
+
         public void reglerVente(double montant, Vente vente, double montantRecu = 0, double montantRendu = 0)
         {
             var caisseParDefaut = getCaisseParDefaut();
@@ -38,6 +39,7 @@ namespace AssistVente.Models
             db.Ventes.First(v => v.Id == vente.Id).MontantRestant -= montant;
             db.SaveChanges();
         }
+
         public void reglerLocation(double montant, Location location, double montantRecu = 0, double montantRendu = 0)
         {
             var caisseParDefaut = getCaisseParDefaut();
@@ -60,9 +62,15 @@ namespace AssistVente.Models
             db.Locations.First(v => v.Id == location.Id).MontantRestant -= montant;
             db.SaveChanges();
         }
+
         public Caisse getCaisseParDefaut()
         {
             return db.Caisses.Include(c=>c.Reglements).First();
         }
+    }
+
+    public enum OperationCaisseType
+    {
+        Initialisation, Reinitialisation
     }
 }
