@@ -1,4 +1,6 @@
 ﻿using AssistVente.Filters;
+using AssistVente.Models;
+using System;
 using System.Web.Mvc;
 
 namespace IdentitySample.Controllers
@@ -10,6 +12,7 @@ namespace IdentitySample.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            //Utilities.sendMail(Utilities.generateStockEmailHtml(), "Assist-vente: Etat du stock du :" + DateTime.Now.ToShortDateString());
             return View();
         }
 

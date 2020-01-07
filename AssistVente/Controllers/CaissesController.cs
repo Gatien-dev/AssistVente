@@ -31,7 +31,7 @@ namespace AssistVente.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Caisse caisse = db.Caisses.Include(c=>c.Reinitialisations).First(c=>c.ID==id);
+            Caisse caisse = db.Caisses.Include(c=>c.Reinitialisations).Include(c=>c.Reglements).First(c=>c.ID==id);
             if (caisse == null)
             {
                 return HttpNotFound();
