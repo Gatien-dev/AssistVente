@@ -201,6 +201,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\ParametresController.cs" />
     <Compile Include="Controllers\ProduitsController.cs" />
     <Compile Include="Controllers\RolesAdminController.cs" />
     <Compile Include="Controllers\StockLogsController.cs" />
@@ -226,9 +227,11 @@
     <Compile Include="Models\Magasin.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Models\Operation.cs" />
+    <Compile Include="Models\Parametre.cs" />
     <Compile Include="Models\Produit.cs" />
     <Compile Include="Models\Reglement.cs" />
     <Compile Include="Models\StockManager.cs" />
+    <Compile Include="Models\Utilities.cs" />
     <Compile Include="Models\Vente.cs" />
     <Compile Include="Models\ViewModels\AchatCreateVM.cs" />
     <Compile Include="Models\ViewModels\stockLogIndexVM.cs" />
@@ -468,6 +471,11 @@
     <Content Include="Views\Achats\Delete.cshtml" />
     <Content Include="Views\Locations\Reglement.cshtml" />
     <Content Include="Views\Caisses\Reset.cshtml" />
+    <Content Include="Views\Parametres\Create.cshtml" />
+    <Content Include="Views\Parametres\Delete.cshtml" />
+    <Content Include="Views\Parametres\Details.cshtml" />
+    <Content Include="Views\Parametres\Edit.cshtml" />
+    <Content Include="Views\Parametres\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
