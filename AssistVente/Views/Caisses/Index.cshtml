@@ -9,9 +9,12 @@
         <div class="col-md-12">
             <div class="card strpied-tabled-with-hover">
                 <div class="card-header ">
-                    <p class="pull-right">
-                        <a href="@Url.Action("Create")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouvelle Caisse</a>
-                    </p>
+                    @if (!Model.Any())
+                    {
+                        <p class="pull-right">
+                            <a href="@Url.Action("Create")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouvelle Caisse</a>
+                        </p>
+                    }
                     <h4 class="card-title">Liste des caisses</h4>
                     <p class="card-category">Enregistrement des caisses</p>
                 </div>
@@ -54,10 +57,10 @@
 
                                         <td>
 
-                                            <a href="@Url.Action("Details", new { id = item.ID })" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
+                                            <a href="@Url.Action("Details", new { id = item.ID })" style="margin-right:5px;" title="Détails" class="btn btn-primary"><span class="fas fa-list"></span></a>
                                             <a href="@Url.Action("Reset", new { id = item.ID })" style="margin-right:5px;" title="Reinitialiser" class="btn btn-primary"><span class="fas fa-redo"></span></a>
-                                            <a href="@Url.Action("Edit", new { id = item.ID })" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-edit"></i></a>
-                                            <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger"><span class="fas fa-remove"></span></a>
+                                            <a href="@Url.Action("Edit", new { id = item.ID })" style="margin-right:5px;" title="Modifier" class="btn btn-default"><i class="fas fa-edit"></i></a>
+                                            <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger" title="Supprimer"><span class="fas fa-remove"></span></a>
                                         </td>
                                     </tr>
                                 }

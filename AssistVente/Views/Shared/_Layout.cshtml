@@ -34,7 +34,7 @@
             -->
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="javascript:;" class="simple-text">
+                    <a href="@Url.Action("Index","home")" class="simple-text">
                         Assist-Vente
                     </a>
                 </div>
@@ -53,7 +53,7 @@
                     </li>
                     <li>
                         <a class="nav-link" href="@Url.Action("Index","Produits")">
-                            <i class="fa fa-shopping-bag"></i>
+                            <i class="fa fa-shopping-cart"></i>
                             <p>Produits</p>
                         </a>
                     </li>
@@ -70,10 +70,16 @@
                             <p>Locations</p>
                         </a>
                     </li>
+                    <li>
+                        <a class="nav-link" href="@Url.Action("Index","Abonnements")">
+                            <i class="fa fa-shopping-bag"></i>
+                            <p>Abonnements</p>
+                        </a>
+                    </li>
 
                     <li>
                         <a class="nav-link" href="@Url.Action("Index","Caisses")">
-                            <i class="fa fa-money-bill"></i>
+                            <i class="fa fa-cash-register"></i>
                             <p>Caisses</p>
                         </a>
                     </li>
@@ -132,11 +138,11 @@
                                     <span class="fa fa-calendar-check"></span>
                                 </a>
                             </li>
-                            <li class="nav-item" title="Actualiser les notifications">
+                            <li class="nav-item" title="Accueil">
                                 <a href="@Url.Action("Index","home")" class="nav-link">
                                     @*<i class="nc-icon nc-zoom-split"></i>*@
                                     @*<span class="notification">@Session["expiredLocations"]</span>*@
-                                    <span class="fa fa-refresh"></span>
+                                    <span class="fa fa-home"></span>
                                 </a>
                             </li>
                         </ul>

@@ -42,7 +42,20 @@ namespace AssistVente.Controllers
         // GET: Abonnements/Create
         public ActionResult Create()
         {
-            ViewBag.ForfaitId = new SelectList(db.Forfaits, "ID", "Nom", "Montant");
+            var forfaits = new List<Forfait>();
+            foreach (var f in db.Forfaits)
+            {
+                forfaits.Add(new Forfait()
+                {
+                    Abonnements = f.Abonnements,
+                    Description = f.Description,
+                    Duree = f.Duree,
+                    Id = f.Id,
+                    Montant = f.Montant,
+                    Nom = f.Nom + " (" + f.Montant + ")"
+                });
+            }
+            ViewBag.ForfaitId = new SelectList(forfaits, "ID", "Nom", "Montant");
             ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom");
             return View();
         }
@@ -65,7 +78,7 @@ namespace AssistVente.Controllers
                 }
 
                 abonnement.Date = DateTime.Now;
-                abonnement.DateFin = abonnement.DateFin;
+                abonnement.DateFin = abonnement.DateDebut.AddDays(forfait.Duree);
                 abonnement.Suspendu = false;
                 abonnement.UserId = User.Identity.GetUserId();
                 abonnement.ResteAPayer = abonnement.Montant - abonnement.SommePaye;
@@ -74,12 +87,11 @@ namespace AssistVente.Controllers
                 {
                     abonnement.ResteAPayer = 0;
                 }
-
-                var caisseManager = new CaisseManager(db);
-                caisseManager.reglerAbonnement(abonnement.SommePaye, abonnement);
-
+                abonnement.DateSuspension = abonnement.DateFin;
                 db.Operations.Add(abonnement);
                 db.SaveChanges();
+                var caisseManager = new CaisseManager(db);
+                caisseManager.reglerAbonnement(abonnement.SommePaye, abonnement);
                 return RedirectToAction("Index");
             }
 

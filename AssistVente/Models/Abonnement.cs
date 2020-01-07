@@ -15,8 +15,10 @@ namespace AssistVente.Models
         public Guid ForfaitId { get; set; }
         public virtual Forfait Forfait { get; set; }
         [Display(Name ="Début")]
+        [DataType(DataType.Date)]
         public DateTime DateDebut { get; set; }
         [Display(Name ="Fin")]
+        [DataType(DataType.Date)]
         public DateTime DateFin { get; set; }
         [Display(Name ="Date de Suspension")]
         public DateTime DateSuspension { get; set; }
