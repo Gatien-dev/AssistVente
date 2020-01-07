@@ -20,7 +20,7 @@ namespace AssistVente.Controllers
         public ActionResult Index()
         {
             var locations = db.Operations.OfType<Location>().Include(l => l.Produit).OrderByDescending(l => l.LocationRendue).OrderByDescending(l => l.Date);
-            return View(locations.ToList());
+            return View(locations);
         }
 
         // GET: Locations/Details/5
@@ -80,6 +80,7 @@ namespace AssistVente.Controllers
                 return RedirectToAction("Index");
             }
 
+            ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom");
             ViewBag.ProduitId = new SelectList(db.Produits, "ID", "Nom", location.ProduitId);
             return View(location);
         }

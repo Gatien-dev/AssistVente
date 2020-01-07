@@ -32,9 +32,9 @@ namespace AssistVente.Models
         [Display(Name = "Quantité Rendue")]
         public double QuantiteRendue { get; set; }
         [Display(Name = "Montant payé")]
-        public double MontantPaye { get; set; }
+        public double MontantPaye { get; set; } = 0;
         [Display(Name = "Montant restant")]
-        public double MontantRestant { get; set; }
+        public double MontantRestant { get; set; } = 0;
 
 
     }

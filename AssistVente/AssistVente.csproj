@@ -465,6 +465,7 @@
     <Content Include="Views\Achats\Details.cshtml" />
     <Content Include="Views\Achats\Delete.cshtml" />
     <Content Include="Views\Locations\Reglement.cshtml" />
+    <Content Include="Views\Caisses\Reset.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssistVente.Models;
+using Microsoft.AspNet.Identity;
 
 namespace AssistVente.Controllers
 {
@@ -28,7 +29,7 @@ namespace AssistVente.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Caisse caisse = db.Caisses.Find(id);
+            Caisse caisse = db.Caisses.Include(c=>c.Reinitialisations).First(c=>c.ID==id);
             if (caisse == null)
             {
                 return HttpNotFound();
@@ -74,7 +75,6 @@ namespace AssistVente.Controllers
             }
             return View(caisse);
         }
-
         // POST: Caisses/Edit/5
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
@@ -91,6 +91,42 @@ namespace AssistVente.Controllers
             return View(caisse);
         }
 
+        public ActionResult Reset(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Caisse caisse = db.Caisses.Find(id);
+            if (caisse == null)
+            {
+                return HttpNotFound();
+            }
+            return View(caisse);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Reset([Bind(Include = "ID,Nom,Solde")] Caisse caisse)
+        {
+            var dbCaisse = db.Caisses.Include(c => c.Reinitialisations).First(c => c.ID == caisse.ID);
+            if (dbCaisse.Reinitialisations == null)
+            {
+                dbCaisse.Reinitialisations = new List<ReinitialisationCaisse>();
+            }
+            dbCaisse.Reinitialisations.Add(new ReinitialisationCaisse()
+            {
+                AncienSolde = dbCaisse.Solde,
+                NouveauSolde = caisse.Solde,
+                Date = DateTime.Now,
+                Caisse = dbCaisse,
+                CaisseId = dbCaisse.ID,
+                Id = Guid.NewGuid(),
+                UserId = User.Identity.GetUserId()
+            }); ;
+            dbCaisse.Solde = caisse.Solde;
+            db.SaveChanges();
+            return RedirectToAction("index");
+        }
         // TODO: veiller a ne pas supprimer les caisses qui ont une historiqueou qui ont une operation
         // GET: Caisses/Delete/5
         public ActionResult Delete(Guid? id)
