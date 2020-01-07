@@ -6,11 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AssistVente.Filters;
 using AssistVente.Models;
 using Microsoft.AspNet.Identity;
 
 namespace AssistVente.Controllers
 {
+    [LogFilter]
     [Authorize(Roles = "Admin,Locations")]
     public class LocationsController : Controller
     {

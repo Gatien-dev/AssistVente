@@ -1,4 +1,5 @@
-﻿using AssistVente.Models;
+﻿using AssistVente.Filters;
+using AssistVente.Models;
 using AssistVente.Models.ViewModels;
 using Microsoft.AspNet.Identity;
 using System;
@@ -12,6 +13,7 @@ using System.Web.Mvc;
 namespace AssistVente.Controllers
 {
     [Authorize(Roles = "Admin,Achats")]
+    [LogFilter]
     public class AchatsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();

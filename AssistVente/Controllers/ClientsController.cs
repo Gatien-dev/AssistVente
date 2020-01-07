@@ -8,10 +8,12 @@ using System.Web;
 using System.Web.Mvc;
 using AssistVente.Models;
 using AssistVente.DAO;
+using AssistVente.Filters;
 
 namespace AssistVente.Controllers
 {
     [Authorize]
+    [LogFilter]
     public class ClientsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();

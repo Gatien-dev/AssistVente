@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AssistVente.Filters;
+using System;
 using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
@@ -66,5 +67,6 @@ namespace AssistVente.Models
         public DbSet<DetailAchat> DetailsAchat { get; set; }
 
         public DbSet<DetailVente> DetailsVente { get; set; }
+        public DbSet<ActionLog> ActionLogs { get;  set; }
     }
 }

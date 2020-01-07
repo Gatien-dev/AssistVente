@@ -1,8 +1,10 @@
-﻿using System.Web.Mvc;
+﻿using AssistVente.Filters;
+using System.Web.Mvc;
 
 namespace IdentitySample.Controllers
 {
     [Authorize]
+    [LogFilter]
     public class HomeController : Controller
     {
         [HttpGet]

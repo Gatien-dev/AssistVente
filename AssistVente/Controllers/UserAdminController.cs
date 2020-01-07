@@ -1,4 +1,5 @@
-﻿using IdentitySample.Models;
+﻿using AssistVente.Filters;
+using IdentitySample.Models;
 using Microsoft.AspNet.Identity.Owin;
 using System.Data.Entity;
 using System.Linq;
@@ -10,6 +11,7 @@ using System.Web.Mvc;
 namespace IdentitySample.Controllers
 {
     [Authorize(Roles = "Admin")]
+    [LogFilter]
     public class UsersAdminController : Controller
     {
         public UsersAdminController()

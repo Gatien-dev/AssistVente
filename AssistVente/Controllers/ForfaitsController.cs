@@ -6,11 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AssistVente.Filters;
 using AssistVente.Models;
 
 namespace AssistVente.Controllers
 {
     [Authorize(Roles = "Admin,Forfaits")]
+    [LogFilter]
     public class ForfaitsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();

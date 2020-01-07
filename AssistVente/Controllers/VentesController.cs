@@ -6,6 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AssistVente.Filters;
 using AssistVente.Models;
 using AssistVente.Models.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -13,6 +14,7 @@ using Microsoft.AspNet.Identity;
 namespace AssistVente.Controllers
 {
     [Authorize(Roles = "Admin,Ventes")]
+    [LogFilter]
     public class VentesController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();

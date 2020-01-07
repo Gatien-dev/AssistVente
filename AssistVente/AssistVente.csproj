@@ -207,6 +207,8 @@
     <Compile Include="Controllers\UserAdminController.cs" />
     <Compile Include="Controllers\VentesController.cs" />
     <Compile Include="DAO\ClientDAO.cs" />
+    <Compile Include="Filters\ActionLog.cs" />
+    <Compile Include="Filters\LogFilter.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

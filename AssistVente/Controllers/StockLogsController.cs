@@ -6,11 +6,13 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using AssistVente.Filters;
 using AssistVente.Models;
 using AssistVente.Models.ViewModels;
 
 namespace AssistVente.Controllers
 {
+    [LogFilter]
     public class StockLogsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();
