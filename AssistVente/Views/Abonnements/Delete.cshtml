@@ -1,0 +1,95 @@
+﻿@model AssistVente.Models.Abonnement
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div>
+    <h6>Suppression de l'abonnement @Model.Forfait.Nom du client @Model.Client.Nom</h6>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Forfait.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Forfait.Nom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateDebut)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateDebut)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateFin)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateFin)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateSuspension)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateSuspension)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Suspendu)
+        </dt>
+
+        <dd>
+            @if (Model.Suspendu)
+            {@("Oui")}
+            else
+            { @("Non")}
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Montant)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Montant)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.SommePaye)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.SommePaye)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResteAPayer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResteAPayer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color pull-right" style="margin-bottom:20px;">
+            <input type="submit" value="Supprimer" class="btn btn-danger" />
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+        </div>
+    }
+</div>

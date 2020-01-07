@@ -120,6 +120,7 @@ namespace AssistVente.Controllers
             ViewBag.ProduitId = new SelectList(db.Produits, "ID", "Nom", location.ProduitId);
             return View(location);
         }
+
         public ActionResult Rendre(Guid? id)
         {
             if (id == null)
@@ -133,6 +134,7 @@ namespace AssistVente.Controllers
             }
             return View(location);
         }
+
         [HttpPost, ActionName("Rendre")]
         [ValidateAntiForgeryToken]
         public ActionResult RendreConfirmed(Guid id, double qteRendue)
@@ -149,6 +151,7 @@ namespace AssistVente.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
         public ActionResult Reglement(Guid? id)
         {
             if (id == null)
@@ -162,6 +165,7 @@ namespace AssistVente.Controllers
             }
             return View(location);
         }
+
         [HttpPost, ActionName("Reglement")]
         [ValidateAntiForgeryToken]
         public ActionResult ReglementConfirmed(Guid id, double montantPaye)
@@ -183,6 +187,7 @@ namespace AssistVente.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+
         // GET: Locations/Delete/5
         public ActionResult Delete(Guid? id)
         {

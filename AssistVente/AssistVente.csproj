@@ -193,6 +193,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Controllers\AbonnementsController.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AchatsController.cs" />
     <Compile Include="Controllers\CaissesController.cs" />
@@ -468,6 +469,12 @@
     <Content Include="Views\Achats\Delete.cshtml" />
     <Content Include="Views\Locations\Reglement.cshtml" />
     <Content Include="Views\Caisses\Reset.cshtml" />
+    <Content Include="Views\Abonnements\Index.cshtml" />
+    <Content Include="Views\Abonnements\Details.cshtml" />
+    <Content Include="Views\Abonnements\Create.cshtml" />
+    <Content Include="Views\Abonnements\Suspendre.cshtml" />
+    <Content Include="Views\Abonnements\Reglement.cshtml" />
+    <Content Include="Views\Abonnements\Delete.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

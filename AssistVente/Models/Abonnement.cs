@@ -22,6 +22,11 @@ namespace AssistVente.Models
         public DateTime DateSuspension { get; set; }
         [Display(Name ="Suspendu?")]
         public bool Suspendu { get; set; }
+        public bool Termine { get; set; }
+        [Display(Name = "Montant restant")]
+        public double ResteAPayer { get; set; } = 0;
+        [Display(Name = "Montant payé")]
+        public double SommePaye { get; set; } = 0;
     }
     public class Forfait
     {

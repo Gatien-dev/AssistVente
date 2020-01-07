@@ -63,6 +63,32 @@ namespace AssistVente.Models
             db.SaveChanges();
         }
 
+        public void reglerAbonnement(double montant, Abonnement abonnement)
+        {
+            var caisseParDefaut = getCaisseParDefaut();
+            if (montant <= 0) return;
+            if (abonnement.ResteAPayer < montant) montant = abonnement.ResteAPayer;
+
+            caisseParDefaut.Solde += montant;
+
+            if (caisseParDefaut.Reglements == null) caisseParDefaut.Reglements = new List<Reglement>();
+
+            caisseParDefaut.Reglements.Add(new Reglement() {
+                Id = Guid.NewGuid(),
+                Caisse = caisseParDefaut,
+                CaisseId = caisseParDefaut.ID,
+                Date = DateTime.Now,
+                IdOperation = abonnement.Id,
+                MontantRegle = montant,
+                MontantRecu = 0,
+                MontantRendu = 0
+            });
+
+            db.Abonnements.First(a => a.Id == abonnement.Id).SommePaye += montant;
+            db.Abonnements.First(a => a.Id == abonnement.Id).ResteAPayer -= montant;
+            db.SaveChanges();
+        }
+
         public Caisse getCaisseParDefaut()
         {
             return db.Caisses.Include(c=>c.Reglements).First();

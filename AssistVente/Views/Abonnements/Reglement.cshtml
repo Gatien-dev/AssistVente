@@ -1,0 +1,86 @@
+﻿@model AssistVente.Models.Abonnement
+@{
+    ViewBag.Title = "Reglement";
+}
+
+<div class="card container">
+    <h4>Reglement de l'abonnement @Model.Forfait.Nom du client @Model.Client.Nom</h4>
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="card-body  table-responsive">
+            <table class="table table-hover table-striped">
+                <tbody>
+                    <tr>
+                        <td><b>Forfait</b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.Forfait.Nom)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Date debut abonnement</b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.DateDebut)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Date Fin abonnement</b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.DateFin)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Etat de l'abonnement</b></td>
+                        <td>
+                            @if (Model.Suspendu)
+                            {@("Suspendu")}
+                            else
+                            { @("Non Suspendu")}
+                        </td>
+                    </tr>
+                        
+                    <tr>
+                        <td><b>@Html.DisplayNameFor(model => model.Montant)</b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.Montant)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>@Html.DisplayNameFor(model => model.SommePaye)</b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.SommePaye)
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>@Html.DisplayNameFor(model => model.ResteAPayer)</b></td>
+                        <td>
+                            @Html.DisplayFor(model => model.ResteAPayer)
+                        </td>
+                    </tr>
+
+                </tbody>
+            </table>
+            <hr />
+            <table class="table table-bordered">
+                <thead><tr><th></th><th></th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td><b>Somme à payer</b></td>
+                        <td width="100%">
+                            <input type="number" id="montantReglement" max="@(Model.Montant-@Model.SommePaye)" name="montantReglement" class="form-control" />
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="form-actions no-color pull-right" style="margin-bottom:20px;">
+
+            <input type="submit" value="Regler l'abonnement" class="btn btn-danger" />
+
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+        </div>
+    }
+</div>
+
