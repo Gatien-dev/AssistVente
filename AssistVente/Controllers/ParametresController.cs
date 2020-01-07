@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using AssistVente.Models;
+using Hangfire;
 
 namespace AssistVente.Controllers
 {
@@ -52,8 +53,12 @@ namespace AssistVente.Controllers
             if (ModelState.IsValid)
             {
                 parametre.Id = Guid.NewGuid();
+                if (parametre.HourNotifications > 24) parametre.HourNotifications = parametre.HourNotifications % 24;
                 db.Parametres.Add(parametre);
                 db.SaveChanges();
+                //RecurringJob.AddOrUpdate("chargement", () => cm.load(), Cron.MinuteInterval(20))
+                RecurringJob.AddOrUpdate("notifications", () => Utilities.SendNotifications(), Cron.Daily(parametre.HourNotifications));
+
                 return RedirectToAction("Index");
             }
 
@@ -85,7 +90,9 @@ namespace AssistVente.Controllers
             if (ModelState.IsValid)
             {
                 db.Entry(parametre).State = EntityState.Modified;
+                if (parametre.HourNotifications > 24) parametre.HourNotifications = parametre.HourNotifications % 24;
                 db.SaveChanges();
+                RecurringJob.AddOrUpdate("notifications", () => Utilities.SendNotifications(), Cron.Daily(parametre.HourNotifications));
                 return RedirectToAction("Index");
             }
             return View(parametre);

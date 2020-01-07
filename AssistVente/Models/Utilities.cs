@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using System.Threading;
 using System.Web;
 
 namespace AssistVente.Models
@@ -13,7 +14,7 @@ namespace AssistVente.Models
         {
             StringBuilder builder = new StringBuilder();
             AssistVenteContext db = new AssistVenteContext();
-            builder.Append("<h2 style=\"font-family: Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 1.1rem; \">Assist-Vente: Situation des ventes du " 
+            builder.Append("<h2 style=\"font-family: Roboto, 'Helvetica Neue', Arial, sans-serif; font-size: 1.1rem; \">Assist-Vente: Situation des ventes du "
                 + DateTime.Now.Date.ToShortDateString()
                 + Environment.NewLine);
             builder.Append("</h2>" + Environment.NewLine);
@@ -80,7 +81,7 @@ namespace AssistVente.Models
         }
 
 
-        public static void sendMail(string body, string subject)
+        public static void sendMail(string body, string subject,string sender, string recipient)
         {
             MailMessage mail = new MailMessage();
             System.Net.Mail.SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
@@ -95,6 +96,16 @@ namespace AssistVente.Models
             SmtpServer.EnableSsl = true;
 
             SmtpServer.Send(mail);
+        }
+        public static void SendNotifications()
+        {
+            string sender="princegnakoU@gmail.com";
+            var parametre = new AssistVenteContext().Parametres.FirstOrDefault();
+            if (parametre == null) { return; }
+            string recipient = parametre.EmailNotifications;
+            sendMail(generateStockEmailHtml(), "Assist-vente: Etat du stock du :" + DateTime.Now.ToShortDateString(),sender,recipient);
+            Thread.Sleep(20000);
+            sendMail(generateVentesEmailHtml(), "Assist-vente: Etat des ventes du :" + DateTime.Now.ToShortDateString(),sender,recipient);
         }
     }
 }
