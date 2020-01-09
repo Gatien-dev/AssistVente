@@ -181,6 +181,13 @@ namespace IdentitySample.Models
                 roleForfaits = new IdentityRole("Forfaits");
                 var roleresult = roleManager.Create(roleForfaits);
             }
+            //Modifier les montants de location
+            var roleModifMontantLocations = roleManager.FindByName("Modifier les montants de location");
+            if (roleModifMontantLocations == null)
+            {
+                roleModifMontantLocations = new IdentityRole("Modifier les montants de location");
+                var roleresult = roleManager.Create(roleModifMontantLocations);
+            }
             var user = userManager.FindByName(name);
             if (user == null)
             {

@@ -57,10 +57,11 @@ namespace AssistVente.Controllers
             if (ModelState.IsValid)
             {
                 produit.ID = Guid.NewGuid();
-                produit.DureeDeLocationParDefaut = TimeSpan.Zero;
+                produit.DureeDeLocationParDefaut = 1;
                 produit.DateCreation = DateTime.Now;
                 produit.CreatorId = User.Identity.GetUserId();
                 db.Produits.Add(produit);
+                new StockManager(db).AddStock(produit.ID, produit.StockDisponible, OperationType.Création);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -88,7 +89,7 @@ namespace AssistVente.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nom,PrixAchat,PrixVente,ALouer,StockDisponible,DureeDeLocationParDefaut,Description,DateCreation,CreatorId")] Produit produit)
+        public ActionResult Edit([Bind(Include = "ID,Nom,PrixAchat,PrixVente,ALouer,DureeDeLocationParDefaut,Description,DateCreation,CreatorId")] Produit produit)
         {
             if (ModelState.IsValid)
             {

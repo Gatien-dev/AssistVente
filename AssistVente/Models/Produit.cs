@@ -21,8 +21,10 @@ namespace AssistVente.Models
         public bool ALouer { get; set; }
         [Display(Name = "Stock disponible")]
         public double StockDisponible { get; set; }
+        [Display(Name = "Stock En Location")]
+        public double StockEnLocation { get; set; }
         [Display(Name = "Durée de location par défaut")]
-        public TimeSpan? DureeDeLocationParDefaut { get; set; }
+        public int DureeDeLocationParDefaut { get; set; } = 1;
         [Display(Name = "Informations complémentaires")]
         public string Description { get; set; }
         [Display(Name ="Date")]

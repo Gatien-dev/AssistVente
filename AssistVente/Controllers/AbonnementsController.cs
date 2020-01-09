@@ -21,7 +21,7 @@ namespace AssistVente.Controllers
         public ActionResult Index()
         {
             checkAbonnements();
-            var abonnements = db.Operations.OfType<Abonnement>().Include(a => a.Forfait).OrderByDescending(a => a.Termine).OrderByDescending(l => l.Date);
+            var abonnements = db.Operations.OfType<Abonnement>().Include(a => a.Forfait).OrderByDescending(a => a.Termine).OrderByDescending(l => l.Date).ToList();
 
             foreach (var abonnement in abonnements)
             {

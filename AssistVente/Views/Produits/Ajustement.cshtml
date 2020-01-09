@@ -8,7 +8,7 @@
     @Html.AntiForgeryToken()
 
     <div class="form-horizontal">
-        <h4>Modification du Produit @Model.Nom</h4>
+        <h4>Ajustement de stock pour le Produit @Model.Nom</h4>
         <h4 class="small">@Html.LabelFor(model => model.Description) : @Model.Description</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -50,6 +50,13 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    @Html.Label("Ecart de stock", htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-10">
+                        @Html.Editor("ecartStock", new { htmlAttributes = new { @class = "form-control", @type = "number", @Value = 0 } })
+                        @Html.ValidationMessage("ecartStock", "La valeur de l'ecart n'est pas valide", new { @class = "text-danger" })
+                    </div>
+                </div>
 
                 <div class="form-group">
                     @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-5" })
@@ -61,15 +68,8 @@
 
             </div>
 
-            <div class="col-md-12">
-                <div class="form-group">
-                    @Html.Label("Ecart de stock", htmlAttributes: new { @class = "control-label col-md-5" })
-                    <div class="col-md-10">
-                        @Html.Editor("ecartStock", new { htmlAttributes = new { @class = "form-control", @type = "number" } })
-                        @Html.ValidationMessage("ecartStock", "La valeur de l'ecart n'est pas valide", new { @class = "text-danger" })
-                    </div>
-                </div>
-            </div>
+            @*<div class="col-md-12">
+            </div>*@
 
             @Html.HiddenFor(model=>model.ID)
             <br />

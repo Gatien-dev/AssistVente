@@ -45,6 +45,7 @@ namespace AssistVente.Controllers
         {
             ViewBag.ProduitId = new SelectList(db.Produits.Where(p => p.ALouer), "ID", "Nom");
             ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom");
+            ViewBag.editAmount = User.IsInRole("Modifier les montants de location") || User.IsInRole("Admin");
             return View();
         }
 

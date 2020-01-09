@@ -39,6 +39,7 @@
                         <th>
                             @Html.DisplayNameFor(model => model.Client.Nom)
                         </th>
+
                         <th>
                             @Html.DisplayNameFor(model => model.DateDebut)
                         </th>
@@ -66,8 +67,12 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Forfait.Nom)
                                     </td>
+                                   
+
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Client.Nom)
+                                        <a href="@Url.Action("Details","Clients",new { Id = item.Client.ID })">
+                                            @Html.DisplayFor(modelItem => item.Client.Nom)
+                                        </a>
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.DateDebut)

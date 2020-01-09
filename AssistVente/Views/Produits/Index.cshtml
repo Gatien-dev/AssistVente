@@ -50,18 +50,21 @@
                         <th>
                             @Html.DisplayNameFor(model => model.StockDisponible)
                         </th>
-                        @*<th>
-                            @Html.DisplayNameFor(model => model.DureeDeLocationParDefaut)
-                        </th>*@
                         <th>
-                            @Html.DisplayNameFor(model => model.Description)
+                            @Html.DisplayNameFor(model => model.StockEnLocation)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DureeDeLocationParDefaut)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PrixLocationParDefaut)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.DateCreation)
                         </th>
                         @*<th>
-                            @Html.DisplayNameFor(model => model.CreatorId)
-                        </th>*@
+                                @Html.DisplayNameFor(model => model.CreatorId)
+                            </th>*@
                         </thead>
 
                         <tbody>
@@ -83,20 +86,23 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.StockDisponible)
                                     </td>
-                                    @*<td>
-                                        @Html.DisplayFor(modelItem => item.DureeDeLocationParDefaut)
-                                    </td>*@
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Description)
+                                        @Html.DisplayFor(modelItem => item.StockEnLocation)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DureeDeLocationParDefaut)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.PrixLocationParDefaut)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.DateCreation)
                                     </td>
                                     @*<td>
-                                        @Html.DisplayFor(modelItem => item.CreatorId)
-                                    </td>*@
+                                            @Html.DisplayFor(modelItem => item.CreatorId)
+                                        </td>*@
                                     <td>
-                                       
+
                                         <a href="@Url.Action("Details", new { id = item.ID })" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
                                         <a href="@Url.Action("Edit", new { id = item.ID })" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-edit"></i></a>
                                         <a href="@Url.Action("Ajustement", new { id = item.ID })" style="margin-right:5px;" title="Ajuster le stock" class="btn btn-default"><i class="fas fa-wrench"></i></a>

@@ -24,7 +24,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.PrixAchat, htmlAttributes: new { @class = "control-label col-md-5" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.PrixAchat, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.PrixAchat, new { htmlAttributes = new { @class = "form-control", @type="number" } })
                     @Html.ValidationMessageFor(model => model.PrixAchat, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -56,7 +56,7 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.PrixVente, htmlAttributes: new { @class = "control-label col-md-5" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.PrixVente, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.EditorFor(model => model.PrixVente, new { htmlAttributes = new { @class = "form-control" , @type="number"} })
                     @Html.ValidationMessageFor(model => model.PrixVente, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -68,7 +68,22 @@
                     @Html.ValidationMessageFor(model => model.ALouer, "", new { @class = "text-danger" })
 
                 </div>
-            </div><div class="form-group">
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(model => model.PrixLocationParDefaut, htmlAttributes: new { @class = "control-label col-md-5" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.PrixLocationParDefaut, new { htmlAttributes = new { @class = "form-control", @type="number" } })
+                    @Html.ValidationMessageFor(model => model.PrixLocationParDefaut, "", new { @class = "text-danger" })
+                </div>
+            </div>
+            @*<div class="form-group">
+                @Html.LabelFor(model => model.DureeDeLocationParDefaut, htmlAttributes: new { @class = "control-label col-md-5" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.DureeDeLocationParDefaut, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.DureeDeLocationParDefaut, "", new { @class = "text-danger" })
+                </div>
+            </div>*@
+            <div class="form-group">
                 @Html.LabelFor(model => model.StockDisponible, htmlAttributes: new { @class = "control-label col-md-5" })
                 <div class="col-md-10">
                     @Html.EditorFor(model => model.StockDisponible, new { htmlAttributes = new { @class = "form-control" } })
@@ -77,12 +92,12 @@
             </div>
 
             @*<div class="form-group">
-                @Html.LabelFor(model => model.DureeDeLocationParDefaut, htmlAttributes: new { @class = "control-label col-md-5" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.DureeDeLocationParDefaut, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.DureeDeLocationParDefaut, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
+            @Html.LabelFor(model => model.DureeDeLocationParDefaut, htmlAttributes: new { @class = "control-label col-md-5" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.DureeDeLocationParDefaut, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.DureeDeLocationParDefaut, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
         </div>
 
 
