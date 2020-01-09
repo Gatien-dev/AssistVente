@@ -78,7 +78,13 @@
                                     <td>
                                         @if (item.Termine)
                                         {
-                                            <span class="badge badge-success">Expiré</span>
+                                            if (item.ResteAPayer <= 0)
+                                            {
+                                                <span class="badge badge-success">Expiré</span>}
+                                            else
+                                            {
+                                                <span class="badge badge-danger">Expiré</span> }
+
                                         }
                                         else
                                         {
@@ -96,12 +102,16 @@
                                             }
                                             else if (item.Suspendu)
                                             {
-                                                <span class="badge badge-warning">Suspendu le</span>  @Html.DisplayFor(modelItem => item.DateSuspension)
+                                                <span class="badge badge-warning">Suspendu le</span> @Html.DisplayFor(modelItem => item.DateSuspension)
                                             }
                                         }
-                                        @if (item.ResteAPayer >= 0)
+                                        @if (item.ResteAPayer <= 0)
                                         {
                                             <span class="badge badge-success">Payé</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-danger">Non Payé</span>
                                         }
                                     </td>
                                     <td>
@@ -113,8 +123,8 @@
 
                                     <td>
 
-                                        <a href="@Url.Action("Suspendre", new { id = item.Id })" title="Suspendre l'abonnement" style="margin-right:5px;" class="btn btn-primary @if (item.Suspendu) { @("disabled")} "><i class="fas fa-arrow-alt-circle-down"></i></a>
-                                        <a href="@Url.Action("Reglement", new { id = item.Id })" title="Payer" style="margin-right:5px;" class="btn btn-default @if (item.ResteAPayer>=0) { @("disabled")}"><span class="fas fa-money"></span></a>
+                                        @*<a href="@Url.Action("Suspendre", new { id = item.Id })" title="Suspendre l'abonnement" style="margin-right:5px;" class="btn btn-primary @if (item.Suspendu) { @("disabled")} "><i class="fas fa-pause"></i></a>*@
+                                        <a href="@Url.Action("Reglement", new { id = item.Id })" title="Payer" style="margin-right:5px;" class="btn btn-default @if (item.ResteAPayer<=0) { @("disabled")}"><span class="fas fa-money"></span></a>
                                         <a href="@Url.Action("Details", new { id = item.Id })" title="Détails" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
                                         <a href="@Url.Action("Delete", new { id = item.Id })" title="Supprimer" class="btn btn-danger"><span class="fas fa-remove"></span></a>
                                     </td>

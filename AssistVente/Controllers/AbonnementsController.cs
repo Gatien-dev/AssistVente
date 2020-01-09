@@ -20,6 +20,7 @@ namespace AssistVente.Controllers
         // GET: Abonnements
         public ActionResult Index()
         {
+            checkAbonnements();
             var abonnements = db.Operations.OfType<Abonnement>().Include(a => a.Forfait).OrderByDescending(a => a.Termine).OrderByDescending(l => l.Date);
             return View(abonnements);
         }
@@ -82,6 +83,7 @@ namespace AssistVente.Controllers
                 abonnement.Suspendu = false;
                 abonnement.UserId = User.Identity.GetUserId();
                 abonnement.ResteAPayer = abonnement.Montant - abonnement.SommePaye;
+                
 
                 if (abonnement.ResteAPayer < 0)
                 {
@@ -117,7 +119,7 @@ namespace AssistVente.Controllers
         }
 
         // POST: Abonnements/Suspendre/5
-        [HttpPost, ActionName("Delete")]
+        [HttpPost, ActionName("Suspendre")]
         [ValidateAntiForgeryToken]
         public ActionResult Suspendre(Guid id)
         {
@@ -191,6 +193,14 @@ namespace AssistVente.Controllers
             db.Operations.Remove(abonnement);
             db.SaveChanges();
             return RedirectToAction("Index");
+        }
+        void checkAbonnements()
+        {
+            foreach (var abo in db.Abonnements)
+            {
+                if (abo.DateFin <= DateTime.Now) abo.Termine = true;
+            }
+            db.SaveChanges();
         }
     }
 }
