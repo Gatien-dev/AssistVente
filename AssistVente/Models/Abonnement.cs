@@ -29,6 +29,9 @@ namespace AssistVente.Models
         public double ResteAPayer { get; set; } = 0;
         [Display(Name = "Montant payé")]
         public double SommePaye { get; set; } = 0;
+        public GroupeAbonnements Groupe { get; set; }
+        [ForeignKey("Groupe")]
+        public virtual Guid GroupeAbonnementsId { get; set; }
     }
     public class Forfait
     {

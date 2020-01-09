@@ -70,5 +70,7 @@ namespace AssistVente.Models
         public DbSet<ActionLog> ActionLogs { get;  set; }
 
         public System.Data.Entity.DbSet<AssistVente.Models.Parametre> Parametres { get; set; }
+
+        public System.Data.Entity.DbSet<AssistVente.Models.GroupeAbonnements> GroupeAbonnements { get; set; }
     }
 }

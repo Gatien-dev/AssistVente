@@ -50,6 +50,9 @@
                             Etat
                         </th>
                         <th>
+                            Groupe
+                        </th>
+                        <th>
                             @Html.DisplayNameFor(model => model.Montant)
                         </th>
                         <th>
@@ -67,7 +70,7 @@
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Forfait.Nom)
                                     </td>
-                                   
+
 
                                     <td>
                                         <a href="@Url.Action("Details","Clients",new { Id = item.Client.ID })">
@@ -114,6 +117,9 @@
                                         {
                                             <span class="badge badge-danger">Non Payé</span>
                                         }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Groupe.Name)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.Montant)

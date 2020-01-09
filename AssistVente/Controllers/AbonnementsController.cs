@@ -21,7 +21,7 @@ namespace AssistVente.Controllers
         public ActionResult Index()
         {
             checkAbonnements();
-            var abonnements = db.Operations.OfType<Abonnement>().Include(a => a.Forfait).OrderByDescending(a => a.Termine).OrderByDescending(l => l.Date).ToList();
+            var abonnements = db.Operations.OfType<Abonnement>().Include(a => a.Forfait).Include(a=>a.Groupe).OrderByDescending(a => a.Termine).OrderByDescending(l => l.Date).ToList();
 
             foreach (var abonnement in abonnements)
             {
@@ -68,13 +68,14 @@ namespace AssistVente.Controllers
                 });
             }
             ViewBag.ForfaitId = new SelectList(forfaits, "ID", "Nom", "Montant");
+            ViewBag.GroupeAbonnementsId = new SelectList(db.GroupeAbonnements, "ID", "Name");
             ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom");
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,ForfaitId,ClientId,DateDebut,DateFin,ResteAPayer,DateSuspension,Montant,Date,UserId,SommePaye")] Abonnement abonnement, string reglement)
+        public ActionResult Create([Bind(Include = "Id,ForfaitId,ClientId,DateDebut,DateFin,ResteAPayer,DateSuspension,Montant,Date,UserId,SommePaye,GroupeAbonnementsId")] Abonnement abonnement, string reglement)
         {
             if (ModelState.IsValid)
             {

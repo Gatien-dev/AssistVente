@@ -208,6 +208,7 @@
     <Compile Include="Controllers\CaissesController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\ForfaitsController.cs" />
+    <Compile Include="Controllers\GroupeAbonnementsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LocationsController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -236,6 +237,7 @@
     <Compile Include="Models\Caisse.cs" />
     <Compile Include="Models\CaisseManager.cs" />
     <Compile Include="Models\Client.cs" />
+    <Compile Include="Models\GroupeAbonnements.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\Location.cs" />
     <Compile Include="Models\Magasin.cs" />
@@ -584,6 +586,11 @@
     <Content Include="Views\Parametres\Edit.cshtml" />
     <Content Include="Views\Parametres\Index.cshtml" />
     <Content Include="Views\Abonnements\Reprendre.cshtml" />
+    <Content Include="Views\GroupeAbonnements\Create.cshtml" />
+    <Content Include="Views\GroupeAbonnements\Delete.cshtml" />
+    <Content Include="Views\GroupeAbonnements\Details.cshtml" />
+    <Content Include="Views\GroupeAbonnements\Edit.cshtml" />
+    <Content Include="Views\GroupeAbonnements\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
