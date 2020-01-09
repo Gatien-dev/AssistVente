@@ -84,6 +84,17 @@
                             <input type="number" id="montantPaye" max="@(Model.Montant-@Model.MontantPaye)" name="montantPaye" class="form-control" />
                         </td>
                     </tr>
+                    <tr>
+                        <td><b>Mode de règlement</b></td>
+                        <td width="100%">
+                            <select class="form-control" id="sel1" name="reglement">
+                                <option>Espèces</option>
+                                <option>Chèque</option>
+                                <option>Carte banquaire</option>
+                            </select>
+                        </td>
+                    </tr>
+
                 </tbody>
             </table>
         </div>

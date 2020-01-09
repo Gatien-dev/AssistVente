@@ -93,6 +93,7 @@
                     <tr>
                         <td>Date</td>
                         <td>Montant</td>
+                        <td>Motif</td>
                         @*<td>Identifiant</td>*@
                     </tr>
                 </thead>
@@ -104,9 +105,9 @@
                             <td>
                                 @Html.DisplayFor(model => reglement.MontantRegle)
                             </td>
-                            @*<td>
-                                    @Html.DisplayFor(model => reglement.IdOperation)
-                                </td>*@
+                            <td>
+                                    @Html.DisplayFor(model => reglement.Raison)
+                                </td>
                         </tr>
                     }
 

@@ -169,7 +169,7 @@ namespace AssistVente.Controllers
 
         [HttpPost, ActionName("Reglement")]
         [ValidateAntiForgeryToken]
-        public ActionResult ReglementConfirmed(Guid id, double montantPaye)
+        public ActionResult ReglementConfirmed(Guid id, double montantPaye, string reglement)
         {
             Location location = (Location)db.Operations.Find(id);
             location.MontantPaye += montantPaye;
@@ -183,7 +183,7 @@ namespace AssistVente.Controllers
             {
                 location.MontantRestant = 0;
             }
-            new CaisseManager(db).reglerLocation(montantPaye, location, montantPaye);
+            new CaisseManager(db).reglerLocation(montantPaye, location, "Paiement de location de " + location.QuantitePrise + " " + location.Produit.Nom, reglement);
 
             db.SaveChanges();
             return RedirectToAction("Index");

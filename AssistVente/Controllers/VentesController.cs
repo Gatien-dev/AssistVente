@@ -84,7 +84,7 @@ namespace AssistVente.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(VenteVM vente, Guid clientId)
+        public ActionResult Create(VenteVM vente, Guid clientId, string reglement)
         {
             if (ModelState.IsValid)
             {
@@ -118,7 +118,7 @@ namespace AssistVente.Controllers
 
                 db.Operations.Add(newVente);
                 db.SaveChanges();
-                new CaisseManager(db).reglerVente(vente.MontantPaye, newVente);
+                new CaisseManager(db).reglerVente(vente.MontantPaye, newVente, "Paiement de vente", reglement);
                 return RedirectToAction("Confirmer", new { id = newVente.Id });
             }
 
@@ -194,10 +194,10 @@ namespace AssistVente.Controllers
 
         [HttpPost, ActionName("Reglement")]
         [ValidateAntiForgeryToken]
-        public ActionResult ReglementConfirmed(Guid id, double mtRegle)
+        public ActionResult ReglementConfirmed(Guid id, double mtRegle,string reglement)
         {
             Vente vente = (Vente)db.Operations.Find(id);
-            new CaisseManager(db).reglerVente(mtRegle, vente);
+            new CaisseManager(db).reglerVente(mtRegle, vente,"Paiement de vente",reglement);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

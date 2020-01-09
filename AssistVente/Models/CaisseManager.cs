@@ -17,7 +17,7 @@ namespace AssistVente.Models
                 db = context;
         }
 
-        public void reglerVente(double montant, Vente vente, double montantRecu = 0, double montantRendu = 0)
+        public void reglerVente(double montant, Vente vente, string raison, string modeReglement, double montantRecu = 0, double montantRendu = 0)
         {
             var caisseParDefaut = getCaisseParDefaut();
             if (montant <= 0) return;
@@ -33,14 +33,16 @@ namespace AssistVente.Models
                 IdOperation = vente.Id,
                 MontantRegle = montant,
                 MontantRecu = montantRecu,
-                MontantRendu = montantRendu
+                MontantRendu = montantRendu,
+                Raison=raison,
+                ModeReglement=modeReglement
             });
             db.Ventes.First(v => v.Id == vente.Id).MontantRegle += montant;
             db.Ventes.First(v => v.Id == vente.Id).MontantRestant -= montant;
             db.SaveChanges();
         }
 
-        public void reglerLocation(double montant, Location location, double montantRecu = 0, double montantRendu = 0)
+        public void reglerLocation(double montant, Location location, string raison, string modeReglement, double montantRecu = 0, double montantRendu = 0)
         {
             var caisseParDefaut = getCaisseParDefaut();
             if (montant <= 0) return;
@@ -56,14 +58,16 @@ namespace AssistVente.Models
                 IdOperation = location.Id,
                 MontantRegle = montant,
                 MontantRecu = montantRecu,
-                MontantRendu = montantRendu
+                MontantRendu = montantRendu,
+                Raison = raison,
+                ModeReglement = modeReglement
             });
             db.Locations.First(v => v.Id == location.Id).MontantPaye += montant;
             db.Locations.First(v => v.Id == location.Id).MontantRestant -= montant;
             db.SaveChanges();
         }
 
-        public void reglerAbonnement(double montant, Abonnement abonnement, string raison, String modeReglement)
+        public void reglerAbonnement(double montant, Abonnement abonnement, string raison, string modeReglement)
         {
             var caisseParDefaut = getCaisseParDefaut();
             //if (montant <= 0) return;

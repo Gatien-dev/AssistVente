@@ -51,7 +51,7 @@ namespace AssistVente.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nom,Default,Solde,Adresse,Telephone,Email")] Client client)
+        public ActionResult Create([Bind(Include = "ID,Nom,Default,Solde,Adresse,Telephone,Email,NomUrgence,AddresseUrgence,TelephoneUrgence,PhotosAllowed,CertficatMedical,DateNaissance,LieuNaiss")] Client client)
         {
             if (ModelState.IsValid)
             {
@@ -85,7 +85,7 @@ namespace AssistVente.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nom,Default,Solde,Adresse,Telephone,Email")] Client client)
+        public ActionResult Edit([Bind(Include = "ID,Nom,Default,Solde,Adresse,Telephone,Email,NomUrgence,AddresseUrgence,TelephoneUrgence,PhotosAllowed,CertficatMedical,DateNaissance,LieuNaiss")] Client client)
         {
             if (ModelState.IsValid)
             {

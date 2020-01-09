@@ -19,7 +19,7 @@
                 <th>Nom</th>
                 <th>Adresse</th>
                 <th>Email</th>
-                <th>Solde</th>
+               
             </thead>
             <tbody>
 
@@ -35,9 +35,7 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Email)
                     </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Solde)
-                    </td>
+                   
 
                     <td>
                         <a href="@Url.Action("Details", new { id = item.ID })" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>

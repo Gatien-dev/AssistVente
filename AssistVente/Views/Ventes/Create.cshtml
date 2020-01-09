@@ -27,6 +27,14 @@
                 @Html.ValidationMessageFor(model => model.MontantPaye, "", new { @class = "text-danger" })
             </div>
         </div>
+        <div class="form-group col-md-6">
+            <label for="sel1">Mode de reglement</label>
+            <select class="form-control" id="sel1" name="reglement">
+                <option>Espèce</option>
+                <option>Chèque</option>
+                <option>Carte banquaire</option>
+            </select>
+        </div>
         <div class="form-group">
             <label id="total_label" class="control-label col-md-2">Total: </label>
             <div class="col-md-6">
