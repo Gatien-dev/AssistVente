@@ -71,6 +71,5 @@ namespace AssistVente.Models
 
         public System.Data.Entity.DbSet<AssistVente.Models.Parametre> Parametres { get; set; }
 
-        public System.Data.Entity.DbSet<AssistVente.Models.GroupeAbonnements> GroupeAbonnements { get; set; }
     }
 }

@@ -43,7 +43,7 @@ namespace AssistVente.Controllers
         // GET: Clients/Create
         public ActionResult Create()
         {
-            return View();
+            return View(new Client());
         }
 
         // POST: Clients/Create

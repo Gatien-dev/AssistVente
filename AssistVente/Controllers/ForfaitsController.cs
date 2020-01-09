@@ -41,6 +41,7 @@ namespace AssistVente.Controllers
         // GET: Forfaits/Create
         public ActionResult Create()
         {
+            
             return View();
         }
 
@@ -49,7 +50,7 @@ namespace AssistVente.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nom,Description,Duree,Montant")] Forfait forfait)
+        public ActionResult Create([Bind(Include = "Id,Nom,Description,Duree,Montant,groupeForfaitsId")] Forfait forfait)
         {
             if (ModelState.IsValid)
             {

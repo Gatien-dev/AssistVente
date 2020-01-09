@@ -127,67 +127,103 @@ namespace IdentitySample.Models
                 role = new IdentityRole(roleName);
                 var roleresult = roleManager.Create(role);
             }
-            var roleProduits = roleManager.FindByName("Produits");
-            if (roleProduits == null)
+            //Adding other roles
+            List<string> allRoles = new List<string>()
             {
-                roleProduits = new IdentityRole("Produits");
-                var roleresult = roleManager.Create(roleProduits);
+                "Produits",
+                "Produits-edition",
+                "Produits-suppression",
+                "Ventes",
+                "Ventes-edition",
+                "Ventes-suppression",
+                "Achats",
+                "Achats-edition",
+                "Achats-suppression",
+                "Caisses",
+                "Caisses-edition",
+                "Caisses-suppression",
+                "Abonnements",
+                "Abonnements-edition",
+                "Abonnements-suppression",
+                "Locations",
+                "Locations-edition",
+                "Locations-suppression",
+                "Stocks",
+                "Stocks-edition",
+                "Stocks-suppression",
+                "Forfaits",
+                "Forfaits-edition",
+                "Forfaits-suppression",
+                "Modifier les montants de location",
+            };
+            foreach (var newRole in allRoles)
+            {
+                if (roleManager.FindByName(newRole) == null)
+                {
+                    roleManager.Create(new IdentityRole(newRole));
+                }
             }
+            //var roleProduits = roleManager.FindByName("Produits");
+            //if (roleProduits == null)
+            //{
+            //    roleProduits = new IdentityRole("Produits");
+            //    var roleresult = roleManager.Create(roleProduits);
+            //}
 
-            var roleVente = roleManager.FindByName("Ventes");
-            if (roleVente == null)
-            {
-                roleVente = new IdentityRole("Ventes");
-                var roleresult = roleManager.Create(roleVente);
-            }
-            var roleAchat = roleManager.FindByName("Achats");
-            if (roleAchat == null)
-            {
-                roleAchat = new IdentityRole("Achats");
-                var roleresult = roleManager.Create(roleAchat);
-            }
+            //var roleVente = roleManager.FindByName("Ventes");
+            //if (roleVente == null)
+            //{
+            //    roleVente = new IdentityRole("Ventes");
+            //    var roleresult = roleManager.Create(roleVente);
+            //}
+            //var roleAchat = roleManager.FindByName("Achats");
+            //if (roleAchat == null)
+            //{
+            //    roleAchat = new IdentityRole("Achats");
+            //    var roleresult = roleManager.Create(roleAchat);
+            //}
 
-            var roleCaisse = roleManager.FindByName("Caisses");
-            if (roleCaisse == null)
-            {
-                roleCaisse = new IdentityRole("Caisses");
-                var roleresult = roleManager.Create(roleCaisse);
-            }
+            //var roleCaisse = roleManager.FindByName("Caisses");
+            //if (roleCaisse == null)
+            //{
+            //    roleCaisse = new IdentityRole("Caisses");
+            //    var roleresult = roleManager.Create(roleCaisse);
+            //}
 
 
-            var roleAbo = roleManager.FindByName("Abonnements");
-            if (roleAbo == null)
-            {
-                roleAbo = new IdentityRole("Abonnements");
-                var roleresult = roleManager.Create(roleAbo);
-            }
+            //var roleAbo = roleManager.FindByName("Abonnements");
+            //if (roleAbo == null)
+            //{
+            //    roleAbo = new IdentityRole("Abonnements");
+            //    var roleresult = roleManager.Create(roleAbo);
+            //}
 
-            var roleLocations = roleManager.FindByName("Locations");
-            if (roleLocations == null)
-            {
-                roleLocations = new IdentityRole("Locations");
-                var roleresult = roleManager.Create(roleLocations);
-            }
+            //var roleLocations = roleManager.FindByName("Locations");
+            //if (roleLocations == null)
+            //{
+            //    roleLocations = new IdentityRole("Locations");
+            //    var roleresult = roleManager.Create(roleLocations);
+            //}
 
-            var roleStock = roleManager.FindByName("Stocks");
-            if (roleStock == null)
-            {
-                roleStock = new IdentityRole("Stocks");
-                var roleresult = roleManager.Create(roleStock);
-            }
-            var roleForfaits = roleManager.FindByName("Forfaits");
-            if (roleForfaits == null)
-            {
-                roleForfaits = new IdentityRole("Forfaits");
-                var roleresult = roleManager.Create(roleForfaits);
-            }
-            //Modifier les montants de location
-            var roleModifMontantLocations = roleManager.FindByName("Modifier les montants de location");
-            if (roleModifMontantLocations == null)
-            {
-                roleModifMontantLocations = new IdentityRole("Modifier les montants de location");
-                var roleresult = roleManager.Create(roleModifMontantLocations);
-            }
+            //var roleStock = roleManager.FindByName("Stocks");
+            //if (roleStock == null)
+            //{
+            //    roleStock = new IdentityRole("Stocks");
+            //    var roleresult = roleManager.Create(roleStock);
+            //}
+            //var roleForfaits = roleManager.FindByName("Forfaits");
+            //if (roleForfaits == null)
+            //{
+            //    roleForfaits = new IdentityRole("Forfaits");
+            //    var roleresult = roleManager.Create(roleForfaits);
+            //}
+            ////Modifier les montants de location
+            //var roleModifMontantLocations = roleManager.FindByName("Modifier les montants de location");
+            //if (roleModifMontantLocations == null)
+            //{
+            //    roleModifMontantLocations = new IdentityRole("Modifier les montants de location");
+            //    var roleresult = roleManager.Create(roleModifMontantLocations);
+            //}
             var user = userManager.FindByName(name);
             if (user == null)
             {

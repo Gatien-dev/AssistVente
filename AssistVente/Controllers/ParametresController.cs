@@ -123,7 +123,16 @@ namespace AssistVente.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
+        public ActionResult InitialiseData()
+        {
+            return RedirectToAction("Index", "Home", null);
+        }
+        public void InsertInitializationData()
+        {
+            
+            db.SaveChanges();
 
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

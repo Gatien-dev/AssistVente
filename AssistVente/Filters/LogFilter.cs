@@ -47,9 +47,17 @@ namespace AssistVente.Filters
 
         private void FechGeneralInfos(ActionExecutingContext filterContext, AssistVenteContext storeDB)
         {
+            try
+            {
+
             //(item.DateFinLocation - DateTime.Now).TotalDays < 0
             var expiredLocations = storeDB.Locations.ToList().Where(l => (l.DateFinLocation - DateTime.Now).TotalDays < 0).ToList();
             filterContext.HttpContext.Session.Add("expiredLocations", expiredLocations.Count());
+            }
+            catch
+            {
+
+            }
         }
     }
 }
