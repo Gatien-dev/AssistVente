@@ -33,6 +33,7 @@ namespace AssistVente.Controllers
                     db.SaveChanges();
                 }
             }
+            ViewBag.groupes = db.GroupeAbonnements.OrderByDescending(g=>g.Abonnements.Count()).ToList();
             return View(abonnements);
         }
 
