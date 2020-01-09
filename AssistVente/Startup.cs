@@ -15,7 +15,7 @@ namespace IdentitySample
             app.UseHangfireDashboard();
 
             // Let's also create a sample background job
-            BackgroundJob.Enqueue(() => Debug.WriteLine("Hello world from Hangfire!"));
+            //BackgroundJob.Enqueue(() => Debug.WriteLine("Hello world from Hangfire!"));
             ConfigureAuth(app);
         }
         private IEnumerable<IDisposable> GetHangfireServers()

@@ -15,6 +15,8 @@ namespace AssistVente.Models
         public double MontantRegle { get; set; }
         public double MontantRecu { get; set; }
         public double MontantRendu { get; set; }
+        public string Raison { get; set; }
+        public String ModeReglement {get; set;}
 
     }
 }

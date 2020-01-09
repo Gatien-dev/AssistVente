@@ -63,11 +63,11 @@ namespace AssistVente.Models
             db.SaveChanges();
         }
 
-        public void reglerAbonnement(double montant, Abonnement abonnement)
+        public void reglerAbonnement(double montant, Abonnement abonnement, string raison, String modeReglement)
         {
             var caisseParDefaut = getCaisseParDefaut();
-            if (montant <= 0) return;
-            if (abonnement.ResteAPayer < montant) montant = abonnement.ResteAPayer;
+            //if (montant <= 0) return;
+            //if (abonnement.ResteAPayer < montant) montant = abonnement.ResteAPayer;
 
             caisseParDefaut.Solde += montant;
 
@@ -81,11 +81,13 @@ namespace AssistVente.Models
                 IdOperation = abonnement.Id,
                 MontantRegle = montant,
                 MontantRecu = 0,
-                MontantRendu = 0
+                MontantRendu = 0,
+                Raison = raison,
+                ModeReglement = modeReglement
             });
 
-            db.Abonnements.First(a => a.Id == abonnement.Id).SommePaye += montant;
-            db.Abonnements.First(a => a.Id == abonnement.Id).ResteAPayer -= montant;
+            //db.Abonnements.First(a => a.Id == abonnement.Id).SommePaye += montant;
+            //db.Abonnements.First(a => a.Id == abonnement.Id).ResteAPayer -= montant;
             db.SaveChanges();
         }
 
