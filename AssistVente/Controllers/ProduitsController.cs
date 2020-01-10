@@ -42,6 +42,7 @@ namespace AssistVente.Controllers
         }
 
         // GET: Produits/Create
+        [Authorize(Roles = "Admin,Produits-edition")]
         public ActionResult Create()
         {
             return View();
@@ -73,6 +74,7 @@ namespace AssistVente.Controllers
         }
 
         // GET: Produits/Edit/5
+        [Authorize(Roles = "Admin,Produits-edition")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -110,6 +112,7 @@ namespace AssistVente.Controllers
             return View(produit);
         }
 
+        [Authorize(Roles = "Admin,Produits-edition")]
         public ActionResult Ajustement(Guid? id)
         {
             if (id == null)
@@ -139,6 +142,7 @@ namespace AssistVente.Controllers
 
 
         // GET: Produits/Delete/5
+        [Authorize(Roles = "Admin,Produits-suppression")]
         public ActionResult Delete(Guid? id)
         {
             ViewBag.currentPage = "Suppression de produit";

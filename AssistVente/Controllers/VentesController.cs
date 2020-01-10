@@ -57,6 +57,7 @@ namespace AssistVente.Controllers
         }
 
         // GET: Ventes/Create
+        [Authorize(Roles = "Admin,Ventes-edition")]
         public ActionResult Create()
         {
             if (!db.Caisses.Any()) return RedirectToAction("Index");
@@ -127,6 +128,7 @@ namespace AssistVente.Controllers
         }
 
         // GET: Ventes/Edit/5
+        [Authorize(Roles = "Admin,Ventes-edition")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -162,6 +164,7 @@ namespace AssistVente.Controllers
 
 
         // GET: Ventes/Delete/5
+        [Authorize(Roles = "Admin,Ventes-suppression")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -178,6 +181,7 @@ namespace AssistVente.Controllers
             return View(vente);
         }
 
+        [Authorize(Roles = "Admin,Ventes-edition")]
         public ActionResult Reglement(Guid? id)
         {
             if (id == null)

@@ -39,6 +39,7 @@ namespace AssistVente.Controllers
         }
 
         // GET: Forfaits/Create
+        [Authorize(Roles = "Admin,Forfaits-edition")]
         public ActionResult Create()
         {
 
@@ -65,6 +66,7 @@ namespace AssistVente.Controllers
         }
 
         // GET: Forfaits/Edit/5
+        [Authorize(Roles = "Admin,Forfaits-edition")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -96,6 +98,7 @@ namespace AssistVente.Controllers
         }
 
         // GET: Forfaits/Delete/5
+        [Authorize(Roles = "Admin,Forfaits-suppression")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)

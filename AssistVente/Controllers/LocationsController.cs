@@ -41,6 +41,7 @@ namespace AssistVente.Controllers
         }
 
         // GET: Locations/Create
+        [Authorize(Roles = "Admin,Locations-edition")]
         public ActionResult Create()
         {
             ViewBag.ProduitId = new SelectList(db.Produits.Where(p => p.ALouer).Select(p => new { id = p.ID, Nom = p.Nom + " (" + p.StockDisponible + " disponibles)" }), "ID", "Nom");
@@ -97,6 +98,7 @@ namespace AssistVente.Controllers
 
 
         // GET: Locations/Edit/5
+        [Authorize(Roles = "Admin,Locations-edition")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -129,6 +131,7 @@ namespace AssistVente.Controllers
             return View(location);
         }
 
+        [Authorize(Roles = "Admin,Locations-edition")]
         public ActionResult Rendre(Guid? id)
         {
             if (id == null)
@@ -172,6 +175,7 @@ namespace AssistVente.Controllers
             }
             return View(Location);
         }
+        [Authorize(Roles = "Admin,Locations-edition")]
         public ActionResult Reglement(Guid? id)
         {
             if (id == null)
@@ -209,6 +213,7 @@ namespace AssistVente.Controllers
         }
 
         // GET: Locations/Delete/5
+        [Authorize(Roles = "Admin,Locations-suppression")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)

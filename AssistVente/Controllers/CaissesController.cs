@@ -40,6 +40,7 @@ namespace AssistVente.Controllers
         }
 
         // GET: Caisses/Create
+        [Authorize(Roles = "Admin,Caisses-edition")]
         public ActionResult Create()
         {
             return View();
@@ -64,6 +65,7 @@ namespace AssistVente.Controllers
         }
 
         // GET: Caisses/Edit/5
+        [Authorize(Roles = "Admin,Caisses-edition")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -108,6 +110,7 @@ namespace AssistVente.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin,Caisses-edition")]
         public ActionResult Reset([Bind(Include = "ID,Nom,Solde")] Caisse caisse)
         {
             var dbCaisse = db.Caisses.Include(c => c.Reinitialisations).First(c => c.ID == caisse.ID);
@@ -131,6 +134,7 @@ namespace AssistVente.Controllers
         }
         // TODO: veiller a ne pas supprimer les caisses qui ont une historiqueou qui ont une operation
         // GET: Caisses/Delete/5
+        [Authorize(Roles = "Admin,Caisses-suppression")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)

@@ -11,6 +11,7 @@ using AssistVente.Models;
 
 namespace AssistVente.Controllers
 {
+    [Authorize(Roles = "Admin,Groupes de forfaits")]
     public class GroupeForfaitsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();
@@ -37,6 +38,7 @@ namespace AssistVente.Controllers
         }
 
         // GET: GroupeForfaits/Create
+        [Authorize(Roles = "Admin,Groupes de forfaits-edition")]
         public ActionResult Create()
         {
             return View();
@@ -61,6 +63,7 @@ namespace AssistVente.Controllers
         }
 
         // GET: GroupeForfaits/Edit/5
+        [Authorize(Roles = "Admin,Groupes de forfaits-edition")]
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
@@ -92,6 +95,7 @@ namespace AssistVente.Controllers
         }
 
         // GET: GroupeForfaits/Delete/5
+        [Authorize(Roles = "Admin,Groupes de forfaits-suppression")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)

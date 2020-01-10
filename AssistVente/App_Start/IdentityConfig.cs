@@ -154,7 +154,11 @@ namespace IdentitySample.Models
                 "Forfaits",
                 "Forfaits-edition",
                 "Forfaits-suppression",
+                "Groupes de forfaits",
+                "Groupes de forfaits-edition",
+                "Groupes de forfaits-suppression",
                 "Modifier les montants de location",
+                "Parametres"
             };
             foreach (var newRole in allRoles)
             {

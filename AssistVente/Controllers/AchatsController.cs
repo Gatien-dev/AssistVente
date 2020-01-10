@@ -12,7 +12,6 @@ using System.Web.Mvc;
 
 namespace AssistVente.Controllers
 {
-    [Authorize(Roles = "Admin,Achats")]
     [LogFilter]
     public class AchatsController : Controller
     {
@@ -56,6 +55,7 @@ namespace AssistVente.Controllers
             //}
         }
 
+    [Authorize(Roles = "Admin,Achats-edition")]
         public ActionResult CreateAchat()
         {
             var achatVM = new AchatCreateVM()
@@ -117,6 +117,7 @@ namespace AssistVente.Controllers
             return View(achat);
         }
 
+        [Authorize(Roles = "Admin,Achats-edition")]
         // GET: Achats/Create
         public ActionResult Create()
         {
@@ -199,6 +200,7 @@ namespace AssistVente.Controllers
             return View(achat);
         }
 
+        [Authorize(Roles = "Admin,Achats-suppression")]
         public ActionResult Delete (Guid id)
         {
             if (id == null)
