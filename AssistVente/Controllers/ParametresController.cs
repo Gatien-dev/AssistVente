@@ -11,7 +11,7 @@ using Hangfire;
 
 namespace AssistVente.Controllers
 {
-    [Authorize(Roles ="Admin")]
+    [Authorize(Roles = "Admin")]
     public class ParametresController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();
@@ -129,7 +129,7 @@ namespace AssistVente.Controllers
         }
         public void InsertInitializationData()
         {
-            
+            db.Caisses.Add(new Caisse() { ID = Guid.NewGuid(), Nom = "Caisse Principale", Solde = 0 });
             db.SaveChanges();
 
         }

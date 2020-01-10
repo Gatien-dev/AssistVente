@@ -5,118 +5,114 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Data.Entity;
 using System.Web.Mvc;
-using AssistVente.Filters;
 using AssistVente.Models;
 
 namespace AssistVente.Controllers
 {
-    [Authorize(Roles = "Admin,Forfaits")]
-    [LogFilter]
-    public class ForfaitsController : Controller
+    public class GroupeForfaitsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();
 
-        // GET: Forfaits
+        // GET: GroupeForfaits
         public ActionResult Index()
         {
-            return View(db.Forfaits.ToList());
+            return View(db.GroupeForfaits.ToList());
         }
 
-        // GET: Forfaits/Details/5
+        // GET: GroupeForfaits/Details/5
         public ActionResult Details(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Forfait forfait = db.Forfaits.Find(id);
-            if (forfait == null)
+            GroupeForfait groupeForfait = db.GroupeForfaits.Include(g=>g.Forfaits.Select(f=>f.Abonnements.Select(a=>a.Client))).First(f=>f.Id==id);
+            if (groupeForfait == null)
             {
                 return HttpNotFound();
             }
-            return View(forfait);
+            return View(groupeForfait);
         }
 
-        // GET: Forfaits/Create
+        // GET: GroupeForfaits/Create
         public ActionResult Create()
         {
-
-            ViewBag.GroupeForfaitId = new SelectList(db.GroupeForfaits, "ID", "Nom");
             return View();
         }
 
-        // POST: Forfaits/Create
+        // POST: GroupeForfaits/Create
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
+        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "Id,Nom,Description,Duree,Montant,GroupeForfaitId")] Forfait forfait)
+        public ActionResult Create([Bind(Include = "Id,Nom,Description")] GroupeForfait groupeForfait)
         {
             if (ModelState.IsValid)
             {
-                forfait.Id = Guid.NewGuid();
-                db.Forfaits.Add(forfait);
+                groupeForfait.Id = Guid.NewGuid();
+                db.GroupeForfaits.Add(groupeForfait);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
-            return View(forfait);
+            return View(groupeForfait);
         }
 
-        // GET: Forfaits/Edit/5
+        // GET: GroupeForfaits/Edit/5
         public ActionResult Edit(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Forfait forfait = db.Forfaits.Find(id);
-            if (forfait == null)
+            GroupeForfait groupeForfait = db.GroupeForfaits.Find(id);
+            if (groupeForfait == null)
             {
                 return HttpNotFound();
             }
-            return View(forfait);
+            return View(groupeForfait);
         }
 
-        // POST: Forfaits/Edit/5
+        // POST: GroupeForfaits/Edit/5
         // Afin de déjouer les attaques par sur-validation, activez les propriétés spécifiques que vous voulez lier. Pour 
-        // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
+        // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Nom,Description,Duree,Montant,GroupeForfaitId")] Forfait forfait)
+        public ActionResult Edit([Bind(Include = "Id,Nom,Description")] GroupeForfait groupeForfait)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(forfait).State = EntityState.Modified;
+                db.Entry(groupeForfait).State = EntityState.Modified;
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
-            return View(forfait);
+            return View(groupeForfait);
         }
 
-        // GET: Forfaits/Delete/5
+        // GET: GroupeForfaits/Delete/5
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Forfait forfait = db.Forfaits.Find(id);
-            if (forfait == null)
+            GroupeForfait groupeForfait = db.GroupeForfaits.Find(id);
+            if (groupeForfait == null)
             {
                 return HttpNotFound();
             }
-            return View(forfait);
+            return View(groupeForfait);
         }
 
-        // POST: Forfaits/Delete/5
+        // POST: GroupeForfaits/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {
-            Forfait forfait = db.Forfaits.Find(id);
-            db.Forfaits.Remove(forfait);
+            GroupeForfait groupeForfait = db.GroupeForfaits.Find(id);
+            db.GroupeForfaits.Remove(groupeForfait);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

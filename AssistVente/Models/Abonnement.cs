@@ -34,6 +34,9 @@ namespace AssistVente.Models
     {
         public Guid Id { get; set; }
         public String Nom { get; set; }
+        public Guid GroupeForfaitId { get; set; }
+        [Display(Name="Groupe de forfaits")]
+        public virtual GroupeForfait GroupeForfait { get; set; }
         public string Description { get; set; }
         [Display(Name="Durée (Jours)")]
         public int Duree { get; set; }

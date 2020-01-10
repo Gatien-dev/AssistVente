@@ -1,0 +1,84 @@
+﻿@model AssistVente.Models.GroupeForfait
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<div class="card strpied-tabled-with-hover">
+    <div class="card-header ">
+        <h4 class="card-title ">Details du groupe "@Model.Nom"</h4>
+
+        <p class="card-category  pull-left">Voir les informations détaillées d'un groupe d'abonnements</p>
+
+    </div>
+    <div class="card-body table-full-width table-responsive">
+        <table class="table table-hover table-striped">
+            <tbody>
+                <tr>
+                    <td><b>NOM</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.Nom)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Description</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.Description)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="pull-right">
+            <a href="@Url.Action("Edit", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-primary"><i class="fas fa-edit"></i> Modifier le groupe</a>
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+        </p>
+    </div>
+</div>
+@if (Model.Forfaits != null)
+{
+    <div class="card strpied-tabled-with-hover">
+        <div class="card-header ">
+            <h4 class="card-title ">@*Historique des réinitialisations*@ </h4>
+
+            <p class="card-category  pull-left">Historique des réinitialisations</p>
+
+        </div>
+        <div class="card-body table-full-width table-responsive">
+            <table class="table table-hover table-striped datatable">
+                <thead>
+                    <tr>
+                        <td>Forfait</td>
+                        <td>Client </td>
+                        <td>Date de Fin </td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var forfait in Model.Forfaits)
+                    {
+                        foreach (var abo in forfait.Abonnements)
+                        {
+                            <tr>
+                                <td><b>@forfait.Nom</b></td>
+                                <td>
+                                    @Html.DisplayFor(model => abo.Client.Nom)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(model => abo.DateFin)
+                                </td>
+                            </tr>
+                        }
+                    }
+
+
+                </tbody>
+            </table>
+            <p class="pull-right">
+                    <a href="@Url.Action("Edit", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-primary"><i class="fas fa-edit"></i> Modifier le groupe</a>
+                    <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+                </p>
+        </div>
+
+    </div>
+}
+

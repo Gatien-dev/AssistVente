@@ -21,6 +21,7 @@ namespace AssistVente.Controllers
         public ActionResult Index()
         {
             checkAbonnements();
+            ViewBag.caisseDefined = db.Caisses.Any();
             var abonnements = db.Operations.OfType<Abonnement>().Include(a => a.Forfait).OrderByDescending(a => a.Termine).OrderByDescending(l => l.Date).ToList();
 
             foreach (var abonnement in abonnements)

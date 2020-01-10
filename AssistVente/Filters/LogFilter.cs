@@ -11,36 +11,45 @@ namespace AssistVente.Filters
     {
         void IActionFilter.OnActionExecuting(ActionExecutingContext filterContext)
         {
-            // TODO: Add your acction filter's tasks here
+            try
+            { // TODO: Add your acction filter's tasks here
 
-            // Log Action Filter Call
-            AssistVenteContext storeDB = new AssistVenteContext();
-            var user = HttpContext.Current.User.Identity.Name;
+                // Log Action Filter Call
+                AssistVenteContext storeDB = new AssistVenteContext();
+                var user = HttpContext.Current.User.Identity.Name;
 
-            var accessedId = string.Empty;
-            if (filterContext.ActionParameters.TryGetValue("id", out object value))
-            {
-                accessedId = value.ToString();
+                var accessedId = string.Empty;
+                if (filterContext.ActionParameters.TryGetValue("id", out object value))
+                {
+                    accessedId = value.ToString();
+                }
+                if (filterContext.ActionDescriptor.ControllerDescriptor.ControllerName == "Home")
+                {
+                    FechGeneralInfos(filterContext, storeDB);
+                }
+                ActionLog log = new ActionLog()
+                {
+                    ID = Guid.NewGuid(),
+                    Controller = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName,
+                    Action = filterContext.ActionDescriptor.ActionName,
+                    IP = filterContext.HttpContext.Request.UserHostAddress,
+                    DateTime = filterContext.HttpContext.Timestamp,
+                    User = user
+                };
+                if (accessedId != string.Empty)
+                {
+                    log.Action += "/" + accessedId;
+                }
+                storeDB.ActionLogs.Add(log);
+                storeDB.SaveChanges();
+
             }
-            if (filterContext.ActionDescriptor.ControllerDescriptor.ControllerName == "Home")
+            catch (Exception)
             {
-                FechGeneralInfos(filterContext,storeDB);
+
+                
             }
-            ActionLog log = new ActionLog()
-            {
-                ID = Guid.NewGuid(),
-                Controller = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName,
-                Action = filterContext.ActionDescriptor.ActionName,
-                IP = filterContext.HttpContext.Request.UserHostAddress,
-                DateTime = filterContext.HttpContext.Timestamp,
-                User = user
-            };
-            if (accessedId != string.Empty)
-            {
-                log.Action += "/" + accessedId;
-            }
-            storeDB.ActionLogs.Add(log);
-            storeDB.SaveChanges();
+
 
             this.OnActionExecuting(filterContext);
         }
@@ -50,9 +59,9 @@ namespace AssistVente.Filters
             try
             {
 
-            //(item.DateFinLocation - DateTime.Now).TotalDays < 0
-            var expiredLocations = storeDB.Locations.ToList().Where(l => (l.DateFinLocation - DateTime.Now).TotalDays < 0).ToList();
-            filterContext.HttpContext.Session.Add("expiredLocations", expiredLocations.Count());
+                //(item.DateFinLocation - DateTime.Now).TotalDays < 0
+                var expiredLocations = storeDB.Locations.ToList().Where(l => (l.DateFinLocation - DateTime.Now).TotalDays < 0).ToList();
+                filterContext.HttpContext.Session.Add("expiredLocations", expiredLocations.Count());
             }
             catch
             {

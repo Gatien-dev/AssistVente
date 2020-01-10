@@ -175,7 +175,7 @@ namespace AssistVente.Controllers
                         stockManager.AddStock(produit.ID, detail.QuantiteAchetee, OperationType.Achat);
                     }
                 }
-
+                db.Achats.Add(achat);
                 //db.Operations.Add(achat);
                 db.SaveChanges();
                 return RedirectToAction("Index");

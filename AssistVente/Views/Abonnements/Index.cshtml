@@ -7,9 +7,18 @@
     <div class="col-md-12">
         <div class="card strpied-tabled-with-hover">
             <div class="card-header ">
-                <p class="pull-right">
-                    <a href="@Url.Action("Create")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouvel abonnement</a>
-                </p>
+                @if (ViewBag.caisseDefined)
+                {
+
+                    <p class="pull-right">
+                        <a href="@Url.Action("Create")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouvelle vente</a>
+                    </p>
+                }
+                else
+                {
+                    <p class="text-danger">Aucune caisse disponible. Impossible d'effectuer une vente.</p>
+                    <a href="@Url.Action("Create","Caisses")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouvelle Caisse</a>
+                }
             </div>
 
             

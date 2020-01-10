@@ -52,7 +52,7 @@ namespace AssistVente.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nom,PrixAchat,PrixVente,ALouer,StockDisponible,DureeDeLocationParDefaut,Description,DateCreation,CreatorId")] Produit produit)
+        public ActionResult Create([Bind(Include = "ID,Nom,PrixAchat,PrixVente,ALouer,StockDisponible,PrixLocationParDefaut,DureeDeLocationParDefaut,Description,DateCreation,CreatorId")] Produit produit)
         {
             if (ModelState.IsValid)
             {
@@ -60,8 +60,11 @@ namespace AssistVente.Controllers
                 produit.DureeDeLocationParDefaut = 1;
                 produit.DateCreation = DateTime.Now;
                 produit.CreatorId = User.Identity.GetUserId();
+                var stock = produit.StockDisponible;
+                produit.StockDisponible = 0;
                 db.Produits.Add(produit);
-                new StockManager(db).AddStock(produit.ID, produit.StockDisponible, OperationType.Création);
+                db.SaveChanges();
+                new StockManager(db).AddStock(produit.ID, stock, OperationType.Création);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -89,11 +92,17 @@ namespace AssistVente.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nom,PrixAchat,PrixVente,ALouer,DureeDeLocationParDefaut,Description,DateCreation,CreatorId")] Produit produit)
+        public ActionResult Edit([Bind(Include = "ID,Nom,PrixAchat,PrixVente,ALouer,PrixLocationParDefaut,DureeDeLocationParDefaut,Description,DateCreation,CreatorId")] Produit produit)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(produit).State = EntityState.Modified;
+                //db.Entry(produit).State = EntityState.Modified;
+                var dbProd = db.Produits.Find(produit.ID);
+                dbProd.Nom = produit.Nom;
+                dbProd.PrixAchat = produit.PrixAchat;
+                dbProd.PrixVente = produit.PrixVente;
+                dbProd.PrixLocationParDefaut = produit.PrixLocationParDefaut;
+                dbProd.Description = produit.Description;
                 produit.CreatorId = User.Identity.GetUserId();
                 db.SaveChanges();
                 return RedirectToAction("Index");

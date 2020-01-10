@@ -43,7 +43,7 @@ namespace AssistVente.Controllers
         // GET: Locations/Create
         public ActionResult Create()
         {
-            ViewBag.ProduitId = new SelectList(db.Produits.Where(p => p.ALouer), "ID", "Nom");
+            ViewBag.ProduitId = new SelectList(db.Produits.Where(p => p.ALouer).Select(p => new { id = p.ID, Nom = p.Nom + " (" + p.StockDisponible + " disponibles)" }), "ID", "Nom");
             ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom");
             ViewBag.editAmount = User.IsInRole("Modifier les montants de location") || User.IsInRole("Admin");
             return View();
@@ -65,6 +65,7 @@ namespace AssistVente.Controllers
                 {
                     ModelState.AddModelError("QuantitePrise", "La quantité de produit à louer n'est pas disponible");
                     ViewBag.ProduitId = new SelectList(db.Produits, "ID", "Nom", location.ProduitId);
+                    ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom");
                     return View(location);
                 }
                 new StockManager(db).RemoveStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
@@ -72,15 +73,21 @@ namespace AssistVente.Controllers
                 location.DateArretLocation = location.DateFinLocation;
                 location.LocationRendue = false;
                 location.UserId = User.Identity.GetUserId();
+                if (!User.IsInRole("Modifier les montants de location"))
+                {
+                    location.Montant = produit.PrixLocationParDefaut * (location.DateFinLocation - location.DateLocation).TotalDays * location.QuantitePrise;
+                }
                 location.QuantiteRendue = 0;
                 location.MontantRestant = location.Montant - location.MontantPaye;
+
                 if (location.MontantRestant < 0)
                 {
                     location.MontantRestant = 0;
                 }
                 db.Operations.Add(location);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                new CaisseManager(db).reglerLocation(location.Montant, location, "Paiement de location de " + location.QuantitePrise + " " + produit.Nom, "Especes");
+                return RedirectToAction("Confirmer", new { id = location.Id });
             }
 
             ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom");
@@ -152,7 +159,19 @@ namespace AssistVente.Controllers
             db.SaveChanges();
             return RedirectToAction("Index");
         }
-
+        public ActionResult Confirmer(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Location Location = db.Operations.OfType<Location>().First(v => v.Id == id);
+            if (Location == null)
+            {
+                return HttpNotFound();
+            }
+            return View(Location);
+        }
         public ActionResult Reglement(Guid? id)
         {
             if (id == null)
@@ -212,7 +231,10 @@ namespace AssistVente.Controllers
             Location location = (Location)db.Operations.Find(id);
             //Restitution du stock qui a ete pris
             if (!location.LocationRendue)
+            {
                 new StockManager(db).AddStock(location.ProduitId, location.QuantitePrise, OperationType.Location);
+                new CaisseManager(db).reglerLocation(-location.MontantPaye, location, "Suppression de location " + location.QuantitePrise + " " + location.Produit.Nom, "especes");
+            }
             db.Operations.Remove(location);
             db.SaveChanges();
             return RedirectToAction("Index");
