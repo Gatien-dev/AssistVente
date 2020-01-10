@@ -41,7 +41,7 @@
         <div class="card-header ">
             <h4 class="card-title ">@*Historique des réinitialisations*@ </h4>
 
-            <p class="card-category  pull-left">Historique des réinitialisations</p>
+            <p class="card-category  pull-left">Abonnements en cours</p>
 
         </div>
         <div class="card-body table-full-width table-responsive">
@@ -56,7 +56,7 @@
                 <tbody>
                     @foreach (var forfait in Model.Forfaits)
                     {
-                        foreach (var abo in forfait.Abonnements)
+                        foreach (var abo in forfait.Abonnements.Where(a=>!a.Termine))
                         {
                             <tr>
                                 <td><b>@forfait.Nom</b></td>

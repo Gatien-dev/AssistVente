@@ -26,13 +26,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><b>Date de retour</b></td>
+                    <td><b>Date de début</b></td>
                     <td>
                         @Html.DisplayFor(model => model.DateDebut)
                     </td>
                 </tr>
                 <tr>
-                    <td><b>Date d'arret</b></td>
+                    <td><b>Date de fin</b></td>
                     <td>
                         @Html.DisplayFor(model => model.DateFin)
                     </td>
@@ -94,6 +94,7 @@
         <p class="pull-right">
             <a href="@Url.Action("Suspendre", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-primary @if (Model.Suspendu) { @("disabled")} "><i class="fas fa-calendar-check"></i> Suspendre l'abonnement</a>
             <a href="@Url.Action("Reglement", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-default @if (Model.ResteAPayer>=0) { @("disabled")} "><i class="fas fa-money"></i> Payer l'abonnement</a>
+            <a href="@Url.Action("Recu", new { id = Model.Id })" style="margin-right:5px;" target="_blank" class="btn btn-default "><i class="fas fa-print"></i> Imprimer le reçu</a>
             <a href="@Url.Action("Delete", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-danger "><i class="fas fa-remove"></i> Supprimer l'abonnement</a>
             <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
         </p>

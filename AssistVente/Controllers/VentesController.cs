@@ -55,7 +55,19 @@ namespace AssistVente.Controllers
             }
             return View(vente);
         }
-
+        public ActionResult recu(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Vente abonnement = db.Operations.OfType<Vente>().Include(a => a.Details).First(a => a.Id == id);
+            if (abonnement == null)
+            {
+                return HttpNotFound();
+            }
+            return View(abonnement);
+        }
         // GET: Ventes/Create
         [Authorize(Roles = "Admin,Ventes-edition")]
         public ActionResult Create()

@@ -52,7 +52,19 @@ namespace AssistVente.Controllers
             }
             return View(abonnement);
         }
-
+        public ActionResult recu(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Abonnement abonnement = db.Operations.OfType<Abonnement>().Include(a => a.Forfait).First(a => a.Id == id);
+            if (abonnement == null)
+            {
+                return HttpNotFound();
+            }
+            return View(abonnement);
+        }
         // GET: Abonnements/Create
         public ActionResult Create()
         {

@@ -25,7 +25,7 @@ namespace AssistVente.Models
         [Display(Name ="Suspendu?")]
         public bool Suspendu { get; set; }
         public bool Termine { get; set; }
-        [Display(Name = "Montant restant")]
+        [Display(Name = "Reste à payer")]
         public double ResteAPayer { get; set; } = 0;
         [Display(Name = "Montant payé")]
         public double SommePaye { get; set; } = 0;

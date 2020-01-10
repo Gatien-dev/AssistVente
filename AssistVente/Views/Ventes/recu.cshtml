@@ -1,0 +1,37 @@
+﻿@model AssistVente.Models.Vente
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>~</title>
+    <style>
+        @@media print {
+            .no-print, .no-print * {
+                display: none !important;
+            }
+        }
+    </style>
+</head>
+<body style="width:200px;  text-align:center;">
+    <div style="width:200px;  text-align:center;">
+        <h4>Recu de Vente Eyiwa Land</h4>
+        <p>Date : @Model.Date.ToShortDateString() <br />
+        <p>
+            Montant : @Model.Montant
+        </p>
+        @foreach (var item in Model.Details)
+        {
+            <p>  @(item.Produit.Nom + " (x" + item.QuantiteVendue + ") --- " + item.QuantiteVendue * item.Produit.PrixVente)</p>
+        }
+        <p>Total: @Model.Montant </p>
+        <p>  Merci de votre confiance.</p>
+        <br />
+    </div>
+    <button onclick="window.print();return false;" class="no-print">Imprimer</button>
+</body>
+</html>

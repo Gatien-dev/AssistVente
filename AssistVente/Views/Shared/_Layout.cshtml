@@ -34,61 +34,80 @@
             -->
             <div class="sidebar-wrapper">
                 <div class="logo">
-                    <a href="@Url.Action("Index","home")" class="simple-text">
+                    <a href="@Url.Action("Index", "home")" class="simple-text">
                         Assist-Vente
                     </a>
                 </div>
                 <ul class="nav">
-                    <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Create","Ventes")">
-                            <i class="nc-icon nc-icon nc-paper-2"></i>
-                            <p>Nouvelle Vente</p>
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("Index","Achats")">
-                            <i class="nc-icon nc-icon nc-paper-2"></i>
-                            <p>Achats</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="@Url.Action("Index","Produits")">
-                            <i class="fa fa-shopping-cart"></i>
-                            <p>Produits</p>
-                        </a>
-                    </li>
+                    @if (User.IsInRole("Admin")||User.IsInRole("Ventes"))
+                    {
 
-                    <li>
-                        <a class="nav-link" href="@Url.Action("Index","Forfaits")">
-                            <i class="fa fa-building"></i>
-                            <p>Forfaits</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="@Url.Action("Index","Locations")">
-                            <i class="fa fa-calendar-check"></i>
-                            <p>Locations</p>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="nav-link" href="@Url.Action("Index","Abonnements")">
-                            <i class="fa fa-shopping-bag"></i>
-                            <p>Abonnements</p>
-                        </a>
-                    </li>
-
-                    <li>
-                        <a class="nav-link" href="@Url.Action("Index","Caisses")">
-                            <i class="fa fa-cash-register"></i>
-                            <p>Caisses</p>
-                        </a>
-                    </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Create", "Ventes")">
+                                <i class="nc-icon nc-icon nc-paper-2"></i>
+                                <p>Nouvelle Vente</p>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin")||User.IsInRole("Achats"))
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Achats")">
+                                <i class="nc-icon nc-icon nc-paper-2"></i>
+                                <p>Achats</p>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin")||User.IsInRole("Produits"))
+                    {
+                        <li>
+                            <a class="nav-link" href="@Url.Action("Index", "Produits")">
+                                <i class="fa fa-shopping-cart"></i>
+                                <p>Produits</p>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin")||User.IsInRole("Forfaits"))
+                    {
+                        <li>
+                            <a class="nav-link" href="@Url.Action("Index","Forfaits")">
+                                <i class="fa fa-building"></i>
+                                <p>Forfaits</p>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin")||User.IsInRole("Locations"))
+                    {
+                        <li>
+                            <a class="nav-link" href="@Url.Action("Index", "Locations")">
+                                <i class="fa fa-calendar-check"></i>
+                                <p>Locations</p>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin")||User.IsInRole("Abonnements"))
+                    {
+                        <li>
+                            <a class="nav-link" href="@Url.Action("Index","Abonnements")">
+                                <i class="fa fa-shopping-bag"></i>
+                                <p>Abonnements</p>
+                            </a>
+                        </li>}
+                    @if (User.IsInRole("Admin")||User.IsInRole("Caisses"))
+                    {
+                        <li>
+                            <a class="nav-link" href="@Url.Action("Index", "Caisses")">
+                                <i class="fa fa-cash-register"></i>
+                                <p>Caisses</p>
+                            </a>
+                        </li>
+                    }
                     @*<li class="nav-item active active-pro">
-            <a class="nav-link active" href="javascript:;">
-                <i class="nc-icon nc-alien-33"></i>
-                <p>Upgrade plan</p>
-            </a>
-        </li>*@
+                            <a class="nav-link active" href="javascript:;">
+                                <i class="nc-icon nc-alien-33"></i>
+                                <p>Upgrade plan</p>
+                            </a>
+                        </li>*@
                 </ul>
             </div>
         </div>
@@ -112,32 +131,35 @@
                     <div class="collapse navbar-collapse justify-content-end" id="navigation">
                         <ul class="nav navbar-nav mr-auto">
                             @*<li class="nav-item">
-            <a href="#" class="nav-link" data-toggle="dropdown">
-                <i class="nc-icon nc-palette"></i>
-                <span class="d-lg-none">Dashboard</span>
-            </a>
-        </li>*@
+                                    <a href="#" class="nav-link" data-toggle="dropdown">
+                                        <i class="nc-icon nc-palette"></i>
+                                        <span class="d-lg-none">Dashboard</span>
+                                    </a>
+                                </li>*@
                             <li class="dropdown nav-item">
                                 @*<a href="@Url.Action("Index","locations")" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                <i class="fa fa-calendar-check"></i>
-                <span class="notification">@Session["expiredLocations"]</span>
-                <span class="d-lg-none">Notifications</span>
-            </a>*@
+                                        <i class="fa fa-calendar-check"></i>
+                                        <span class="notification">@Session["expiredLocations"]</span>
+                                        <span class="d-lg-none">Notifications</span>
+                                    </a>*@
                                 @*<ul class="dropdown-menu">
-                <a class="dropdown-item" href="#">Notification 1</a>
-                <a class="dropdown-item" href="#">Notification 2</a>
-                <a class="dropdown-item" href="#">Notification 3</a>
-                <a class="dropdown-item" href="#">Notification 4</a>
-                <a class="dropdown-item" href="#">Another notification</a>
-            </ul>*@
+                                        <a class="dropdown-item" href="#">Notification 1</a>
+                                        <a class="dropdown-item" href="#">Notification 2</a>
+                                        <a class="dropdown-item" href="#">Notification 3</a>
+                                        <a class="dropdown-item" href="#">Notification 4</a>
+                                        <a class="dropdown-item" href="#">Another notification</a>
+                                    </ul>*@
                             </li>
-                            <li class="nav-item" title="locations expirées">
-                                <a href="@Url.Action("Index","locations")" class="nav-link">
-                                    @*<i class="nc-icon nc-zoom-split"></i>*@
-                                    <span class="notification">@Session["expiredLocations"]</span>
-                                    <span class="fa fa-calendar-check"></span>
-                                </a>
-                            </li>
+                            @if (User.IsInRole("Admin")||User.IsInRole("Locations"))
+                            {
+                                <li class="nav-item" title="locations expirées">
+                                    <a href="@Url.Action("Index", "locations")" class="nav-link">
+                                        @*<i class="nc-icon nc-zoom-split"></i>*@
+                                        <span class="notification">@Session["expiredLocations"]</span>
+                                        <span class="fa fa-calendar-check"></span>
+                                    </a>
+                                </li>
+                            }
                             <li class="nav-item" title="Accueil">
                                 <a href="@Url.Action("Index","home")" class="nav-link">
                                     @*<i class="nc-icon nc-zoom-split"></i>*@
@@ -152,7 +174,7 @@
                                     <span class="no-icon">Mon compte</span>
                                 </a>
                             </li>
-                            @if (Request.IsAuthenticated && User.IsInRole("Admin"))
+                            @if (Request.IsAuthenticated && User.IsInRole("Admin")||User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link" href="@Url.Action("Index","RolesAdmin")">
@@ -175,10 +197,18 @@
                                     <span class="no-icon">Configuration</span>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    <a class="dropdown-item" href="@Url.Action("Index","Produits")">Produits</a>
-                                    <a class="dropdown-item" href="@Url.Action("Index","Caisses")">Caisses</a>
-                                    <a class="dropdown-item" href="@Url.Action("Index","Stock")">Stock</a>
-                                    <a class="dropdown-item" href="@Url.Action("Index","GroupeForfaits")">Groupes de forfaits</a>
+                                    @if (User.IsInRole("Admin")||User.IsInRole("Produits"))
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("Index","Produits")">Produits</a>
+                                    }
+                                    @if (User.IsInRole("Admin")||User.IsInRole("Produits"))
+                                    {
+                                        <a class="dropdown-item" href="@Url.Action("Index","Caisses")">Caisses</a>
+                                    }
+
+                                    @*<a class="dropdown-item" href="@Url.Action("Index","Stock")">Stock</a>*@
+                                    @if (User.IsInRole("Admin")||User.IsInRole("Groupes de forfaits")) { }
+                                        <a class="dropdown-item" href="@Url.Action("Index","GroupeForfaits")">Groupes de forfaits</a>
                                     <a class="dropdown-item" href="@Url.Action("Index","Parametres")">Paramètres</a>
                                     @*<div class="divider"></div>
         <a class="dropdown-item" href="#">Separated link</a>*@
@@ -211,20 +241,26 @@
                                 </a>
                             </li>
                             <li>
-                                <a href="@Url.Action("Index","Ventes")">
-                                    Ventes
-                                </a>
+                                @if (User.IsInRole("Admin")||User.IsInRole("Ventes"))
+                                {
+
+                                    <a href="@Url.Action("Index","Ventes")">
+                                        Ventes
+                                    </a>
+                                }
                             </li>
-                            <li>
-                                <a href="@Url.Action("Index","Achats")">
-                                    Achats
-                                </a>
-                            </li>
+                            @if (User.IsInRole("Admin")||User.IsInRole("Achats"))
+                            {
+                                <li>
+                                    <a href="@Url.Action("Index", "Achats")">
+                                        Achats
+                                    </a>
+                                </li>}
                             @*<li>
-                                <a href="@Url.Action("Index","Stock")">
-                                    Stock
-                                </a>
-                            </li>*@
+                                    <a href="@Url.Action("Index","Stock")">
+                                        Stock
+                                    </a>
+                                </li>*@
                         </ul>
                         <p class="copyright text-center">
                             ©
@@ -247,10 +283,10 @@
         });
     </script>
     <script type="text/javascript">
-    function updatetotal(evt) {
-        alert("Calculating....")
-        document.querySelectorAll(".qtefield").map(node=>console.log(node));
-    }
+        function updatetotal(evt) {
+            alert("Calculating....")
+            document.querySelectorAll(".qtefield").map(node => console.log(node));
+        }
     </script>
     @*<script src="~/Scripts/jquery-3.3.1.slim.min.js"></script>*@
     @*<script src="~/Scripts/jquery.validate.unobtrusive.js"></script>*@

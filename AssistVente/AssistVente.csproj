@@ -592,6 +592,9 @@
     <Content Include="Views\GroupeForfaits\Edit.cshtml" />
     <Content Include="Views\GroupeForfaits\Index.cshtml" />
     <Content Include="Views\Locations\Confirmer.cshtml" />
+    <Content Include="Views\Abonnements\recu.cshtml" />
+    <Content Include="Views\Locations\recu.cshtml" />
+    <Content Include="Views\Ventes\recu.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
