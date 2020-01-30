@@ -224,9 +224,9 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202001301535182_explicit.cs" />
-    <Compile Include="Migrations\202001301535182_explicit.Designer.cs">
-      <DependentUpon>202001301535182_explicit.cs</DependentUpon>
+    <Compile Include="Migrations\202001301911257_default.cs" />
+    <Compile Include="Migrations\202001301911257_default.Designer.cs">
+      <DependentUpon>202001301911257_default.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Abonnement.cs" />
@@ -482,7 +482,9 @@
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -619,8 +621,8 @@
     <Content Include="Scripts\jquery-3.3.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202001301535182_explicit.resx">
-      <DependentUpon>202001301535182_explicit.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202001301911257_default.resx">
+      <DependentUpon>202001301911257_default.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

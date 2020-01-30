@@ -7,18 +7,18 @@ namespace AssistVente.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.1.3-40302")]
-    public sealed partial class _explicit : IMigrationMetadata
+    public sealed partial class _default : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(_explicit));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(_default));
         
         string IMigrationMetadata.Id
         {
-            get { return "202001301535182_explicit"; }
+            get { return "202001301911257_default"; }
         }
         
         string IMigrationMetadata.Source
         {
-            get { return null; }
+            get { return Resources.GetString("Source"); }
         }
         
         string IMigrationMetadata.Target
