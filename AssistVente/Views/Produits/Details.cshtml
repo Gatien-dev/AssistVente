@@ -3,91 +3,88 @@
 @{
     ViewBag.Title = "Details";
 }
+
+<h2>Details</h2>
+
 <div>
-    <h4>Détails du produit @Model.Nom</h4>
+    <h4>Produit</h4>
     <hr />
-    <dl class="row">
-        <div class="col-md-6">
-            <dt>
-                @Html.DisplayNameFor(model => model.Nom)
-            </dt>
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Nom)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Nom)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.PrixAchat)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.PrixAchat)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.PrixAchat)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.PrixAchat)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.PrixVente)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.PrixVente)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.PrixVente)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.PrixVente)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.ALouer)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.ALouer)
+        </dt>
 
-            <dd>
-                @if (Model.ALouer)
-                {
-                    @("Oui")
-                }
-                else
-                {
-                    @("Non")
-                }
-            </dd>
-        </div>
-        <div class="col-md-6">
-            <dt>
-                @Html.DisplayNameFor(model => model.StockDisponible)
-            </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ALouer)
+        </dd>
 
-            <dd>
-                @Html.DisplayFor(model => model.StockDisponible)
-            </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.StockDisponible)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.StockDisponible)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.Description)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.DureeDeLocationParDefaut)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.Description)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.DureeDeLocationParDefaut)
+        </dd>
 
-            <dt>
-                @Html.DisplayNameFor(model => model.DateCreation)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.DateCreation)
-            </dd>
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
 
-            @*<dt>
-                @Html.DisplayNameFor(model => model.CreatorId)
-            </dt>
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreation)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.CreatorId)
-            </dd>*@
-        </div>
+        <dd>
+            @Html.DisplayFor(model => model.DateCreation)
+        </dd>
 
+        <dt>
+            @Html.DisplayNameFor(model => model.CreatorId)
+        </dt>
 
+        <dd>
+            @Html.DisplayFor(model => model.CreatorId)
+        </dd>
 
     </dl>
 </div>
-<p class="pull-right">
-    <a href="@Url.Action("Edit", new { id = Model.ID })" style="margin-right:5px;" class="btn btn-primary"><i class="fas fa-edit"></i> Modifier le produit</a>
-    <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
-    
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
 </p>

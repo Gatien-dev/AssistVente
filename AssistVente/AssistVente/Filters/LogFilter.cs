@@ -18,30 +18,30 @@ namespace AssistVente.Filters
                 AssistVenteContext storeDB = new AssistVenteContext();
                 var user = HttpContext.Current.User.Identity.Name;
 
-                var accessedId = string.Empty;
-                if (filterContext.ActionParameters.TryGetValue("id", out object value))
-                {
-                    accessedId = value.ToString();
-                }
-                if (filterContext.ActionDescriptor.ControllerDescriptor.ControllerName == "Home")
-                {
-                    FechGeneralInfos(filterContext, storeDB);
-                }
-                ActionLog log = new ActionLog()
-                {
-                    ID = Guid.NewGuid(),
-                    Controller = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName,
-                    Action = filterContext.ActionDescriptor.ActionName,
-                    IP = filterContext.HttpContext.Request.UserHostAddress,
-                    DateTime = filterContext.HttpContext.Timestamp,
-                    User = user
-                };
-                if (accessedId != string.Empty)
-                {
-                    log.Action += "/" + accessedId;
-                }
-                storeDB.ActionLogs.Add(log);
-                storeDB.SaveChanges();
+                //var accessedId = string.Empty;
+                //if (filterContext.ActionParameters.TryGetValue("id", out object value))
+                //{
+                //    accessedId = value.ToString();
+                //}
+                //if (filterContext.ActionDescriptor.ControllerDescriptor.ControllerName == "Home")
+                //{
+                //    FechGeneralInfos(filterContext, storeDB);
+                //}
+                //ActionLog log = new ActionLog()
+                //{
+                //    ID = Guid.NewGuid(),
+                //    Controller = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName,
+                //    Action = filterContext.ActionDescriptor.ActionName,
+                //    IP = filterContext.HttpContext.Request.UserHostAddress,
+                //    DateTime = filterContext.HttpContext.Timestamp,
+                //    User = user
+                //};
+                //if (accessedId != string.Empty)
+                //{
+                //    log.Action += "/" + accessedId;
+                //}
+                //storeDB.ActionLogs.Add(log);
+                //storeDB.SaveChanges();
 
             }
             catch (Exception)
