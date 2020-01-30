@@ -12,6 +12,9 @@ namespace AssistVente.Models.ViewModels
         public List<DetailVenteVM> Details { get; set; }
         [Display(Name ="Montant payé")]
         public double MontantPaye { get; set; }
+        [DataType(DataType.DateTime)]
+        [Display(Name ="Date")]
+        public DateTime DateOperation { get; set; }
     }
     public class DetailVenteVM
     {

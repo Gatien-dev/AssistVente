@@ -35,13 +35,17 @@
                     <th>
                         @Html.DisplayNameFor(model => model.Date)
                     </th>
-                   
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateOperation)
+                    </th>
                     <th>
                         @Html.DisplayNameFor(model => model.MontantRegle)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.MontantRestant)
                     </th>
+                    <th>Quantité</th>
                     <th></th>
                 </tr>
             </thead>
@@ -60,10 +64,21 @@
                         @Html.DisplayFor(modelItem => item.Date)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.DateOperation)
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.MontantRegle)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.MontantRestant)
+                    </td>
+                    <td>
+                        @if (item.Details != null)
+                        {
+                            @item.Details.Sum(d => d.QuantiteVendue)
+
+
+                        }
                     </td>
                     <td>
                         <a href="@Url.Action("Details", new { id = item.Id })" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>

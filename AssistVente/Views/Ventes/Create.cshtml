@@ -23,8 +23,15 @@
         <div class="form-group">
             <label class="control-label col-md-2">Montant payé</label>
             <div class="col-md-6">
-                @Html.TextBoxFor(model => Model.MontantPaye, htmlAttributes: new { @class = "form-control", @type = "number" })
+                @Html.TextBoxFor(model => Model.MontantPaye, htmlAttributes: new { @class = "form-control", @type = "number", @step = "0.01", @placeholder = "0.00" })
                 @Html.ValidationMessageFor(model => model.MontantPaye, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-md-2">Date</label>
+            <div class="col-md-6">
+                @Html.TextBoxFor(model => Model.DateOperation, htmlAttributes: new { @class = "form-control", @type = "date" })
+                @Html.ValidationMessageFor(model => model.DateOperation, "", new { @class = "text-danger" })
             </div>
         </div>
         <div class="form-group col-md-6">
@@ -56,8 +63,8 @@
                         <tr>
                             <td class="col-md-3">@Model.Details[i].NomProduit</td>
                             @Html.HiddenFor(model => Model.Details[i].ProduitId)
-                            <td class="col-md-3">@Html.TextBoxFor(model => Model.Details[i].Quantite, htmlAttributes: new { @class = "form-control text-align-right qtefield", @type = "number", @onblur = "updatetotal" })</td>
-                            <td class="col-md-3">@Html.TextBoxFor(model => Model.Details[i].PU, htmlAttributes: new { @class = "form-control text-align-right", @type = "number" })</td>
+                            <td class="col-md-3">@Html.TextBoxFor(model => Model.Details[i].Quantite, htmlAttributes: new { @class = "form-control text-align-right qtefield", @type = "number", @step = "0.01", @placeholder = "0.00", @onblur = "updatetotal" })</td>
+                            <td class="col-md-3">@Html.TextBoxFor(model => Model.Details[i].PU, htmlAttributes: new { @class = "form-control text-align-right", @type = "number", @step = "0.01", @placeholder = "0.00" })</td>
                         </tr>
                     }
                 </tbody>

@@ -28,9 +28,16 @@
             </dd>
 
             <dt>
-                Date
+                @Html.DisplayNameFor(model => model.DateOperation)
             </dt>
 
+            <dd>
+                @Html.DisplayFor(model => model.DateOperation)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
             <dd>
                 @Html.DisplayFor(model => model.Date)
             </dd>
@@ -60,6 +67,7 @@
         <table class="table table-condensed table-hover">
             <thead>
             <th>Produit</th>
+            <th>P.U.</th>
             <th>Quantité</th>
             <th>total</th>
             </thead>
@@ -68,6 +76,7 @@
                 {
                     <tr>
                         <td>@detail.Produit.Nom.ToString()</td>
+                        <td>@detail.Produit.PrixVente.ToString()</td>
                         <td>@detail.QuantiteVendue.ToString()</td>
                         <td>@(detail.QuantiteVendue * @detail.Produit.PrixVente)</td>
 

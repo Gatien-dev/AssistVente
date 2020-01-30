@@ -13,6 +13,8 @@ namespace AssistVente.Models
         public double MontantRegle { get; set; }
         [Display(Name = "Reste à payer")]
         public double MontantRestant { get; set; }
+        [Display(Name ="Date d'opération")]
+        public DateTime DateOperation { get; set; }
         public List<DetailVente> Details { get; set; }
 
     }

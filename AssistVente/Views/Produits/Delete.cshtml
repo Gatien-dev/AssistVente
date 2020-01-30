@@ -2,7 +2,7 @@
 
 @{
     ViewBag.Title = "Delete";
-    bool deletable = ViewBag.disableDelete;
+    bool disableDelete = ViewBag.disableDelete;
 }
 
 <h3>Merci de confirmer la suppression du produit @Model.Nom</h3>
@@ -90,20 +90,24 @@
     </dl>
 
     @*@using (Html.BeginForm())
-    {
-        @Html.AntiForgeryToken()
+        {
+            @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
-        </div>
-    }*@
+            <div class="form-actions no-color">
+                <input type="submit" value="Delete" class="btn btn-default" /> |
+                @Html.ActionLink("Back to List", "Index")
+            </div>
+        }*@
     @using (Html.BeginForm())
     {
         @Html.AntiForgeryToken()
-
+        <div>
+            @if (disableDelete)
+            {<span class="text text-danger">Impossible de supprimer le produit, merci d'en supprimer les operations avant.</span>
+            }
+        </div>
         <div class="form-actions no-color">
-            <input type="submit" value="Oui, supprimer" class="btn btn-danger" @if (!deletable) { @("disabled"); } /> |
+            <input type="submit" value="Oui, supprimer" class="btn btn-danger" @if (disableDelete) { @("disabled") ; } /> |
             <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
         </div>
     }

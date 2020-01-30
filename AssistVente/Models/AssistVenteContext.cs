@@ -38,6 +38,7 @@ namespace AssistVente.Models
         {
             modelBuilder.Entity<Produit>().HasMany(p => p.DetailsAchat).WithRequired(d => d.Produit).WillCascadeOnDelete(false);
             modelBuilder.Entity<Produit>().HasMany(p => p.DetailsVente).WithRequired(d => d.Produit).WillCascadeOnDelete(false);
+            modelBuilder.Entity<Vente>().HasMany(v => v.Details).WithRequired(d => d.Vente).WillCascadeOnDelete(true);
         }
 
         public System.Data.Entity.DbSet<AssistVente.Models.Produit> Produits { get; set; }

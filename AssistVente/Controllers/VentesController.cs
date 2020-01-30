@@ -22,7 +22,7 @@ namespace AssistVente.Controllers
         // GET: Ventes
         public ActionResult Index()
         {
-            var operations = db.Operations.OfType<Vente>().Include(v => v.Client).OrderByDescending(v => v.Date);
+            var operations = db.Operations.OfType<Vente>().Include(v => v.Client).Include(v=>v.Details).OrderByDescending(v => v.Date);
             ViewBag.caisseDefined = db.Caisses.Any();
             return View(operations.ToList());
         }
@@ -110,6 +110,7 @@ namespace AssistVente.Controllers
                     Id = Guid.NewGuid(),
                     ClientId = clientId,
                     MontantRegle = 0,
+                    DateOperation=vente.DateOperation,
                     UserId = User.Identity.GetUserId()
                 };
                 double total = 0;
