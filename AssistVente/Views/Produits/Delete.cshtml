@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Delete";
+    bool deletable = ViewBag.disableDelete;
 }
 
 <h3>Merci de confirmer la suppression du produit @Model.Nom</h3>
@@ -102,7 +103,7 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Oui, supprimer" class="btn btn-danger" /> |
+            <input type="submit" value="Oui, supprimer" class="btn btn-danger" @if (!deletable) { @("disabled"); } /> |
             <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
         </div>
     }

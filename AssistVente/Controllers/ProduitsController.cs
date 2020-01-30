@@ -155,6 +155,7 @@ namespace AssistVente.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.disableDelete = !db.Ventes.Any(v => v.Details.Any(d => d.Produit.ID == id));
             return View(produit);
         }
 

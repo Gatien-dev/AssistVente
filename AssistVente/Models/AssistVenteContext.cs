@@ -31,7 +31,7 @@ namespace AssistVente.Models
         // For more information refer to the documentation:
         // http://msdn.microsoft.com/en-us/data/jj591621.aspx
 
-        public AssistVenteContext() : base("name=AssistVenteContext")
+        public AssistVenteContext() : base("AssistVenteContext")
         {
         }
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

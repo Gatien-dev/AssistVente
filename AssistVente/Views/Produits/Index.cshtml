@@ -33,7 +33,7 @@
                 }
                 else
                 {
-                    <table class="table table-hover table-striped">
+                    <table class="table table-hover table-striped datatable">
                         <thead>
                         <th>
                             @Html.DisplayNameFor(model => model.Nom)
@@ -62,11 +62,11 @@
                         <th>
                             @Html.DisplayNameFor(model => model.DateCreation)
                         </th>
-                        @*<th>
-                                @Html.DisplayNameFor(model => model.CreatorId)
-                            </th>*@
+                        <th>Actions</th>
                         </thead>
+                        <thead>
 
+                        </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
