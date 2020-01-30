@@ -10,6 +10,9 @@ namespace AssistVente.Migrations
         public Configuration()
         {
             AutomaticMigrationsEnabled = true;
+            ContextKey = "AssistVente.Models.AssistVenteContext";
+            AutomaticMigrationDataLossAllowed = true;
+            
         }
 
         protected override void Seed(AssistVente.Models.AssistVenteContext context)

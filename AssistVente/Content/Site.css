@@ -1,4 +1,5 @@
 ﻿
+
 .placeholder{
     width:100%;
     min-height:40vh;
@@ -6,9 +7,4 @@
     vertical-align:central;
     margin:auto;
     
-}
-
-.text-error{color:red !important;}
-.text-align-right{
-    text-align:right;
 }
