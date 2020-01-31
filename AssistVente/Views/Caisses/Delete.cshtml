@@ -1,0 +1,38 @@
+﻿@model AssistVente.Models.Caisse
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Suppression de caisse</h2>
+<div>
+    <h4>Etes vous sur de vouloir supprimer la caisse @Model.Nom</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nom de caisse
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Nom)
+        </dd>
+
+        <dt>
+            Solde de la caisse
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Solde)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Oui, supprimer" class="btn btn-danger" /> |
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+        </div>
+    }
+</div>

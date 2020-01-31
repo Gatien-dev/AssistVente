@@ -1,0 +1,97 @@
+﻿@model AssistVente.Models.Client
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="card strpied-tabled-with-hover">
+    <div class="card-header ">
+        <h4 class="card-title ">Details du client "@Model.Nom"</h4>
+
+        <p class="card-category  pull-left">Voir les informations détaillées d'un client</p>
+
+    </div>
+    <div class="card-body table-full-width table-responsive">
+        <table class="table table-hover table-striped">
+            <tbody>
+                <tr>
+                    <td><b>NOM</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.Nom)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>DATE DE NAISSANCE</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.DateNaissance)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>LIEU DE NAISSANCE</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.LieuNaiss)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>ADRESSE</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.Adresse)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>EMAIL</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.Email)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>TELEPHONE</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.Telephone)
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <p class="pull-right">
+            <a href="@Url.Action("Edit", new { id = Model.ID })" style="margin-right:5px;" class="btn btn-primary"><i class="fas fa-edit"></i> Modifier</a>
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+        </p>
+    </div>
+</div>
+<div class="card strpied-tabled-with-hover">
+    <div class="card-header ">
+        <h4 class="card-title ">Personne a prévenir</h4>
+
+        <p class="card-category  pull-left">Personne à prévenir en cas d'urgence</p>
+
+    </div>
+    <div class="card-body table-full-width table-responsive">
+        <table class="table table-hover table-striped">
+            <tbody>
+                <tr>
+                    <td><b>NOM</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.NomUrgence)
+                    </td>
+                </tr>
+
+                <tr>
+                    <td><b>ADRESSE</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.AddresseUrgence)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>TELEPHONE</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.TelephoneUrgence)
+                    </td>
+                </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+</div>

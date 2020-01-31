@@ -1,0 +1,48 @@
+﻿@model AssistVente.Models.GroupeAbonnements
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h4 class="text-danger">Merci de confirmer la suppression</h4>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateCreation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateCreation)
+        </dd>
+
+    </dl>
+
+    <h4 class="small text-danger">Ceci supprimera tous les abonnements de ce groupe</h4>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Oui, supprimer" class="btn btn-danger" /> |
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+        </div>
+    }
+</div>

@@ -1,0 +1,29 @@
+﻿@model IdentitySample.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h3>Suppression d'utilisateur</h3>
+<div>
+    <h4>Etes vous sur de vouloir supprimer l'utilisateur @Model.UserName</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nom d'utilisateur
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserName)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Oui, supprimer" class="btn btn-danger" /> |
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+        </div>
+    }
+</div>

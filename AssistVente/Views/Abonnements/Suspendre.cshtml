@@ -1,0 +1,53 @@
+﻿@model AssistVente.Models.Abonnement
+@{
+    ViewBag.Title = "Suspendre";
+}
+
+<h2>Suspendre un abonnement</h2>
+<div>
+    <h4>Etes vous sur de vouloir suspendre l'abonnement @Model.Forfait.Nom du client @Model.Client.Nom ?</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Nom du client
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Client.Nom)
+        </dd>
+
+        <dt>
+            Forfait
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Forfait.Nom)
+        </dd>
+
+        <dt>
+            Montant
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Montant)
+        </dd>
+
+        <dt>
+            Reste à payer
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResteAPayer)
+        </dd>
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Oui, suspendre" class="btn btn-danger" /> |
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+        </div>
+    }
+</div>

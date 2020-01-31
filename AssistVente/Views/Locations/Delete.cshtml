@@ -1,0 +1,112 @@
+﻿@model AssistVente.Models.Location
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<div>
+    <h6>Suppression de la location du produit @Model.Produit.Nom</h6>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Produit.Nom)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Produit.Nom)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateFinLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateFinLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateArretLocation)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateArretLocation)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LocationRendue)
+        </dt>
+
+        <dd>
+            @if (Model.LocationRendue)
+            {@("Oui")}
+        else
+        { @("Non")}
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuantitePrise)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuantitePrise)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuantiteRendue)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuantiteRendue)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Montant)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Montant)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Date)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Date)
+        </dd>
+
+        @*<dt>
+                @Html.DisplayNameFor(model => model.UserId)
+            </dt>*@
+
+        @*<dd>
+                @Html.DisplayFor(model => model.UserId)
+            </dd>*@
+
+    </dl>
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        <div class="form-actions no-color pull-right" style="margin-bottom:20px;">
+            @if (Model.LocationRendue)
+            {
+
+                <input type="submit" value="Supprimer" class="btn btn-danger" />
+            }
+            else
+            {
+                <input type="submit" value="Supprimer et rendre le stock" class="btn btn-danger" />
+            }
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+        </div>
+    }
+</div>

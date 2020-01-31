@@ -11,6 +11,9 @@
     <div class="col-md-12">
         <div class="card strpied-tabled-with-hover">
             <div class="card-header ">
+                <p class="pull-right">
+                    <a href="@Url.Action("Create")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouveau Produit</a>
+                </p>
                 <h4 class="card-title">Produits vendus</h4>
                 <p class="card-category">Enregistrez vos produits pour effectuer des ventes</p>
             </div>
@@ -30,7 +33,7 @@
                 }
                 else
                 {
-                    <table class="table table-hover table-striped">
+                    <table class="table table-hover table-striped datatable">
                         <thead>
                         <th>
                             @Html.DisplayNameFor(model => model.Nom)
@@ -48,19 +51,22 @@
                             @Html.DisplayNameFor(model => model.StockDisponible)
                         </th>
                         <th>
+                            @Html.DisplayNameFor(model => model.StockEnLocation)
+                        </th>
+                        <th>
                             @Html.DisplayNameFor(model => model.DureeDeLocationParDefaut)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.Description)
+                            @Html.DisplayNameFor(model => model.PrixLocationParDefaut)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.DateCreation)
                         </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.CreatorId)
-                        </th>
+                        <th>Actions</th>
                         </thead>
+                        <thead>
 
+                        </thead>
                         <tbody>
                             @foreach (var item in Model)
                             {
@@ -81,21 +87,27 @@
                                         @Html.DisplayFor(modelItem => item.StockDisponible)
                                     </td>
                                     <td>
+                                        @Html.DisplayFor(modelItem => item.StockEnLocation)
+                                    </td>
+                                    <td>
                                         @Html.DisplayFor(modelItem => item.DureeDeLocationParDefaut)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.Description)
+                                        @Html.DisplayFor(modelItem => item.PrixLocationParDefaut)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.DateCreation)
                                     </td>
+                                    @*<td>
+                                            @Html.DisplayFor(modelItem => item.CreatorId)
+                                        </td>*@
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.CreatorId)
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Edit", "Edit", new { id = item.ID }) |
-                                        @Html.ActionLink("Details", "Details", new { id = item.ID }) |
-                                        @Html.ActionLink("Delete", "Delete", new { id = item.ID })
+
+                                        <a href="@Url.Action("Details", new { id = item.ID })" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
+                                        <a href="@Url.Action("Edit", new { id = item.ID })" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-edit"></i></a>
+                                        <a href="@Url.Action("Ajustement", new { id = item.ID })" style="margin-right:5px;" title="Ajuster le stock" class="btn btn-default"><i class="fas fa-wrench"></i></a>
+                                        <a href="@Url.Action("Index","stocklogs", new { id = item.ID })" style="margin-right:5px;" title="Historique du stock" class="btn btn-default"><i class="fas fa-history"></i></a>
+                                        <a href="@Url.Action("Delete", new { id = item.ID })" class="btn btn-danger"><span class="fas fa-remove"></span></a>
                                     </td>
                                 </tr>
                             }

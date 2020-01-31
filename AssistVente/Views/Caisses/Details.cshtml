@@ -1,0 +1,124 @@
+﻿@model AssistVente.Models.Caisse
+
+@{
+    ViewBag.Title = "Details";
+}
+
+
+<div class="card strpied-tabled-with-hover">
+    <div class="card-header ">
+        <h4 class="card-title ">Details de la caisse "@Model.Nom"</h4>
+
+        <p class="card-category  pull-left">Voir les informations détaillées d'une caisse</p>
+
+    </div>
+    <div class="card-body table-full-width table-responsive">
+        <table class="table table-hover table-striped">
+            <tbody>
+                <tr>
+                    <td><b>NOM</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.Nom)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>SOLDE</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.Solde)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <p class="pull-right">
+            <a href="@Url.Action("Edit", new { id = Model.ID })" style="margin-right:5px;" class="btn btn-primary"><i class="fas fa-edit"></i> Modifier la caisse</a>
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+        </p>
+    </div>
+</div>
+@if (Model.Reinitialisations != null && Model.Reinitialisations.Count() > 0)
+{
+    <div class="card strpied-tabled-with-hover">
+        <div class="card-header ">
+            <h4 class="card-title ">@*Historique des réinitialisations*@ </h4>
+
+            <p class="card-category  pull-left">Historique des réinitialisations</p>
+
+        </div>
+        <div class="card-body table-full-width table-responsive">
+            <table class="table table-hover table-striped datatable">
+                <thead>
+                    <tr>
+                        <td>Date</td>
+                        <td>Ancien Solde</td>
+                        <td>Nouveau Solde</td>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var reset in Model.Reinitialisations)
+                    {
+                        <tr>
+                            <td><b>@reset.Date</b></td>
+                            <td>
+                                @Html.DisplayFor(model => reset.AncienSolde)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(model => reset.NouveauSolde)
+                            </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+            @*<p class="pull-right">
+                    <a href="@Url.Action("Edit", new { id = Model.ID })" style="margin-right:5px;" class="btn btn-primary"><i class="fas fa-edit"></i> Modifier la caisse</a>
+                    <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+                </p>*@
+        </div>
+
+    </div>
+}
+@if (Model.Reglements != null && Model.Reglements.Count() > 0)
+{
+    <div class="card strpied-tabled-with-hover">
+        <div class="card-header ">
+            <h4 class="card-title ">@*Historique des réinitialisations*@ </h4>
+
+            <p class="card-category  pull-left">Historique des règlements</p>
+
+        </div>
+        <div class="card-body table-full-width table-responsive">
+            <table class="table table-hover table-striped datatable">
+                <thead>
+                    <tr>
+                        <td>Date</td>
+                        <td>Montant</td>
+                        <td>Motif</td>
+                        @*<td>Identifiant</td>*@
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var reglement in Model.Reglements)
+                    {
+                        <tr>
+                            <td><b>@reglement.Date</b></td>
+                            <td>
+                                @Html.DisplayFor(model => reglement.MontantRegle)
+                            </td>
+                            <td>
+                                    @Html.DisplayFor(model => reglement.Raison)
+                                </td>
+                        </tr>
+                    }
+
+
+                </tbody>
+            </table>
+            @*<p class="pull-right">
+                    <a href="@Url.Action("Edit", new { id = Model.ID })" style="margin-right:5px;" class="btn btn-primary"><i class="fas fa-edit"></i> Modifier la caisse</a>
+                    <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+                </p>*@
+        </div>
+
+    </div>
+}

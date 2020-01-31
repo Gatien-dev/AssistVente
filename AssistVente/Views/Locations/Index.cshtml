@@ -1,0 +1,144 @@
+﻿
+
+@model IEnumerable<AssistVente.Models.Location>
+
+@{
+    ViewBag.Title = "Index";
+    ViewBag.position = "Locations";
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card strpied-tabled-with-hover">
+            <div class="card-header ">
+                <p class="pull-right">
+                    <a href="@Url.Action("Create")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouvelle Location</a>
+                </p>
+                <h4 class="card-title">Locations </h4>
+                <p class="card-category">Enregistrez vos Locations </p>
+            </div>
+            <div class="card-body table-full-width table-responsive">
+                @if (Model.Count() <= 0)
+                {
+                    <div class="placeholder col-md-10">
+                        <span>
+                            Aucune Location enregistrée pour l'instant
+                        </span>
+                        <hr />
+                        <h5>
+                            <a href="@Url.Action("Create")" class="btn btn-default"><i class="nc-icon nc-simple-add"></i> Nouvelle Location</a>
+                        </h5>
+                    </div>
+
+                }
+                else
+                {
+                    
+                    <table class="table table-hover table-striped dataTable">
+                        <thead>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Produit.Nom)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DateLocation)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DateFinLocation)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.DateArretLocation)
+                        </th>
+                        <th>
+                            Etat
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.QuantitePrise)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.QuantiteRendue)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Montant)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Date)
+                        </th>
+                        <th>
+                            Actions
+                        </th>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Produit.Nom)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateLocation)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateFinLocation)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.DateArretLocation)
+                                    </td>
+                                    <td>
+                                        @if (item.LocationRendue)
+                                        {
+                                            <span class="badge badge-success">RENDU</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge badge-danger">NON RENDU</span>
+                                            if ((item.DateFinLocation - DateTime.Now).TotalDays < -1)
+                                            {
+                                                <span class="badge badge-danger">Expiré</span>
+                                            }
+                                            else if ((item.DateFinLocation - DateTime.Now).TotalDays < 0)
+                                            {
+                                                <span class="badge badge-warning">Expire aujourd'hui</span>
+                                            }
+                                            else if ((item.DateFinLocation - DateTime.Now).TotalDays < 1)
+                                            {
+                                                <span class="badge badge-warning">Expire demain</span>
+                                            }
+                                        }
+                                        @if (item.Montant <= item.MontantPaye)
+                                        {
+                                            <span class="badge badge-success">Payé</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.QuantitePrise)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.QuantiteRendue)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Montant)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Date)
+                                    </td>
+
+                                    <td>
+
+                                        <a href="@Url.Action("Rendre", new { id = item.Id })" title="Restituer la location" style="margin-right:5px;" class="btn btn-primary @if (item.LocationRendue) { @("disabled")} "><i class="fas fa-arrow-alt-circle-down"></i></a>
+                                        <a href="@Url.Action("reglement", new { id = item.Id })" title="Payer la location" style="margin-right:5px;" class="btn btn-default @if (item.Montant<=item.MontantPaye) { @("disabled")}"><span class="fas fa-money"></span></a>
+                                        <a href="@Url.Action("Details", new { id = item.Id })" title="Détails de la location" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
+                                        <a href="@Url.Action("Delete", new { id = item.Id })" title="Supprimer la location" class="btn btn-danger"><span class="fas fa-remove"></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>

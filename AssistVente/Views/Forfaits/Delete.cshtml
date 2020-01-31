@@ -1,0 +1,68 @@
+﻿@model AssistVente.Models.Forfait
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h3>Merci de confirmer la suppression du produit @Model.Nom</h3>
+<div>
+    <hr />
+
+    <dl class="row">
+        <div class="col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.Nom)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Nom)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Description)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Description)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Duree)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Duree)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Montant)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Montant)
+            </dd>
+        </div>
+        <div class="col-md-6">
+            <dt>
+                @Html.DisplayNameFor(model => model.Abonnements)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Abonnements.Count)
+            </dd>
+
+        </div>
+
+
+
+    </dl>
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Oui, supprimer" class="btn btn-danger" /> |
+            <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+        </div>
+    }
+</div>

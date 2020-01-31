@@ -1,0 +1,71 @@
+﻿@model IEnumerable<AssistVente.Models.GroupeForfait>
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card strpied-tabled-with-hover">
+            <div class="card-header ">
+                @if (!Model.Any())
+                {
+                    <p class="pull-right">
+                        <a href="@Url.Action("Create")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouveau groupe</a>
+                    </p>
+                }
+                <h4 class="card-title">Liste des groupes de forfaits</h4>
+                <p class="card-category">Enregistrement des groupes de forfaits</p>
+            </div>
+            <div class="card-body table-full-width table-responsive">
+                @if (Model.Count() <= 0)
+                {
+                    <div class="placeholder col-md-10">
+                        <span>
+                            Aucun groupe enregistré pour l'instant
+                        </span>
+                        <hr />
+                        <h5>
+                            <a href="@Url.Action("Create")" class="btn btn-default"><i class="nc-icon nc-simple-add"></i> Nouveau groupe</a>
+                        </h5>
+                    </div>
+
+                }
+                else
+                {
+                    <table class="table table-hover table-striped">
+                        <thead>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Nom)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Description)
+                        </th>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Nom)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => item.Description)
+                                    </td>
+
+                                    <td>
+
+                                        <a href="@Url.Action("Details", new { id = item.Id })" style="margin-right:5px;" title="Détails" class="btn btn-primary"><span class="fas fa-list"></span></a>
+                                        <a href="@Url.Action("Edit", new { id = item.Id })" style="margin-right:5px;" title="Modifier" class="btn btn-default"><i class="fas fa-edit"></i></a>
+                                        <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger" title="Supprimer"><span class="fas fa-remove"></span></a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                }
+            </div>
+        </div>
+    </div>
+
+</div>
+
+

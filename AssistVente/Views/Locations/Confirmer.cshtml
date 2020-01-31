@@ -1,0 +1,115 @@
+﻿
+@model AssistVente.Models.Location
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<div class="card strpied-tabled-with-hover">
+    <div class="card-header ">
+        <h4 class="card-title ">Merci de confirmer la location de @Model.QuantitePrise "@Model.Produit.Nom" pour @((Model.DateFinLocation-Model.DateLocation).TotalDays) jours.</h4>
+
+        <p class="card-category  pull-left">Voir les informations détaillées d'une location</p>
+
+    </div>
+    <div class="card-body table-full-width table-responsive">
+        <table class="table table-hover table-striped">
+            <tbody>
+                <tr>
+                    <td><b>Produit</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.Produit.Nom)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Date de Location</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.DateLocation)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Date de retour</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.DateFinLocation)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Date d'arret</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.DateArretLocation)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>Etat</b></td>
+                    <td>
+                        @if (Model.LocationRendue)
+                        {
+                            <span class="badge badge-success">RENDUE</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">NON RENDU</span>
+                        }
+                        @if (Model.Montant <= Model.MontantPaye)
+                        {
+                            <span class="badge badge-success">Payé</span>
+                        }
+                        else
+                        {
+                            <span class="badge badge-danger">NON Payé</span>if ((Model.DateFinLocation - DateTime.Now).TotalDays < -1)
+                            {
+                                <span class="badge badge-danger">Expiré</span>
+                            }
+                            else if ((Model.DateFinLocation - DateTime.Now).TotalDays < 0)
+                            {
+                                <span class="badge badge-warning">Expire aujourd'hui</span>
+                            }
+                            else if ((Model.DateFinLocation - DateTime.Now).TotalDays < 1)
+                            {
+                                <span class="badge badge-warning">Expire demain</span>
+                            }
+                        }
+
+
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.QuantitePrise)</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.QuantitePrise)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.QuantiteRendue)</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.QuantiteRendue)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.Montant)</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.Montant)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.MontantPaye)</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.MontantPaye)
+                    </td>
+                </tr>
+                <tr>
+                    <td><b>@Html.DisplayNameFor(model => model.Date)</b></td>
+                    <td>
+                        @Html.DisplayFor(model => model.Date)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+       
+    </div>
+</div>
+
+<p class="pull-right">
+    <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-primary"><i class="fa fa-check"></i> Oui, la location est conforme</a>
+    <a href="@Url.Action("Delete", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-danger"><i class="fas fa-remove"></i> Non, supprimer la location</a>
+</p>

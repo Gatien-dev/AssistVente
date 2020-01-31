@@ -1,0 +1,174 @@
+﻿@model IdentitySample.Models.RegisterViewModel
+@{
+    ViewBag.Title = "Create";
+}
+
+
+@using (Html.BeginForm("Create", "UsersAdmin", FormMethod.Post, new { @class = "form-horizontal", role = "form", @id="mainForm" }))
+{
+     Html.EnableClientValidation(false); 
+<div class="row">
+    <div class="col-md-6">
+        @Html.AntiForgeryToken()
+        <h4>Enregistrez un nouvel utilisateur</h4>
+        <hr />
+        @Html.ValidationSummary("", new { @class = "text-error" })
+        <div class="form-group">
+            @Html.LabelFor(m => m.UserName, new { @class = "col-md-6 control-label" })
+            <div class="col-md-8">
+                @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.UserName)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.Password, new { @class = "col-md-6 control-label" })
+            <div class="col-md-8">
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.ConfirmPassword, new { @class = "col-md-6 control-label" })
+            <div class="col-md-8">
+                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                @Html.ValidationMessageFor(model => model.Email)
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-4  control-label">
+                Droits d'accès de l'utlisateur
+            </label>
+            <div class="col-md-10">
+                @foreach (var item in (SelectList)ViewBag.RoleId)
+                {
+
+                    <label class="control-label">
+                        @item.Value
+                        <input type="checkbox" name="SelectedRoles" value="@item.Value" class="checkbox-inline" />
+                    </label>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h4 class="card-title">Profil de l'utilisateur</h4>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="row">
+                        <div class="col-md-5 pr-1">
+                            <div class="form-group">
+                                <label>Entreprise</label>
+                                @*<input type="text" class="form-control" disabled="" placeholder="Company" value="Creative Code Inc.">*@
+                                @Html.TextBoxFor(m => m.Entreprise, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                        </div>
+                        <div class="col-md-6 px-1">
+                            <div class="form-group">
+                                <label>Email</label>
+                                @*<input type="text" class="form-control" placeholder="Username" value="michael23">*@
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                        </div>
+                        @*<div class="col-md-4 pl-1">
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email</label>
+                                @*<input type="email" class="form-control" placeholder="Email">
+
+                                @Html.TextBoxFor(m => m.Email, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                        </div>*@
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 pr-1">
+                            <div class="form-group">
+                                <label>Nom</label>
+                                @*<input type="text" class="form-control" placeholder="Company" value="Mike">*@
+
+                                @Html.TextBoxFor(m => m.Nom, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                        </div>
+                        <div class="col-md-6 pl-1">
+                            <div class="form-group">
+                                <label>Prenoms</label>
+                                @*<input type="text" class="form-control" placeholder="Last Name" value="Andrew">*@
+
+                                @Html.TextBoxFor(m => m.Prenoms, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Adresse</label>
+                                @*<input type="text" class="form-control" placeholder="Home Address" value="Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09">*@
+
+                                @Html.TextBoxFor(m => m.Adresse, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.Email)
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 pr-1">
+                            <div class="form-group">
+                                <label>Ville</label>
+                                @*<input type="text" class="form-control" placeholder="City" value="Mike">*@
+
+                                @Html.TextBoxFor(m => m.Ville, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4 px-1">
+                            <div class="form-group">
+                                <label>Pays</label>
+                                @*<input type="text" class="form-control" placeholder="Country" value="Andrew">*@
+
+                                @Html.TextBoxFor(m => m.Pays, new { @class = "form-control" })
+                            </div>
+                        </div>
+                        <div class="col-md-4 pl-1">
+                            <div class="form-group">
+                                <label>Boite Postale</label>
+                                @*<input type="number" class="form-control" placeholder="ZIP Code">*@
+
+                                @Html.TextBoxFor(m => m.BoitePostale, new { @class = "form-control", @type = "number" })
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Informations personnelles</label>
+                                @*<textarea rows="4" cols="80" class="form-control" placeholder="Informations personnelles" value="Mike">J'aime la musique, etc....</textarea>*@
+                                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", @rows="4",@cols="80" })
+                            </div>
+                        </div>
+                    </div>
+                    @*<button type="submit" class="btn btn-info btn-fill pull-right">Update Profile</button>*@
+                    <div class="clearfix"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" class="btn btn-primary" value="Enregistrer" onclick="submitMainForm()"/>
+        <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
+    </div>
+</div>
+}
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

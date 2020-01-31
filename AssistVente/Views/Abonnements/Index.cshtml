@@ -1,0 +1,159 @@
+﻿@model IEnumerable<AssistVente.Models.Abonnement>
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card strpied-tabled-with-hover">
+            <div class="card-header ">
+                @if (ViewBag.caisseDefined)
+                {
+
+                    <p class="pull-right">
+                        <a href="@Url.Action("Create")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouvelle vente</a>
+                    </p>
+                }
+                else
+                {
+                    <p class="text-danger">Aucune caisse disponible. Impossible d'effectuer une vente.</p>
+                    <a href="@Url.Action("Create","Caisses")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouvelle Caisse</a>
+                }
+            </div>
+
+            
+                <h4 class="card-title">Abonnements </h4>
+                <p class="card-category">Enregistrez vos abonnements </p>
+                <div class="card-body table-full-width table-responsive">
+                    @if (Model.Count() <= 0)
+                    {
+                        <div class="placeholder col-md-10">
+                            <span>
+                                Aucun Abonnement enregistré pour l'instant
+                            </span>
+                            <hr />
+                            <h5>
+                                <a href="@Url.Action("Create")" class="btn btn-default"><i class="nc-icon nc-simple-add"></i> Nouvel abonnement</a>
+                            </h5>
+                        </div>
+
+                    }
+                    else
+                    {
+
+                        <table class="table table-hover table-striped datatable">
+                            <thead>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Forfait.Nom)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Client.Nom)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.DateDebut)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.DateFin)
+                            </th>
+                            <th>
+                                Etat
+                            </th>
+                            <th>
+                                Groupe
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Montant)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Date)
+                            </th>
+                            <th>
+                                Actions
+                            </th>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Forfait.Nom)
+                                        </td>
+
+
+                                        <td>
+                                            <a href="@Url.Action("Details","Clients",new { Id = item.Client.ID })">
+                                                @Html.DisplayFor(modelItem => item.Client.Nom)
+                                            </a>
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DateDebut)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.DateFin)
+                                        </td>
+                                        <td>
+                                            @if (item.Termine)
+                                            {
+                                                if (item.ResteAPayer <= 0)
+                                                {
+                                                    <span class="badge badge-success">Expiré</span>}
+                                                else
+                                                {
+                                                    <span class="badge badge-danger">Expiré</span> }
+
+                                            }
+                                            else
+                                            {
+                                                if ((item.DateFin - DateTime.Now).TotalDays < 0)
+                                                {
+                                                    <span class="badge badge-warning">Expire aujourd'hui</span>
+                                                }
+                                                else if ((item.DateFin - DateTime.Now).TotalDays < 1)
+                                                {
+                                                    <span class="badge badge-warning">Expire demain</span>
+                                                }
+                                                else if (item.Suspendu)
+                                                {
+                                                    <span class="badge badge-warning">Suspendu le</span> @Html.DisplayFor(modelItem => item.DateSuspension)
+                                                }
+                                            }
+                                            @if (item.ResteAPayer <= 0)
+                                            {
+                                                <span class="badge badge-success">Payé</span>
+                                            }
+                                            else
+                                            {
+                                                <span class="badge badge-danger">Non Payé</span>
+                                            }
+                                        </td>
+                                        <td>@Html.DisplayFor(modelItem => item.Forfait.GroupeForfait.Nom)</td>
+                                       
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Montant)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(modelItem => item.Date)
+                                        </td>
+
+                                        <td>
+
+                                            <a href="@Url.Action("Suspendre", new { id = item.Id })" title="Suspendre l'abonnement" style="margin-right:5px;" class="btn btn-primary @if (item.Suspendu) { @("disabled")} "><i class="fas fa-arrow-alt-circle-down"></i></a>
+                                            <a href="@Url.Action("Reprendre", new { id = item.Id })" title="Reprendre l'abonnement" style="margin-right:5px;" class="btn btn-primary @if (!item.Suspendu) {@("disabled") } "><i class="fas fa-arrow-alt-circle-up"></i></a>
+                                            <a href="@Url.Action("Reglement", new { id = item.Id })" title="Payer" style="margin-right:5px;" class="btn btn-default @if (item.ResteAPayer>=0) { @("disabled")}"><span class="fas fa-money"></span></a>
+                                            <a href="@Url.Action("Details", new { id = item.Id })" title="Détails" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
+                                            <a href="@Url.Action("Delete", new { id = item.Id })" title="Supprimer" class="btn btn-danger"><span class="fas fa-remove"></span></a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                </div>
+            
+        </div>
+       
+        
+    </div>
+</div>
