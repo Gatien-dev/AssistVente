@@ -388,6 +388,7 @@
     <Content Include="Content\css\regular.min.css" />
     <Content Include="Content\css\solid.css" />
     <Content Include="Content\css\solid.min.css" />
+    <Content Include="Content\css\style-error-page.css" />
     <Content Include="Content\css\svg-with-js.css" />
     <Content Include="Content\css\svg-with-js.min.css" />
     <Content Include="Content\css\v4-shims.css" />
