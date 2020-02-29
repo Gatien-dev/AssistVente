@@ -9,8 +9,8 @@
     <title>Assist-Vente</title>
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0, shrink-to-fit=no' name='viewport' />
     <!--     Fonts and icons     -->
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    @*<link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />*@
+    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />*@
     <!-- CSS Files -->
     <link href="~/Content/css/all.css" rel="stylesheet" />
     <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
@@ -21,7 +21,11 @@
     <link href="~/assets/css/demo.css" rel="stylesheet" />
     <link href="~/Content/custom-checkboxes.css" rel="stylesheet" />
     <link href="~/Content/css/datatables.min.css" rel="stylesheet" />
-    <script src="https://kit.fontawesome.com/b198560ba0.js" crossorigin="anonymous"></script>
+    @*<script src="https://kit.fontawesome.com/b198560ba0.js" crossorigin="anonymous"></script>*@
+    <link href="~/Content/bootstrap-datetimepicker.min.css" rel="stylesheet" />
+    @*<link href="~/Content/font-awesome.min.css" rel="stylesheet" />*@
+    <link href="~/Content/css/fontawesome.min.css" rel="stylesheet" />
+    <link href="~/Content/google-fonts.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -39,7 +43,7 @@
                     </a>
                 </div>
                 <ul class="nav">
-                    @if (User.IsInRole("Admin")||User.IsInRole("Ventes"))
+                    @if (User.IsInRole("Admin") || User.IsInRole("Ventes"))
                     {
 
                         <li class="nav-item">
@@ -49,7 +53,7 @@
                             </a>
                         </li>
                     }
-                    @if (User.IsInRole("Admin")||User.IsInRole("Achats"))
+                    @if (User.IsInRole("Admin") || User.IsInRole("Achats"))
                     {
                         <li class="nav-item">
                             <a class="nav-link" href="@Url.Action("Index", "Achats")">
@@ -58,7 +62,7 @@
                             </a>
                         </li>
                     }
-                    @if (User.IsInRole("Admin")||User.IsInRole("Produits"))
+                    @if (User.IsInRole("Admin") || User.IsInRole("Produits"))
                     {
                         <li>
                             <a class="nav-link" href="@Url.Action("Index", "Produits")">
@@ -67,7 +71,7 @@
                             </a>
                         </li>
                     }
-                    @if (User.IsInRole("Admin")||User.IsInRole("Forfaits"))
+                    @if (User.IsInRole("Admin") || User.IsInRole("Forfaits"))
                     {
                         <li>
                             <a class="nav-link" href="@Url.Action("Index","Forfaits")">
@@ -76,7 +80,7 @@
                             </a>
                         </li>
                     }
-                    @if (User.IsInRole("Admin")||User.IsInRole("Locations"))
+                    @if (User.IsInRole("Admin") || User.IsInRole("Locations"))
                     {
                         <li>
                             <a class="nav-link" href="@Url.Action("Index", "Locations")">
@@ -85,7 +89,7 @@
                             </a>
                         </li>
                     }
-                    @if (User.IsInRole("Admin")||User.IsInRole("Abonnements"))
+                    @if (User.IsInRole("Admin") || User.IsInRole("Abonnements"))
                     {
                         <li>
                             <a class="nav-link" href="@Url.Action("Index","Abonnements")">
@@ -93,7 +97,7 @@
                                 <p>Abonnements</p>
                             </a>
                         </li>}
-                    @if (User.IsInRole("Admin")||User.IsInRole("Caisses"))
+                    @if (User.IsInRole("Admin") || User.IsInRole("Caisses"))
                     {
                         <li>
                             <a class="nav-link" href="@Url.Action("Index", "Caisses")">
@@ -150,7 +154,7 @@
                                         <a class="dropdown-item" href="#">Another notification</a>
                                     </ul>*@
                             </li>
-                            @if (User.IsInRole("Admin")||User.IsInRole("Locations"))
+                            @if (User.IsInRole("Admin") || User.IsInRole("Locations"))
                             {
                                 <li class="nav-item" title="locations expirées">
                                     <a href="@Url.Action("Index", "locations")" class="nav-link">
@@ -174,7 +178,7 @@
                                     <span class="no-icon">Mon compte</span>
                                 </a>
                             </li>
-                            @if (Request.IsAuthenticated && User.IsInRole("Admin")||User.IsInRole("Admin"))
+                            @if (Request.IsAuthenticated && User.IsInRole("Admin") || User.IsInRole("Admin"))
                             {
                                 <li class="nav-item">
                                     <a class="nav-link" href="@Url.Action("Index","RolesAdmin")">
@@ -186,32 +190,32 @@
                                         <span class="no-icon">Utilisateurs</span>
                                     </a>
                                 </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="@Url.Action("Index","Clients")">
-                                        <span class="no-icon">Clients</span>
-                                    </a>
-                                </li>
                             }
+                            <li class="nav-item">
+                                <a class="nav-link" href="@Url.Action("Index","Clients")">
+                                    <span class="no-icon">Clients</span>
+                                </a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <span class="no-icon">Configuration</span>
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                                    @if (User.IsInRole("Admin")||User.IsInRole("Produits"))
+                                    @if (User.IsInRole("Admin") || User.IsInRole("Produits"))
                                     {
                                         <a class="dropdown-item" href="@Url.Action("Index","Produits")">Produits</a>
                                     }
-                                    @if (User.IsInRole("Admin")||User.IsInRole("Produits"))
+                                    @if (User.IsInRole("Admin") || User.IsInRole("Produits"))
                                     {
                                         <a class="dropdown-item" href="@Url.Action("Index","Caisses")">Caisses</a>
                                     }
 
                                     @*<a class="dropdown-item" href="@Url.Action("Index","Stock")">Stock</a>*@
-                                    @if (User.IsInRole("Admin")||User.IsInRole("Groupes de forfaits")) { }
-                                        <a class="dropdown-item" href="@Url.Action("Index","GroupeForfaits")">Groupes de forfaits</a>
+                                    @if (User.IsInRole("Admin") || User.IsInRole("Groupes de forfaits")) { }
+                                    <a class="dropdown-item" href="@Url.Action("Index","GroupeForfaits")">Groupes de forfaits</a>
                                     <a class="dropdown-item" href="@Url.Action("Index","Parametres")">Paramètres</a>
                                     @*<div class="divider"></div>
-        <a class="dropdown-item" href="#">Separated link</a>*@
+                                        <a class="dropdown-item" href="#">Separated link</a>*@
                                 </div>
                             </li>
                             <li class="nav-item">
@@ -241,7 +245,7 @@
                                 </a>
                             </li>
                             <li>
-                                @if (User.IsInRole("Admin")||User.IsInRole("Ventes"))
+                                @if (User.IsInRole("Admin") || User.IsInRole("Ventes"))
                                 {
 
                                     <a href="@Url.Action("Index","Ventes")">
@@ -249,7 +253,7 @@
                                     </a>
                                 }
                             </li>
-                            @if (User.IsInRole("Admin")||User.IsInRole("Achats"))
+                            @if (User.IsInRole("Admin") || User.IsInRole("Achats"))
                             {
                                 <li>
                                     <a href="@Url.Action("Index", "Achats")">
@@ -275,8 +279,10 @@
         </div>
     </div>
     <!--   Core JS Files   -->
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+    @*<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+    <script src="~/Scripts/jquery-1.12.4.js"></script>
+    <script src="~/Scripts/jquery-ui.js"></script>
     <script>
         $(function () {
             $(".datepicker").datepicker();
@@ -305,9 +311,11 @@
     <script src="~/assets/js/light-bootstrap-dashboard.js?v=2.0.0 " type="text/javascript"></script>
     <!-- Light Bootstrap Dashboard DEMO methods, don't include it in your project! -->
     <script src="~/assets/js/demo.js"></script>
-    <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+    <script src="~/Scripts/moment.min.js"></script>
+    @*<script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>*@
+    @*<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.js"></script>*@
+    <script src="~/Scripts/bootstrap-datepicker.js"></script>
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">*@
 
     <script src="~/Scripts/datatables.min.js"></script>
     <script type="text/javascript">

@@ -22,11 +22,16 @@ namespace AssistVente.Controllers
         // GET: Ventes
         public ActionResult Index()
         {
-            var operations = db.Operations.OfType<Vente>().Include(v => v.Client).Include(v=>v.Details).OrderByDescending(v => v.Date);
+            var operations = db.Operations.OfType<Vente>().Include(v => v.Client).Include(v => v.Details).OrderByDescending(v => v.Date);
             ViewBag.caisseDefined = db.Caisses.Any();
             return View(operations.ToList());
         }
-
+        public ActionResult VentesProduit(Guid idProduit)
+        {
+            var operations = db.Operations.OfType<Vente>().Where(v => v.Details.Any(d => d.Produit.ID == idProduit)).Include(v => v.Client).Include(v => v.Details).OrderByDescending(v => v.Date);
+            ViewBag.caisseDefined = db.Caisses.Any();
+            return View(operations.ToList());
+        }
         // GET: Ventes/Details/5
         public ActionResult Details(Guid? id)
         {
@@ -78,7 +83,7 @@ namespace AssistVente.Controllers
             {
                 Details = new List<DetailVenteVM>()
             };
-            var produits = db.Produits.ToList();
+            var produits = db.Produits.OrderBy(p=>p.Nom).ToList();
             foreach (var produit in produits)
             {
                 venteVM.Details.Add(new DetailVenteVM()
@@ -110,7 +115,7 @@ namespace AssistVente.Controllers
                     Id = Guid.NewGuid(),
                     ClientId = clientId,
                     MontantRegle = 0,
-                    DateOperation=vente.DateOperation,
+                    DateOperation = DateTime.Now,
                     UserId = User.Identity.GetUserId()
                 };
                 double total = 0;
@@ -211,10 +216,10 @@ namespace AssistVente.Controllers
 
         [HttpPost, ActionName("Reglement")]
         [ValidateAntiForgeryToken]
-        public ActionResult ReglementConfirmed(Guid id, double mtRegle,string reglement)
+        public ActionResult ReglementConfirmed(Guid id, double mtRegle, string reglement)
         {
             Vente vente = (Vente)db.Operations.Find(id);
-            new CaisseManager(db).reglerVente(mtRegle, vente,"Paiement de vente",reglement);
+            new CaisseManager(db).reglerVente(mtRegle, vente, "Paiement de vente", reglement);
             db.SaveChanges();
             return RedirectToAction("Index");
         }

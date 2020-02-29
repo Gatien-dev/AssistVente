@@ -96,6 +96,7 @@ namespace AssistVente.Controllers
         }
 
         // GET: Clients/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)
@@ -109,9 +110,8 @@ namespace AssistVente.Controllers
             }
             return View(client);
         }
-
-        // POST: Clients/Delete/5
-        [HttpPost, ActionName("Delete")]
+       // POST: Clients/Delete/5
+       [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public ActionResult DeleteConfirmed(Guid id)
         {

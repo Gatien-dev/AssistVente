@@ -10,25 +10,98 @@
     <meta name="viewport" content="width=device-width" />
     <title>~</title>
     <style>
+
         @@media print {
             .no-print, .no-print * {
                 display: none !important;
             }
         }
     </style>
+    <link href="~/Content/css/all.css" rel="stylesheet" />
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assets/css/light-bootstrap-dashboard.css?v=2.0.0 " rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="~/assets/css/demo.css" rel="stylesheet" />
+    <link href="~/Content/custom-checkboxes.css" rel="stylesheet" />
+    <link href="~/Content/css/datatables.min.css" rel="stylesheet" />
 </head>
-<body style="width:200px;  text-align:center;">
-    <div style="width:200px;  text-align:center;">
-        <h4>Recu de Vente Eyiwa Land</h4>
-        <p>Date : @Model.Date.ToShortDateString() <br />
+<body style="width:100%;  text-align:center;">
+    <div style="width:100%;  text-align:center; @if (Model.Details.Count > 5) { @("min-height: 90vh;") } else {@("min-height: 20vh;") } ">
+        <h4 style="display:inline-block; margin-top:3px;margin-bottom:2px;"><img src="~/assets/img/eyiwa.jpg" width="100px" /> Recu de Vente Eyiwa Land</h4>
+
+        <p></p>
+        <p>Date : @Model.DateOperation.ToShortDateString() | Client: @Model.Client.Nom | Montant : @Model.Montant</p>
         <p>
-            Montant : @Model.Montant
+
         </p>
-        @foreach (var item in Model.Details)
-        {
-            <p>  @(item.Produit.Nom + " (x" + item.QuantiteVendue + ") --- " + item.QuantiteVendue * item.Produit.PrixVente)</p>
-        }
-        <p>Total: @Model.Montant </p>
+        <p>
+
+        </p>
+        <table border="1" cellpadding="4" style="margin:auto">
+            <thead>
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th>P.U.</th>
+            <th>Montant</th>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Details)
+                {
+                    <tr>
+                        <td>@item.Produit.Nom</td>
+                        <td>@item.QuantiteVendue</td>
+                        <td>@item.Produit.PrixVente</td>
+                        <td>@(item.Produit.PrixVente * item.QuantiteVendue)</td>
+                    </tr>
+
+                }
+            </tbody>
+
+        </table>
+        <p style="font-weight:bold; margin-top:10px;">Total: @Model.Montant </p>
+        <p>  Merci de votre confiance.</p>
+        <br />
+    </div>
+    @if (Model.Details.Count < 5)
+    {
+
+        <hr style="color:black; background-color:black; min-height:1px; margin-top:1px; margin-bottom: 1px;" />
+    }
+    <div style="width:100%;  text-align:center; @if (Model.Details.Count > 5) { @("min-height: 90vh;") } else {@("min-height: 20vh;") }  ">
+        <h4 style="display:inline-block"><img src="~/assets/img/eyiwa.jpg" width="100px" /> Recu de Vente Eyiwa Land</h4>
+
+        <p></p>
+        <p>Date : @Model.DateOperation.ToShortDateString() | Client: @Model.Client.Nom | Montant : @Model.Montant</p>
+        <p>
+
+        </p>
+        <p>
+
+        </p>
+        <table border="1" cellpadding="4" style="margin:auto">
+            <thead>
+            <th>Produit</th>
+            <th>Quantité</th>
+            <th>P.U.</th>
+            <th>Montant</th>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Details)
+                {
+                <tr>
+                    <td>@item.Produit.Nom</td>
+                    <td>@item.QuantiteVendue</td>
+                    <td>@item.Produit.PrixVente</td>
+                    <td>@(item.Produit.PrixVente*item.QuantiteVendue)</td>
+                </tr>
+
+                }
+            </tbody>
+
+        </table>
+        <p style="font-weight:bold; margin-top:10px;">Total: @Model.Montant </p>
         <p>  Merci de votre confiance.</p>
         <br />
     </div>
