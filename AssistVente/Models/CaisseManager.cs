@@ -41,7 +41,37 @@ namespace AssistVente.Models
             db.Ventes.First(v => v.Id == vente.Id).MontantRestant -= montant;
             db.SaveChanges();
         }
+        public void AnnulerReglementsVente(Vente vente, string raison)
+        {
+            var caisseParDefaut = getCaisseParDefaut();
 
+            if (caisseParDefaut.Reglements == null) caisseParDefaut.Reglements = new List<Reglement>();
+
+            var reglementsASupprimer = caisseParDefaut.Reglements.Where(r => r.IdOperation == vente.Id);
+            for(int i = 0; i < reglementsASupprimer.Count(); i++)
+            {
+                caisseParDefaut.Solde -= reglementsASupprimer.ElementAt(i).MontantRegle;
+                db.Reglements.Remove(reglementsASupprimer.ElementAt(i));
+            }
+
+            db.SaveChanges();
+        }
+
+        public void AnnulerReglementsAchat(Achat achat, string raison)
+        {
+            var caisseParDefaut = getCaisseParDefaut();
+
+            if (caisseParDefaut.Reglements == null) caisseParDefaut.Reglements = new List<Reglement>();
+
+            var reglementsASupprimer = caisseParDefaut.Reglements.Where(r => r.IdOperation == achat.Id);
+            for(int i = 0; i < reglementsASupprimer.Count(); i++)
+            {
+                caisseParDefaut.Solde -= reglementsASupprimer.ElementAt(i).MontantRegle;
+                db.Reglements.Remove(reglementsASupprimer.ElementAt(i));
+            }
+
+            db.SaveChanges();
+        }
         public void reglerLocation(double montant, Location location, string raison, string modeReglement, double montantRecu = 0, double montantRendu = 0)
         {
             var caisseParDefaut = getCaisseParDefaut();

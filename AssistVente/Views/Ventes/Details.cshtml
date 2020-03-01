@@ -41,7 +41,13 @@
             <dd>
                 @Html.DisplayFor(model => model.Date)
             </dd>
-
+            <dt>
+                Agent de saisie
+            </dt>
+            <dd>
+                @ViewBag.userName
+            </dd>
+            
 
 
             <dt>
@@ -87,6 +93,6 @@
 
 </div>
 <p class="pull-right">
-    <a href="@Url.Action("Delete", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-danger"><i class="fas fa-remove"></i> Supprimer la vente</a>
+    <a href="@Url.Action("Delete", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Supprimer la vente</a>
     <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
 </p>

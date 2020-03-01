@@ -22,7 +22,7 @@ namespace IdentitySample
         }
         protected void Application_BeginRequest(object sender, EventArgs e)
         {
-            CultureInfo culture = new CultureInfo("en-FR");
+            CultureInfo culture = new CultureInfo("fr-FR");
             Thread.CurrentThread.CurrentCulture = culture;
             Thread.CurrentThread.CurrentUICulture = culture;
         }

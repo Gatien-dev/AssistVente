@@ -8,6 +8,7 @@ namespace AssistVente.Models.ViewModels
 {
     public class AchatCreateVM
     {
+        public Guid ID { get; set; }
         public string Fournisseur{ get; set; }
         public List<DetailAchatVM> Details { get; set; }
         [Display(Name = "Montant payé")]

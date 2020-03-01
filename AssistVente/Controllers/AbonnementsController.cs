@@ -13,7 +13,7 @@ using Microsoft.AspNet.Identity;
 namespace AssistVente.Controllers
 {
     [LogFilter]
-    [Authorize(Roles = "Admin,Locations")]
+    [Authorize(Roles = "Admin,Abonnements")]
     public class AbonnementsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();
@@ -66,6 +66,7 @@ namespace AssistVente.Controllers
             return View(abonnement);
         }
         // GET: Abonnements/Create
+        [Authorize(Roles = "Admin, Abonnements-edition")]
         public ActionResult Create()
         {
             var forfaits = new List<Forfait>();
@@ -132,6 +133,7 @@ namespace AssistVente.Controllers
 
 
         //GET: Abonnements/suspendre/5
+        [Authorize(Roles = "Admin, Abonnements-edition")]
         public ActionResult Suspendre(Guid? id)
         {
             if (id == null)
@@ -161,6 +163,7 @@ namespace AssistVente.Controllers
         }
 
         //GET: Abonnements/reprendre/5
+        [Authorize(Roles = "Admin, Abonnements-edition")]
         public ActionResult Reprendre(Guid? id)
         {
             if (id == null)
@@ -190,6 +193,7 @@ namespace AssistVente.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin, Abonnements-edition")]
         public ActionResult Reglement(Guid? id)
         {
             if (id == null)
@@ -229,6 +233,7 @@ namespace AssistVente.Controllers
             return RedirectToAction("Index");
         }
 
+        [Authorize(Roles = "Admin, Abonnements-suppression")]
         public ActionResult Delete(Guid? id)
         {
             if (id == null)

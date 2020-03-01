@@ -1,4 +1,4 @@
-﻿@model AssistVente.Models.Abonnement
+﻿@*@model AssistVente.Models.Abonnement
 @{
     Layout = null;
 }
@@ -10,6 +10,7 @@
     <meta name="viewport" content="width=device-width" />
     <title>~</title>
     <style>
+
         @@media print {
             .no-print, .no-print * {
                 display: none !important;
@@ -30,6 +31,75 @@
         <p>  Merci de votre confiance.</p>
         <br />
     </div>
+    <button onclick="window.print();return false;" class="no-print">Imprimer</button>
+</body>
+</html>*@
+
+
+@model AssistVente.Models.Abonnement
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>~</title>
+    <style>
+
+        @@media print {
+            .no-print, .no-print * {
+                display: none !important;
+            }
+        }
+    </style>
+    <link href="~/Content/css/all.css" rel="stylesheet" />
+    <link href="~/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/assets/css/light-bootstrap-dashboard.css?v=2.0.0 " rel="stylesheet" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <link href="~/Content/dataTables.bootstrap4.min.css" rel="stylesheet" />
+    <!-- CSS Just for demo purpose, don't include it in your project -->
+    <link href="~/assets/css/demo.css" rel="stylesheet" />
+    <link href="~/Content/custom-checkboxes.css" rel="stylesheet" />
+    <link href="~/Content/css/datatables.min.css" rel="stylesheet" />
+</head>
+<body style="width:100%;  text-align:center;">
+    <div style="width:100%;  text-align:center; min-height: 20vh; ">
+        <h4 style="display:inline-block; margin-top:3px;margin-bottom:2px;"><img src="~/assets/img/eyiwa.jpg" width="100px" /> Recu d'abonnement Eyiwa Land</h4>
+
+        <p>Forfait: @Model.Forfait.Nom</p>
+        <p>Date : @Model.Date.ToShortDateString() | Client: @Model.Client.Nom | Montant : @Model.Montant</p>
+        <p>Date : @Model.Date.ToShortDateString() </p>
+
+        <p>Date de début : @Model.DateDebut.ToShortDateString()</p>
+        <p>Date de fin: @Model.DateFin.ToShortDateString()</p>
+
+        <p style="font-weight:bold; margin-top:10px;">Total: @Model.Montant </p>
+
+        <p>  Merci de votre confiance.</p>
+        <br />
+    </div>
+    
+
+        <hr style="color:black; background-color:black; min-height:1px; margin-top:1px; margin-bottom: 1px;" />
+    
+        <div style="width:100%;  text-align:center; min-height: 20vh; ">
+            <h4 style="display:inline-block; margin-top:3px;margin-bottom:2px;"><img src="~/assets/img/eyiwa.jpg" width="100px" /> Recu d'abonnement Eyiwa Land</h4>
+
+            <p>Forfait: @Model.Forfait.Nom</p>
+            <p>Date : @Model.Date.ToShortDateString() | Client: @Model.Client.Nom | Montant : @Model.Montant</p>
+            <p>Date : @Model.Date.ToShortDateString() </p>
+
+            <p>Date de début : @Model.DateDebut.ToShortDateString()</p>
+            <p>Date de fin: @Model.DateFin.ToShortDateString()</p>
+
+            <p style="font-weight:bold; margin-top:10px;">Total: @Model.Montant </p>
+
+            <p>  Merci de votre confiance.</p>
+            <br />
+        </div>
     <button onclick="window.print();return false;" class="no-print">Imprimer</button>
 </body>
 </html>

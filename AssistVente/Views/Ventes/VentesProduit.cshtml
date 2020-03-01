@@ -1,0 +1,111 @@
+﻿@model IEnumerable<AssistVente.Models.Vente>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="card strpied-tabled-with-hover">
+    <div class="card-header ">
+        <h4 class="card-title ">Liste des ventes</h4>
+        @if (ViewBag.caisseDefined)
+        {
+
+            <p class="pull-right">
+                <a href="@Url.Action("Create")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouvelle vente</a>
+            </p>
+        }
+        else
+        {
+            <p class="text-danger">Aucune caisse disponible. Impossible d'effectuer une vente.</p>
+            <a href="@Url.Action("Create","Caisses")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouvelle Caisse</a>
+        }
+        <p class="card-category  pull-left">Enregistrez vos ventes</p>
+
+    </div>
+    <div class="card-body table-full-width table-responsive">
+        <table class="table datatable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Client.Nom)
+                    </th>
+                    <th>
+                        Détail
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Montant)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.DateOperation)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MontantRegle)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.MontantRestant)
+                    </th>
+                    <th>Quantité</th>
+                    <th></th>
+                </tr>
+            </thead>
+
+
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Client.Nom)
+                    </td>
+                    <td>
+                        @foreach (var detail in item.Details)
+                        {
+                            <span>@(detail.Produit.Nom)</span> <span>(</span>
+
+                            <span>@(detail.QuantiteVendue)</span> <span>)</span>
+                            <br />
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Montant)
+                    </td>
+                    <td>
+                        @item.DateOperation.ToShortDateString()
+                    </td>
+                    <td>
+                        @Html.DisplayFor(model => item.Date)
+                        @*@item.Date.ToShortDateString()*@
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MontantRegle)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MontantRestant)
+                    </td>
+                    <td>
+                        @if (item.Details != null)
+                        {
+                            @item.Details.Sum(d => d.QuantiteVendue)
+                            
+                        }
+                    </td>
+                    <td>
+                        <a href="@Url.Action("Details", new { id = item.Id })" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
+                        @*<a href="@Url.Action("Edit", new { id = item.Id })" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-edit"></i></a>*@
+                        <a href="@Url.Action("Reglement", new { id = item.Id })" style="margin-right:5px;" class="btn btn-default"><i class="fa fa-money-bill"></i></a>
+                        <a href="@Url.Action("recu", new { id = item.Id })" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-print"></i></a>
+                        <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger"><span class="fas fa-trash-alt"></span></a>
+                    </td>
+                </tr>
+            }
+
+        </table>
+
+        <div>
+            <h4>Total: <span class="small text-primary">@Model.Sum(m => m.Details.Sum(d=>d.QuantiteVendue))</span></h4>
+        </div>
+    </div>
+</div>

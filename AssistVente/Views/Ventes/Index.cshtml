@@ -30,14 +30,17 @@
                         @Html.DisplayNameFor(model => model.Client.Nom)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Montant)
+                        Détail
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.Date)
+                        @Html.DisplayNameFor(model => model.Montant)
                     </th>
 
                     <th>
                         @Html.DisplayNameFor(model => model.DateOperation)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Date)
                     </th>
                     <th>
                         @Html.DisplayNameFor(model => model.MontantRegle)
@@ -58,13 +61,23 @@
                         @Html.DisplayFor(modelItem => item.Client.Nom)
                     </td>
                     <td>
+                        @foreach (var detail in item.Details)
+                        {
+                            <span>@(detail.Produit.Nom)</span> <span>(</span>
+
+                            <span>@(detail.QuantiteVendue)</span> <span>)</span>
+                            <br />
+                        }
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.Montant)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Date)
+                        @item.DateOperation.ToShortDateString()
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.DateOperation)
+                        @Html.DisplayFor(model => item.Date)
+                        @*@item.Date.ToShortDateString()*@
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.MontantRegle)
@@ -82,10 +95,10 @@
                     </td>
                     <td>
                         <a href="@Url.Action("Details", new { id = item.Id })" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-list"></span></a>
-                        @*<a href="@Url.Action("Edit", new { id = item.Id })" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-edit"></i></a>*@
-                        <a href="@Url.Action("Reglement", new { id = item.Id })" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-money"></i></a>
+                        <a href="@Url.Action("Edit", new { id = item.Id })" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-edit"></i></a>
+                        <a href="@Url.Action("Reglement", new { id = item.Id })" style="margin-right:5px;" class="btn btn-default"><i class="fa fa-money-bill"></i></a>
                         <a href="@Url.Action("recu", new { id = item.Id })" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-print"></i></a>
-                        <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger"><span class="fas fa-remove"></span></a>
+                        <a href="@Url.Action("Delete", new { id = item.Id })" class="btn btn-danger"><span class="fas fa-trash-alt"></span></a>
                     </td>
                 </tr>
             }
