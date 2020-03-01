@@ -55,7 +55,7 @@ namespace AssistVente.Controllers
             //}
         }
 
-    [Authorize(Roles = "Admin,Achats-edition")]
+        [Authorize(Roles = "Admin,Achats-edition")]
         public ActionResult CreateAchat()
         {
             var achatVM = new AchatCreateVM()
@@ -129,7 +129,7 @@ namespace AssistVente.Controllers
                 {
                     NomProduit = produit.Nom,
                     ProduitId = produit.ID,
-                    Prix = 0,
+                    Prix = produit.PrixAchat,
                     Quantite = 0
                 });
             }
@@ -186,6 +186,99 @@ namespace AssistVente.Controllers
 
         }
 
+        public ActionResult Edit(Guid? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Achat achat = db.Operations.OfType<Achat>().Include(o => o.Details).FirstOrDefault(o => o.Id == id);
+            if (achat == null)
+            {
+                return HttpNotFound();
+            }
+            if (!db.Caisses.Any()) return RedirectToAction("Index");
+            ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom");
+            var achatVM = new AchatCreateVM()
+            {
+                Fournisseur = achat.Fournisseur,
+                MontantPaye = achat.Montant,
+                NumFactureFournisseur = achat.NumFacture,
+                Details = new List<DetailAchatVM>()
+            };
+            var produits = db.Produits.OrderBy(p => p.Nom).ToList();
+            foreach (var produit in produits)
+            {
+                achatVM.Details.Add(new DetailAchatVM()
+                {
+                    NomProduit = produit.Nom,
+                    ProduitId = produit.ID,
+                    Prix = produit.PrixVente,
+                    Quantite = 0
+                });
+                var detail = achat.Details.FirstOrDefault(d => d.Produit.ID == produit.ID);
+                if (detail != null)
+                {
+                    achatVM.Details.Last().Quantite = detail.QuantiteAchetee;
+                }
+            }
+            return View(achatVM);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Edit(AchatCreateVM achat)
+        {
+            if (ModelState.IsValid)
+            {
+                StockManager stockManager = new StockManager(db);
+                Achat oldAchat = db.Achats.Where(v => v.Id == achat.ID).Include(v => v.Details.Select(d => d.Produit)).First();
+                //Restitution du stock
+                foreach (var detail in oldAchat.Details)
+                {
+                    stockManager.RemoveStock(detail.ProduitID.Value, detail.QuantiteAchetee, OperationType.Vente);
+                }
+                //Annulation des reglements
+                var caisseManager = new CaisseManager(db);
+                caisseManager.AnnulerReglementsAchat(oldAchat, "suppression");
+                //Suppression des anciens details
+                oldAchat.Montant = 0;
+                oldAchat.Montant = achat.MontantPaye;
+                oldAchat.UserId = User.Identity.GetUserId();
+                for (int i = 0; i < oldAchat.Details.Count; i++)
+                {
+                    db.DetailsAchat.Remove(oldAchat.Details[i]);
+                }
+                db.SaveChanges();
+                //Enregistrement des nouveaux details commande
+                double total = 0;
+                foreach (var detail in achat.Details)
+                {
+                    if (detail.Quantite > 0)
+                        oldAchat.Details.Add(new DetailAchat()
+                        {
+                            Produit = db.Produits.Find(detail.ProduitId),
+                            QuantiteAchetee = detail.Quantite,
+                            ProduitID = detail.ProduitId,
+                            ID = Guid.NewGuid(),
+                            PrixAchat = db.Produits.Find(detail.ProduitId).PrixAchat
+                        });
+                    //Sortie de stock
+                    stockManager.AddStock(detail.ProduitId, detail.Quantite, OperationType.Achat);
+                    total += detail.Quantite * db.Produits.Find(detail.ProduitId).PrixVente;
+                }
+
+                //Reglements
+
+                oldAchat.Montant = total;
+                //oldAchat.MontantRestant = total;
+                db.SaveChanges();
+                //caisseManager.reglerAchat(achat.MontantPaye, oldAchat, "Paiement de vente");
+                //return RedirectToAction("Confirmer", new { id = oldAchat.Id });
+            }
+
+            //ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom", achat.ClientId);
+            return RedirectToAction("Index");
+        }
         public ActionResult Details(Guid id)
         {
             if (id == null)
@@ -201,7 +294,7 @@ namespace AssistVente.Controllers
         }
 
         [Authorize(Roles = "Admin,Achats-suppression")]
-        public ActionResult Delete (Guid id)
+        public ActionResult Delete(Guid id)
         {
             if (id == null)
             {

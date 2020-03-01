@@ -62,14 +62,14 @@
                         <tr>
                             <td>@Model.Details[i].Produit.Nom</td>
                             <td class="text-align-right">@Model.Details[i].QuantiteAchetee</td>
-                            <td class="text-align-right">@Model.Details[i].PrixAchat</td>
+                            <td class="text-align-right">@Model.Details[i].Produit.PrixAchat</td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
     </div>
-
+Total: @Model.Details.Sum(d=>d.PrixAchat*d.QuantiteAchetee)
     <p class="pull-right">
         <a href="@Url.Action("Delete", new { id = Model.Id })" style="margin-right:5px;" class="btn btn-danger"><i class="fas fa-trash-alt"></i> Supprimer l'achat</a>
         <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><span class="fas fa-arrow-left"></span> Retour à la liste</a>
