@@ -10,6 +10,8 @@ using AssistVente.Filters;
 using AssistVente.Models;
 using AssistVente.Models.ViewModels;
 using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.Owin;
+using IdentitySample.Models;
 
 namespace AssistVente.Controllers
 {
@@ -40,10 +42,12 @@ namespace AssistVente.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Vente vente = db.Operations.OfType<Vente>().Include(v => v.Details).First(v => v.Id == id);
+
             if (vente == null)
             {
                 return HttpNotFound();
             }
+            ViewBag.userName = Request.GetOwinContext().GetUserManager<ApplicationUserManager>().Users.FirstOrDefault(u => u.Id == vente.UserId).UserName;
             return View(vente);
         }
 
@@ -83,7 +87,7 @@ namespace AssistVente.Controllers
             {
                 Details = new List<DetailVenteVM>()
             };
-            var produits = db.Produits.OrderBy(p=>p.Nom).ToList();
+            var produits = db.Produits.OrderBy(p => p.Nom).ToList();
             foreach (var produit in produits)
             {
                 venteVM.Details.Add(new DetailVenteVM()
@@ -153,13 +157,35 @@ namespace AssistVente.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Vente vente = (Vente)db.Operations.Find(id);
+            Vente vente = db.Operations.OfType<Vente>().Include(o => o.Details).FirstOrDefault(o => o.Id == id);
             if (vente == null)
             {
                 return HttpNotFound();
             }
-            ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom", vente.ClientId);
-            return View(vente);
+            if (!db.Caisses.Any()) return RedirectToAction("Index");
+            ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom");
+            var venteVM = new VenteVM()
+            {
+                DateOperation = vente.DateOperation,
+                Details = new List<DetailVenteVM>()
+            };
+            var produits = db.Produits.OrderBy(p => p.Nom).ToList();
+            foreach (var produit in produits)
+            {
+                venteVM.Details.Add(new DetailVenteVM()
+                {
+                    NomProduit = produit.Nom,
+                    ProduitId = produit.ID,
+                    PU = produit.PrixVente,
+                    Quantite = 0
+                });
+                var detail = vente.Details.FirstOrDefault(d => d.Produit.ID == produit.ID);
+                if (detail != null)
+                {
+                    venteVM.Details.Last().Quantite = detail.QuantiteVendue;
+                }
+            }
+            return View(venteVM);
         }
 
         // POST: Ventes/Edit/5
@@ -167,14 +193,55 @@ namespace AssistVente.Controllers
         // plus de détails, voir  http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "Id,Montant,Date,UserId,ClientId,MontantRegle,MontantRestant")] Vente vente)
+        public ActionResult Edit(VenteVM vente, Guid clientId, string reglement)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(vente).State = EntityState.Modified;
+                StockManager stockManager = new StockManager(db);
+                Vente oldVente = db.Ventes.Where(v => v.Id == vente.Id).Include(v => v.Details.Select(d => d.Produit)).First();
+                //Restitution du stock
+                foreach (var detail in oldVente.Details)
+                {
+                    stockManager.AddStock(detail.ProduitID, detail.QuantiteVendue, OperationType.Vente);
+                }
+                //Annulation des reglements
+                var caisseManager = new CaisseManager(db);
+                caisseManager.AnnulerReglementsVente(oldVente, "suppression");
+                //Suppression des anciens details
+                oldVente.Montant = 0;
+                oldVente.MontantRegle = 0;
+                oldVente.MontantRestant = 0;
+                for (int i = 0; i < oldVente.Details.Count; i++)
+                {
+                    db.DetailsVente.Remove(oldVente.Details[i]);
+                }
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                //Enregistrement des nouveaux details commande
+                double total = 0;
+                foreach (var detail in vente.Details)
+                {
+                    if (detail.Quantite > 0)
+                        oldVente.Details.Add(new DetailVente()
+                        {
+                            Produit = db.Produits.Find(detail.ProduitId),
+                            QuantiteVendue = detail.Quantite,
+                            ProduitID = detail.ProduitId,
+                            ID = Guid.NewGuid()
+                        });
+                //Sortie de stock
+                    stockManager.RemoveStock(detail.ProduitId, detail.Quantite, OperationType.Vente);
+                    total += detail.Quantite * db.Produits.Find(detail.ProduitId).PrixVente;
+                }
+
+                //Reglements
+
+                oldVente.Montant = total;
+                oldVente.MontantRestant = total;
+                db.SaveChanges();
+                caisseManager.reglerVente(vente.MontantPaye, oldVente, "Paiement de vente", reglement);
+                return RedirectToAction("Confirmer", new { id = oldVente.Id });
             }
+
             ViewBag.ClientId = new SelectList(db.Clients, "ID", "Nom", vente.ClientId);
             return View(vente);
         }
@@ -235,6 +302,8 @@ namespace AssistVente.Controllers
             {
                 manager.AddStock(detail.ProduitID, detail.QuantiteVendue, OperationType.Vente);
             }
+            var caisseManager = new CaisseManager(db);
+            caisseManager.AnnulerReglementsVente(vente, "suppression");
             db.Operations.Remove(vente);
             db.SaveChanges();
             return RedirectToAction("Index");

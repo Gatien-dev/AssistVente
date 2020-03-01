@@ -8,6 +8,7 @@ namespace AssistVente.Models.ViewModels
 {
     public class VenteVM
     {
+        public Guid Id { get; set; }
         public Guid ClientId { get; set; }
         public List<DetailVenteVM> Details { get; set; }
         [Display(Name ="Montant payé")]
