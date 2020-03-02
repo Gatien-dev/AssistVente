@@ -7,7 +7,7 @@
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.Id)
     <div class="form-horizontal">
-        <h4>Modification de vente</h4>
+        <h4>Nouvelle de vente</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
@@ -38,6 +38,14 @@
                 <option>Chèque</option>
                 <option>Carte banquaire</option>
             </select>
+        </div>
+        <div class="form-group col-md-6">
+            <label for="sel1">Types de produit</label>
+            <div>
+                <a href="#" class="btn btn-default" onclick="showProduits()">Restaurant</a>
+                <a href="#" class="btn btn-default" onclick="showProduits()">Bar</a>
+                <a href="#" class="btn btn-default" onclick="showProduits()">Autres</a>
+            </div>
         </div>
         <div class="form-group col-md-12">
             <div class="row">
@@ -92,7 +100,7 @@
                 <tbody>
                     @for (int i = 0; i < Model.Details.Count; i++)
                     {
-                        <tr>
+                        <tr data-categorie="@Model.Details[i].CategorieProduit">
                             <td class="col-md-3">@Model.Details[i].NomProduit</td>
                             @Html.HiddenFor(model => Model.Details[i].ProduitId)
                             <td class="col-md-3">

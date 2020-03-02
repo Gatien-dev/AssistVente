@@ -21,6 +21,7 @@ namespace AssistVente.Models.ViewModels
     {
         public Guid ProduitId { get; set; }
         public string NomProduit { get; set; }
+        public string CategorieProduit { get; set; }
         public double PU { get; set; }
         public double Quantite { get; set; }
     }

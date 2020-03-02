@@ -95,6 +95,7 @@ namespace AssistVente.Controllers
                     NomProduit = produit.Nom,
                     ProduitId = produit.ID,
                     PU = produit.PrixVente,
+                    CategorieProduit=produit.Categorie.Name,
                     Quantite = 0
                 });
             }
