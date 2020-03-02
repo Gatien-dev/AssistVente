@@ -9,6 +9,10 @@ namespace AssistVente.Models
 {
     public class Vente:Operation
     {
+
+        [Key]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+        public int NumVente { get; set; }
         [Display(Name ="Montant Réglé")]
         public double MontantRegle { get; set; }
         [Display(Name = "Reste à payer")]
