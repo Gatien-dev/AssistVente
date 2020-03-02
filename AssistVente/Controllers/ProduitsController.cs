@@ -45,6 +45,7 @@ namespace AssistVente.Controllers
         [Authorize(Roles = "Admin,Produits-edition")]
         public ActionResult Create()
         {
+            ViewBag.CategorieProduitId = new SelectList(db.CategorieProduits, "ID", "Name");
             return View();
         }
 
@@ -53,7 +54,7 @@ namespace AssistVente.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ID,Nom,PrixAchat,PrixVente,ALouer,StockDisponible,PrixLocationParDefaut,DureeDeLocationParDefaut,Description,DateCreation,CreatorId")] Produit produit)
+        public ActionResult Create([Bind(Include = "ID,Nom,PrixAchat,PrixVente,ALouer,StockDisponible,PrixLocationParDefaut,DureeDeLocationParDefaut,Description,DateCreation,CreatorId,CategorieProduitId")] Produit produit)
         {
             if (ModelState.IsValid)
             {
@@ -86,6 +87,7 @@ namespace AssistVente.Controllers
             {
                 return HttpNotFound();
             }
+            ViewBag.CategorieProduitId = new SelectList(db.CategorieProduits, "ID", "Name");
             return View(produit);
         }
 
@@ -94,7 +96,7 @@ namespace AssistVente.Controllers
         // plus de détails, voir  https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "ID,Nom,PrixAchat,PrixVente,ALouer,PrixLocationParDefaut,DureeDeLocationParDefaut,Description,DateCreation,CreatorId")] Produit produit)
+        public ActionResult Edit([Bind(Include = "ID,Nom,PrixAchat,PrixVente,ALouer,PrixLocationParDefaut,DureeDeLocationParDefaut,Description,DateCreation,CreatorId,CategorieProduitId")] Produit produit)
         {
             if (ModelState.IsValid)
             {
@@ -105,6 +107,7 @@ namespace AssistVente.Controllers
                 dbProd.PrixVente = produit.PrixVente;
                 dbProd.PrixLocationParDefaut = produit.PrixLocationParDefaut;
                 dbProd.Description = produit.Description;
+                dbProd.CategorieProduitId = produit.CategorieProduitId;
                 produit.CreatorId = User.Identity.GetUserId();
                 db.SaveChanges();
                 return RedirectToAction("Index");

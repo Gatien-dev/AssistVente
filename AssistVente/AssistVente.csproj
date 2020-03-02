@@ -206,6 +206,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AchatsController.cs" />
     <Compile Include="Controllers\CaissesController.cs" />
+    <Compile Include="Controllers\CategorieProduitsController.cs" />
     <Compile Include="Controllers\ClientsController.cs" />
     <Compile Include="Controllers\ForfaitsController.cs" />
     <Compile Include="Controllers\GroupeForfaitsController.cs" />
@@ -564,6 +565,11 @@
     <Content Include="Views\Ventes\recu.cshtml" />
     <Content Include="Views\Ventes\VentesProduit.cshtml" />
     <Content Include="Views\Achats\Edit.cshtml" />
+    <Content Include="Views\CategorieProduits\Create.cshtml" />
+    <Content Include="Views\CategorieProduits\Delete.cshtml" />
+    <Content Include="Views\CategorieProduits\Details.cshtml" />
+    <Content Include="Views\CategorieProduits\Edit.cshtml" />
+    <Content Include="Views\CategorieProduits\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

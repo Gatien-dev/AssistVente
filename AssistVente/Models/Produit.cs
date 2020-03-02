@@ -45,6 +45,7 @@ namespace AssistVente.Models
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int ID { get; set; }
+        [Display(Name="Catégorie")]
         public string Name { get; set; }
         public List<Produit> Produits { get; set; }
     }

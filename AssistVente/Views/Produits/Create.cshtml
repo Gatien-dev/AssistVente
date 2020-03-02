@@ -1,9 +1,7 @@
 ﻿@model AssistVente.Models.Produit
-
 @{
     ViewBag.Title = "Create";
 }
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -20,11 +18,17 @@
                     @Html.ValidationMessageFor(model => model.Nom, "", new { @class = "text-danger" })
                 </div>
             </div>
-
+            <div class="form-group">
+                <label class="control-label col-md-2">Catégorie</label>
+                <div class="col-md-6">
+                    @Html.DropDownList("CategorieProduitId", null, htmlAttributes: new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.CategorieProduitId, "", new { @class = "text-danger" })
+                </div>
+            </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.PrixAchat, htmlAttributes: new { @class = "control-label col-md-5" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.PrixAchat, new { htmlAttributes = new { @class = "form-control", @type="number" } })
+                    @Html.EditorFor(model => model.PrixAchat, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                     @Html.ValidationMessageFor(model => model.PrixAchat, "", new { @class = "text-danger" })
                 </div>
             </div>
@@ -35,7 +39,6 @@
                     @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group">
                 @Html.LabelFor(model => model.DateCreation, htmlAttributes: new { @class = "control-label col-md-5" })
                 <div class="col-md-10">
@@ -43,7 +46,6 @@
                     @Html.ValidationMessageFor(model => model.DateCreation, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             @*<div class="form-group">
                     @Html.LabelFor(model => model.CreatorId, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
@@ -56,33 +58,31 @@
             <div class="form-group">
                 @Html.LabelFor(model => model.PrixVente, htmlAttributes: new { @class = "control-label col-md-5" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.PrixVente, new { htmlAttributes = new { @class = "form-control" , @type="number"} })
+                    @Html.EditorFor(model => model.PrixVente, new { htmlAttributes = new { @class = "form-control", @type = "number" } })
                     @Html.ValidationMessageFor(model => model.PrixVente, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             <div class="form-group">
                 @Html.LabelFor(model => model.ALouer, htmlAttributes: new { @class = "control-label col-md-5" })
                 <div class="col-md-3">
                     @Html.CheckBoxFor(model => model.ALouer)
                     @Html.ValidationMessageFor(model => model.ALouer, "", new { @class = "text-danger" })
-
                 </div>
             </div>
             <div class="form-group">
                 @Html.LabelFor(model => model.PrixLocationParDefaut, htmlAttributes: new { @class = "control-label col-md-5" })
                 <div class="col-md-10">
-                    @Html.EditorFor(model => model.PrixLocationParDefaut, new { htmlAttributes = new { @class = "form-control", @type="number", @Value=0 } })
+                    @Html.EditorFor(model => model.PrixLocationParDefaut, new { htmlAttributes = new { @class = "form-control", @type = "number", @Value = 0 } })
                     @Html.ValidationMessageFor(model => model.PrixLocationParDefaut, "", new { @class = "text-danger" })
                 </div>
             </div>
             @*<div class="form-group">
-                @Html.LabelFor(model => model.DureeDeLocationParDefaut, htmlAttributes: new { @class = "control-label col-md-5" })
-                <div class="col-md-10">
-                    @Html.EditorFor(model => model.DureeDeLocationParDefaut, new { htmlAttributes = new { @class = "form-control" } })
-                    @Html.ValidationMessageFor(model => model.DureeDeLocationParDefaut, "", new { @class = "text-danger" })
-                </div>
-            </div>*@
+                    @Html.LabelFor(model => model.DureeDeLocationParDefaut, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DureeDeLocationParDefaut, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DureeDeLocationParDefaut, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
             <div class="form-group">
                 @Html.LabelFor(model => model.StockDisponible, htmlAttributes: new { @class = "control-label col-md-5" })
                 <div class="col-md-10">
@@ -90,19 +90,17 @@
                     @Html.ValidationMessageFor(model => model.StockDisponible, "", new { @class = "text-danger" })
                 </div>
             </div>
-
             @*<div class="form-group">
-            @Html.LabelFor(model => model.DureeDeLocationParDefaut, htmlAttributes: new { @class = "control-label col-md-5" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.DureeDeLocationParDefaut, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DureeDeLocationParDefaut, "", new { @class = "text-danger" })
-            </div>
-        </div>*@
+                    @Html.LabelFor(model => model.DureeDeLocationParDefaut, htmlAttributes: new { @class = "control-label col-md-5" })
+                    <div class="col-md-10">
+                        @Html.EditorFor(model => model.DureeDeLocationParDefaut, new { htmlAttributes = new { @class = "form-control" } })
+                        @Html.ValidationMessageFor(model => model.DureeDeLocationParDefaut, "", new { @class = "text-danger" })
+                    </div>
+                </div>*@
         </div>
 
-
     </div>
-    <br/>
+    <br />
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10 text-center">
             <input type="submit" class="btn btn-primary" value="Enregistrer" onclick="submitMainForm()" />
@@ -110,7 +108,6 @@
         </div>
     </div>
 }
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

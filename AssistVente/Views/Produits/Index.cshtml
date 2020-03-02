@@ -57,7 +57,7 @@
                             @Html.DisplayNameFor(model => model.DureeDeLocationParDefaut)
                         </th>
                         <th>
-                            @Html.DisplayNameFor(model => model.PrixLocationParDefaut)
+                            @Html.DisplayNameFor(model => model.Categorie.Name)
                         </th>
                         <th>
                             @Html.DisplayNameFor(model => model.DateCreation)
@@ -93,7 +93,7 @@
                                         @Html.DisplayFor(modelItem => item.DureeDeLocationParDefaut)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => item.PrixLocationParDefaut)
+                                        @Html.DisplayFor(modelItem => item.Categorie.Name)
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => item.DateCreation)
