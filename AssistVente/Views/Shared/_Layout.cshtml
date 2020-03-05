@@ -53,6 +53,26 @@
                             </a>
                         </li>
                     }
+                    @if (User.IsInRole("Admin") || User.IsInRole("Ventes"))
+                    {
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Ventes")">
+                                <i class="nc-icon nc-icon nc-paper-2"></i>
+                                <p>Liste des ventes</p>
+                            </a>
+                        </li>
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("VentesJournee", "Ventes",new {date=DateTime.Now.Date, fin=DateTime.Now.Date.AddDays(1) })">
+                                <i class="nc-icon nc-icon nc-paper-2"></i>
+                                <p>Ventes de la journée</p>
+                            </a>
+                        </li>
+                    }
                     @if (User.IsInRole("Admin") || User.IsInRole("Achats"))
                     {
                         <li class="nav-item">
@@ -280,7 +300,7 @@
     </div>
     <!--   Core JS Files   -->
     @*<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
+        <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>*@
     <script src="~/Scripts/jquery-1.12.4.js"></script>
     <script src="~/Scripts/jquery-ui.js"></script>
     <script>

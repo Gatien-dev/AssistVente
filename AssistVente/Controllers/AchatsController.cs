@@ -154,13 +154,13 @@ namespace AssistVente.Controllers
                     Details = new List<DetailAchat>(),
                     UserId = User.Identity.GetUserId()
                 };
-
+                double total = 0;
                 foreach (var detailVM in achatVM.Details)
                 {
                     if (detailVM.Quantite > 0)
                     {
                         var produit = db.Produits.Find(detailVM.ProduitId);
-
+                        total += detailVM.Quantite * produit.PrixAchat;
                         var detail = new DetailAchat()
                         {
                             ID = Guid.NewGuid(),
@@ -176,6 +176,7 @@ namespace AssistVente.Controllers
                         stockManager.AddStock(produit.ID, detail.QuantiteAchetee, OperationType.Achat);
                     }
                 }
+                achat.Montant = total;
                 db.Achats.Add(achat);
                 //db.Operations.Add(achat);
                 db.SaveChanges();
@@ -213,7 +214,7 @@ namespace AssistVente.Controllers
                 {
                     NomProduit = produit.Nom,
                     ProduitId = produit.ID,
-                    Prix = produit.PrixVente,
+                    Prix = produit.PrixAchat,
                     Quantite = 0
                 });
                 var detail = achat.Details.FirstOrDefault(d => d.Produit.ID == produit.ID);
@@ -264,7 +265,7 @@ namespace AssistVente.Controllers
                         });
                     //Sortie de stock
                     stockManager.AddStock(detail.ProduitId, detail.Quantite, OperationType.Achat);
-                    total += detail.Quantite * db.Produits.Find(detail.ProduitId).PrixVente;
+                    total += detail.Quantite * db.Produits.Find(detail.ProduitId).PrixAchat;
                 }
 
                 //Reglements

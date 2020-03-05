@@ -112,7 +112,7 @@
         {
             if (i == 2)
             {
-                <div class="col-md-3" style="max-width:30% ;">
+                <div class="col-md-3" style="max-width:32% ;">
                     <p style="display:inline-block; margin-top:3px;margin-bottom:2px; font-size:small"><img src="~/assets/img/eyiwa.jpg" width="50px" /></p>
                     <p style="font-size:small"> Recu de Vente Eyiwa Land</p>
 
@@ -121,7 +121,7 @@
                     <p>
                         Client: @Model.Client.Nom
                     </p>
-                    <table border="1" cellpadding="4" style="margin:auto">
+                    <table border="1" cellpadding="1" style="margin:auto">
                         <thead>
                         <th style="font-size:12px">Article</th>
                         <th style="font-size:12px">Qte</th>
@@ -134,8 +134,8 @@
                                 <tr>
                                     <td style="font-size:12px;">@item.Produit.Nom</td>
                                     <td style="font-size:12px">@item.QuantiteVendue</td>
-                                    <td style="font-size:12px">@String.Format("{0:### ### ###}", item.Produit.PrixVente)</td>
-                                    <td style="font-size:12px">@String.Format("{0:### ### ###}", (item.Produit.PrixVente * item.QuantiteVendue))</td>
+                                    <td style="font-size:8px">@String.Format("{0:### ### ###}", item.Produit.PrixVente)</td>
+                                    <td style="font-size:8px">@String.Format("{0:### ### ###}", (item.Produit.PrixVente * item.QuantiteVendue))</td>
                                 </tr>
 
                             }
@@ -156,7 +156,7 @@
             }
             else
             {
-                <div class="col-md-3" style="max-width:30% ; border-right:2px black dashed;margin-left:10px;">
+                <div class="col-md-3" style="max-width:32% ; border-right:2px black dashed;margin-left:10px;">
                     <p style="display:inline-block; margin-top:3px;margin-bottom:2px; font-size:small"><img src="~/assets/img/eyiwa.jpg" width="50px" /></p>
                     <p style="font-size:small"> Recu de Vente Eyiwa Land</p>
 
@@ -165,7 +165,7 @@
                     <p>
                         Client: @Model.Client.Nom
                     </p>
-                    <table border="1" cellpadding="4" style="margin:auto">
+                    <table border="1" cellpadding="1" style="margin:auto">
                         <thead>
                         <th style="font-size:12px">Article</th>
                         <th style="font-size:12px">Qte</th>
@@ -178,8 +178,8 @@
                                 <tr>
                                     <td style="font-size:12px;">@item.Produit.Nom</td>
                                     <td style="font-size:12px">@item.QuantiteVendue</td>
-                                    <td style="font-size:12px">@String.Format("{0:### ### ###}", item.Produit.PrixVente)</td>
-                                    <td style="font-size:12px">@String.Format("{0:### ### ###}", (item.Produit.PrixVente * item.QuantiteVendue))</td>
+                                    <td style="font-size:8px">@String.Format("{0:### ### ###}", item.Produit.PrixVente)</td>
+                                    <td style="font-size:8px">@String.Format("{0:### ### ###}", (item.Produit.PrixVente * item.QuantiteVendue))</td>
                                 </tr>
 
                             }

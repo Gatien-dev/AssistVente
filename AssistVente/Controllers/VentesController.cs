@@ -28,6 +28,60 @@ namespace AssistVente.Controllers
             ViewBag.caisseDefined = db.Caisses.Any();
             return View(operations.ToList());
         }
+        public ActionResult VentesJournee(DateTime date, DateTime? fin)
+        {
+            var operations = db.Operations.OfType<Vente>().Include(v => v.Client).Include(v => v.Details)
+
+                .OrderByDescending(v => v.Date).ToList();
+            if (fin == null)
+            {
+                fin = DateTime.Now;
+            }
+            if (fin < date)
+            {
+                fin = date;
+            }
+            
+                operations = operations.Where(v => v.Date >= date.Date && v.Date <= fin.Value.AddDays(1)).ToList();
+            
+            
+
+            var resume = new List<VenteProduitVM>();
+            foreach (var vente in operations)
+            {
+                foreach (var detail in vente.Details)
+                {
+                    var detailresume = resume.FirstOrDefault(r => r.IDProduit == detail.ProduitID);
+                    if (detailresume == null)
+                    {
+                        var venteVm = new VenteProduitVM()
+                        {
+                            IDProduit = detail.ProduitID,
+                            NomProduit = detail.Produit.Nom,
+                            PrixVente = detail.Produit.PrixVente,
+                            QteVendue = detail.QuantiteVendue,
+                        };
+                        venteVm.TotalVente += venteVm.PrixVente * venteVm.QteVendue;
+                        resume.Add(venteVm);
+                    }
+                    else
+                    {
+                        detailresume.QteVendue += detail.QuantiteVendue;
+                        detailresume.TotalVente += detail.QuantiteVendue * detail.Produit.PrixVente;
+                    }
+                }
+            }
+            ViewBag.journee = date;
+            ViewBag.fin = fin;
+            return View(resume);
+        }
+        [HttpPost, ActionName("ChangerDate")]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteConfirmed(DateTime date, DateTime? fin)
+        {
+
+            return RedirectToAction("VentesJournee", new { date, fin });
+        }
         public ActionResult VentesProduit(Guid idProduit)
         {
             var operations = db.Operations.OfType<Vente>().Where(v => v.Details.Any(d => d.Produit.ID == idProduit)).Include(v => v.Client).Include(v => v.Details).OrderByDescending(v => v.Date);
@@ -95,7 +149,7 @@ namespace AssistVente.Controllers
                     NomProduit = produit.Nom,
                     ProduitId = produit.ID,
                     PU = produit.PrixVente,
-                    CategorieProduit=produit.Categorie.Name,
+                    CategorieProduit = produit.Categorie.Name,
                     Quantite = 0
                 });
             }
@@ -229,7 +283,7 @@ namespace AssistVente.Controllers
                             ProduitID = detail.ProduitId,
                             ID = Guid.NewGuid()
                         });
-                //Sortie de stock
+                    //Sortie de stock
                     stockManager.RemoveStock(detail.ProduitId, detail.Quantite, OperationType.Vente);
                     total += detail.Quantite * db.Produits.Find(detail.ProduitId).PrixVente;
                 }
