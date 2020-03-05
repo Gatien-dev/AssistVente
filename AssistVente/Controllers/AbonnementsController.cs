@@ -26,7 +26,7 @@ namespace AssistVente.Controllers
 
             foreach (var abonnement in abonnements)
             {
-                
+
                 if ((abonnement.DateFin - DateTime.Now).TotalDays < -1 && !abonnement.Suspendu)
                 {
                     abonnement.Termine = true;
@@ -34,7 +34,7 @@ namespace AssistVente.Controllers
                     db.SaveChanges();
                 }
             }
-            
+
             return View(abonnements);
         }
 
@@ -123,6 +123,48 @@ namespace AssistVente.Controllers
                 var caisseManager = new CaisseManager(db);
                 string raison = "Reglement abonnement";
                 caisseManager.reglerAbonnement(abonnement.SommePaye, abonnement, raison, reglement);
+
+                //Enregistrement sous forme de vente pour les traces
+                Vente newVente = new Vente()
+                {
+                    Details = new List<DetailVente>(),
+                    //Client = db.Clients.Find(clientId),
+                    Date = DateTime.Now,
+                    Id = Guid.NewGuid(),
+                    ClientId = abonnement.ClientId,
+                    MontantRegle = 0,
+                    Montant=forfait.Montant,
+                    DateOperation = DateTime.Now,
+                    UserId = User.Identity.GetUserId()
+                };
+                double total = 0;
+                var produit = db.Produits.FirstOrDefault(p => p.Nom == forfait.Nom);
+                if (produit == null)
+                {
+                    produit = new Produit()
+                    {
+                        ID = Guid.NewGuid(),
+                        Nom = forfait.Nom,
+                        DateCreation = DateTime.Now,
+                        PrixVente = forfait.Montant
+                    };
+                    db.Produits.Add(produit);
+                    db.SaveChanges();
+                }
+
+                newVente.Details.Add(new DetailVente()
+                {
+                    Produit = produit,
+                    QuantiteVendue = 1,
+                    ProduitID = produit.ID,
+                    ID = Guid.NewGuid()
+                });
+                newVente.Montant = 0;
+                newVente.MontantRestant = 0;
+                newVente.MontantRegle = forfait.Montant;
+
+                db.Operations.Add(newVente);
+                db.SaveChanges();
                 return RedirectToAction("Index");
             }
 
@@ -257,11 +299,11 @@ namespace AssistVente.Controllers
 
             if (!abonnement.Termine)
             {
-                foreach (var reglement in db.Reglements.Where(r => r.IdOperation == abonnement.Id).ToList())
-                {
-                    db.Reglements.Remove(reglement);
-                    db.SaveChanges();
-                }
+                //foreach (var reglement in db.Reglements.Where(r => r.IdOperation == abonnement.Id).ToList())
+                //{
+                //    db.Reglements.Remove(reglement);
+                //    db.SaveChanges();
+                //}
 
                 string raison = "Résiliation d'abonnement";
                 string modeReglement = "";

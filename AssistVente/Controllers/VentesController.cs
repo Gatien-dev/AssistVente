@@ -41,10 +41,10 @@ namespace AssistVente.Controllers
             {
                 fin = date;
             }
-            
-                operations = operations.Where(v => v.Date >= date.Date && v.Date <= fin.Value.AddDays(1)).ToList();
-            
-            
+
+            operations = operations.Where(v => v.Date >= date.Date && v.Date <= fin.Value.AddDays(1)).ToList();
+
+
 
             var resume = new List<VenteProduitVM>();
             foreach (var vente in operations)
@@ -77,7 +77,7 @@ namespace AssistVente.Controllers
         }
         [HttpPost, ActionName("ChangerDate")]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteConfirmed(DateTime date, DateTime? fin)
+        public ActionResult ChangerDate(DateTime date, DateTime? fin)
         {
 
             return RedirectToAction("VentesJournee", new { date, fin });
@@ -358,7 +358,12 @@ namespace AssistVente.Controllers
                 manager.AddStock(detail.ProduitID, detail.QuantiteVendue, OperationType.Vente);
             }
             var caisseManager = new CaisseManager(db);
-            caisseManager.AnnulerReglementsVente(vente, "suppression");
+            //Ne pas annuler de reglements dans le cas de ventes d'abonnement puisqu'elles ne sont pas reglees. L'abonnement fait le reglement.
+            //Ces ventes servent juste pour les traces.
+            if (!db.Forfaits.Any(f => f.Nom == vente.Details.First().Produit.Nom))
+            {
+                caisseManager.AnnulerReglementsVente(vente, "suppression");
+            }
             db.Operations.Remove(vente);
             db.SaveChanges();
             return RedirectToAction("Index");
