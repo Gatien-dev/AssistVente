@@ -1,0 +1,91 @@
+﻿@model IEnumerable<AssistVente.Models.ViewModels.VenteProduitPeriodeVM>
+
+@{
+    ViewBag.Title = "Index";
+    //DateTime journee = ViewBag.journee;
+    //DateTime journeefin = ViewBag.fin;
+    String produitName = ViewBag.produitName;
+    Guid idProduit = ViewBag.produitId;
+}
+
+<div class="card strpied-tabled-with-hover">
+    <div class="card-header ">
+        <h4 class="card-title ">Ventes du produit @produitName la periode @ViewBag.debut a @ViewBag.fin </h4>
+
+        <p class="card-category  pull-left">  </p>
+
+    </div>
+
+    @using (Html.BeginForm("ChangerDate", "Ventes"))
+    {
+        @Html.AntiForgeryToken()
+
+        <div style="margin-left:2em;">
+
+            <input id="date" name="date" type="date" />
+            <input id="fin" name="fin" type="date" />
+            <input id="option" name="option" type="text" hidden value="VentesProduitPeriode" />
+            <input id="idProduit" name="idProduit" type="text" hidden value="@idProduit" />
+            <input type="submit" value="Changer la date" class="btn btn-primary" />
+        </div>
+    }
+    <div class="card-body table-full-width table-responsive">
+        <table class="table datatable">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayName("N°")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Client")
+                    </th>
+                    <th>
+                        @Html.DisplayName("Date")
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.QteVendueProduit)
+                    </th>
+
+                    <th>
+                        @Html.DisplayNameFor(model => model.Prix)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.Montant)
+                    </th>
+
+                </tr>
+            </thead>
+
+
+            @foreach (var item in Model)
+            {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ID)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vente.Client.Nom)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Vente.Date)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.QteVendueProduit)
+            </td>
+
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Prix)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Montant)
+            </td>
+        </tr>
+            }
+
+        </table>
+        <p style="font-weight:bold; font-size:large; text-align:right; margin-top: 50px; margin-right: 30px; ">Total des ventes: @Model.Sum(c => c.Montant)</p>
+    </div>
+</div>

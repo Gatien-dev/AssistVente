@@ -64,6 +64,13 @@
             <dd>
                 @Html.DisplayFor(model => model.Description)
             </dd>
+            <dt>
+                @Html.DisplayNameFor(model => model.Categorie)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Categorie.Name)
+            </dd>
 
             <dt>
                 @Html.DisplayNameFor(model => model.DateCreation)
@@ -74,12 +81,12 @@
             </dd>
 
             @*<dt>
-                @Html.DisplayNameFor(model => model.CreatorId)
-            </dt>
+            @Html.DisplayNameFor(model => model.CreatorId)
+        </dt>
 
-            <dd>
-                @Html.DisplayFor(model => model.CreatorId)
-            </dd>*@
+        <dd>
+            @Html.DisplayFor(model => model.CreatorId)
+        </dd>*@
         </div>
 
 

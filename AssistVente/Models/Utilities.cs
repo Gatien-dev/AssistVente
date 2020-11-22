@@ -86,20 +86,20 @@ namespace AssistVente.Models
             MailMessage mail = new MailMessage();
             System.Net.Mail.SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
 
-            mail.From = new MailAddress("princegnakou@gmail.com");
-            mail.To.Add("gatiengnakoU@gmail.com");
+            mail.From = new MailAddress(sender);
+            mail.To.Add(recipient);
             mail.Subject = subject;
             mail.Body = body;
             mail.IsBodyHtml = true;
             SmtpServer.Port = 587;
-            SmtpServer.Credentials = new System.Net.NetworkCredential("princegnakou@gmail.com", "Azetohprince2018");
+            SmtpServer.Credentials = new System.Net.NetworkCredential(sender, "Admin@eyiwa2020");
             SmtpServer.EnableSsl = true;
 
             SmtpServer.Send(mail);
         }
         public static void SendNotifications()
         {
-            string sender="princegnakoU@gmail.com";
+            string sender= "eyiwalandmailsender@gmail.com";
             var parametre = new AssistVenteContext().Parametres.FirstOrDefault();
             if (parametre == null) { return; }
             string recipient = parametre.EmailNotifications;

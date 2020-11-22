@@ -146,7 +146,8 @@ namespace AssistVente.Controllers
                         ID = Guid.NewGuid(),
                         Nom = forfait.Nom,
                         DateCreation = DateTime.Now,
-                        PrixVente = forfait.Montant
+                        PrixVente = forfait.Montant, 
+                        //Categorie = db.CategorieProduits.FirstOrDefault(c => c.Name.ToLower() == "autres")
                     };
                     db.Produits.Add(produit);
                     db.SaveChanges();

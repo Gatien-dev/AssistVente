@@ -1,0 +1,86 @@
+﻿@model IEnumerable<AssistVente.Models.ViewModels.VenteProduitVM>
+
+@{
+    ViewBag.Title = "Index";
+    DateTime journee = ViewBag.journee;
+    DateTime journeefin = ViewBag.fin;
+    List<string> categories = ViewBag.categories;
+}
+
+    <div class="card strpied-tabled-with-hover">
+        <div class="card-header ">
+            <h4 class="card-title ">Liste des ventes de la journée du @journee.ToShortDateString() au @journeefin.ToShortDateString()</h4>
+
+            <p class="card-category  pull-left">Ventes de la journée  </p>
+
+        </div>
+
+        @using (Html.BeginForm("ChangerDate", "Ventes"))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-actions no-color pull-right">
+
+                <input id="date" name="date" type="date" />
+                <input id="fin" name="fin" type="date" />
+                <input id="option" name="option" hidden type="text" value="VentesJourneeParCategorie" />
+                <input type="submit" value="Changer la date" class="btn btn-primary" />
+            </div>
+        }
+        @foreach (var categorie in categories)
+        {
+            <p>Categorie: @categorie</p>
+            <div class="card-body table-full-width table-responsive">
+                <table class="table datatable">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.NomProduit)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.PrixVente)
+                            </th>
+
+                            <th>
+                                @Html.DisplayNameFor(model => model.QteVendue)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.TotalVente)
+                            </th>
+
+                        </tr>
+                    </thead>
+
+
+                    @foreach (var item in Model)
+                    {
+                        if (item.CategorieName == categorie)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.NomProduit)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.PrixVente)
+                                </td>
+
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.QteVendue)
+                                </td>
+
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.TotalVente)
+                                </td>
+                            </tr>
+                        }
+
+                    }
+
+                </table>
+                <p style="font-weight:bold; font-size:large; text-align:right; margin-top: 50px; margin-right: 30px; ">Total de la catégorie @categorie: @Model.Where(c=>c.CategorieName==categorie).Sum(c => c.TotalVente)</p>
+            </div>
+        }
+        <p style="font-weight:bold; font-size:large; text-align:right; margin-top: 50px; margin-right: 30px; ">Total des général: @Model.Sum(c => c.TotalVente)</p>
+    </div>

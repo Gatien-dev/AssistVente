@@ -16,25 +16,44 @@ namespace AssistVente.Controllers
     public class StockLogsController : Controller
     {
         private AssistVenteContext db = new AssistVenteContext();
-        [Authorize(Roles ="Admin,Stocks")]
+        [Authorize(Roles = "Admin,Stocks")]
         // GET: StockLogs
-        public ActionResult Index(Guid id)
+        public ActionResult Index(Guid? id)
         {
             var produit = db.Produits.Find(id);
-            if (produit!= null)
+            if (produit != null)
             {
                 ViewBag.produitName = produit.Nom;
             }
             if (id == Guid.Empty || id == null)
             {
-                var data = db.StockLogs.Select(s => new stockLogIndexVM()
+                var tempdata = db.StockLogs.OrderByDescending(s => s.Date).Select(s => new stockLogIndexVM()
                 {
                     ProduitId = s.ProduitId,
                     Amount = s.Amount,
                     Date = s.Date,
                     Id = s.Id,
-                    Type = s.Type
+                    Type = s.Type,
+                    NewStock = s.NewStock,
+                    OldStock = s.OldStock
                 }).ToList();
+                var data = new List<stockLogIndexVM>();
+                int index = 0;
+                foreach (var s in tempdata)
+                {
+                    index += 1;
+                    data.Add(new stockLogIndexVM()
+                    {
+                        ProduitId = s.ProduitId,
+                        Amount = s.Amount,
+                        Date = s.Date,
+                        Id = s.Id,
+                        Number = index,
+                        Type = s.Type,
+                        NewStock = s.NewStock,
+                        OldStock = s.OldStock
+                    });
+                }
                 foreach (var item in data)
                 {
                     item.ProduitName = db.Produits.Find(item.ProduitId).Nom;
@@ -45,14 +64,42 @@ namespace AssistVente.Controllers
             //return View(db.StockLogs.Where(p => p.ProduitId == id).OrderByDescending(s => s.Date).ToList());
             {
 
-                var data = db.StockLogs.Where(p => p.ProduitId == id).Select(s => new stockLogIndexVM()
+                var tempdata = db.StockLogs.Where(p => p.ProduitId == id).OrderByDescending(s => s.Date).Select(s => new stockLogIndexVM()
                 {
                     ProduitId = s.ProduitId,
                     Amount = s.Amount,
                     Date = s.Date,
                     Id = s.Id,
-                    Type = s.Type
+                    Type = s.Type,
+                    NewStock = s.NewStock,
+                    OldStock = s.OldStock
                 }).ToList();
+                var data = new List<stockLogIndexVM>();
+                int index = 0;
+                foreach (var s in tempdata)
+                {
+                    index += 1;
+                    data.Add(new stockLogIndexVM()
+                    {
+                        ProduitId = s.ProduitId,
+                        Amount = s.Amount,
+                        Date = s.Date,
+                        Id = s.Id,
+                        Number = index,
+                        Type = s.Type,
+                        NewStock = s.NewStock,
+                        OldStock = s.OldStock
+                    });
+                }
+
+                //var data = db.StockLogs.Where(p => p.ProduitId == id).Select(s => new stockLogIndexVM()
+                //{
+                //    ProduitId = s.ProduitId,
+                //    Amount = s.Amount,
+                //    Date = s.Date,
+                //    Id = s.Id,
+                //    Type = s.Type
+                //}).ToList();
                 foreach (var item in data)
                 {
                     item.ProduitName = db.Produits.Find(item.ProduitId).Nom;

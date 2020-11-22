@@ -254,6 +254,7 @@
     <Compile Include="Models\StockManager.cs" />
     <Compile Include="Models\Utilities.cs" />
     <Compile Include="Models\Vente.cs" />
+    <Compile Include="Models\ViewModels\VentesProduitPeriodeVM.cs" />
     <Compile Include="Models\ViewModels\AchatCreateVM.cs" />
     <Compile Include="Models\ViewModels\stockLogIndexVM.cs" />
     <Compile Include="Models\ViewModels\VenteProduitVM.cs" />
@@ -572,6 +573,10 @@
     <Content Include="Views\CategorieProduits\Edit.cshtml" />
     <Content Include="Views\CategorieProduits\Index.cshtml" />
     <Content Include="Views\Ventes\VentesJournee.cshtml" />
+    <Content Include="Views\Ventes\VentesProduitPeriode.cshtml" />
+    <Content Include="Views\Ventes\VentesJourneeParCategorie.cshtml" />
+    <Content Include="Views\Ventes\recu-a4.cshtml" />
+    <Content Include="Views\Ventes\recu-80c-v0.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

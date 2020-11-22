@@ -7,19 +7,7 @@
 <div class="card strpied-tabled-with-hover">
     <div class="card-header ">
         <h4 class="card-title ">Liste des ventes</h4>
-        @if (ViewBag.caisseDefined)
-        {
-
-            <p class="pull-right">
-                <a href="@Url.Action("Create")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouvelle vente</a>
-            </p>
-        }
-        else
-        {
-            <p class="text-danger">Aucune caisse disponible. Impossible d'effectuer une vente.</p>
-            <a href="@Url.Action("Create","Caisses")" style="margin-right:5px;" class="btn btn-primary"><span class="fas fa-plus"></span> Nouvelle Caisse</a>
-        }
-        <p class="card-category  pull-left">Enregistrez vos ventes</p>
+       
 
     </div>
     <div class="card-body table-full-width table-responsive">
@@ -89,7 +77,7 @@
                         @if (item.Details != null)
                         {
                             @item.Details.Sum(d => d.QuantiteVendue)
-                            
+
                         }
                     </td>
                     <td>
@@ -105,7 +93,8 @@
         </table>
 
         <div>
-            <h4>Total: <span class="small text-primary">@Model.Sum(m => m.Details.Sum(d=>d.QuantiteVendue))</span></h4>
+            <h4>Total: <span class="small text-primary">@Model.Sum(m => m.Details.Sum(d => d.QuantiteVendue))</span></h4>
         </div>
+        <a href="@Url.Action("Index")" style="margin-right:5px;" class="btn btn-default"><i class="fas fa-arrow-left"></i> Retour à la liste</a>
     </div>
 </div>

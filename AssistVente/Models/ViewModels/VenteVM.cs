@@ -13,6 +13,8 @@ namespace AssistVente.Models.ViewModels
         public List<DetailVenteVM> Details { get; set; }
         [Display(Name ="Montant payé")]
         public double MontantPaye { get; set; }
+        [Display(Name ="Montant manuel")]
+        public double MontantCommande { get; set; }
         [DataType(DataType.DateTime)]
         [Display(Name ="Date")]
         public DateTime DateOperation { get; set; }
@@ -24,5 +26,6 @@ namespace AssistVente.Models.ViewModels
         public string CategorieProduit { get; set; }
         public double PU { get; set; }
         public double Quantite { get; set; }
+        public double StockDisponible { get; set; }
     }
 }

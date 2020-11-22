@@ -236,7 +236,7 @@ namespace AssistVente.Controllers
                 //Restitution du stock
                 foreach (var detail in oldAchat.Details)
                 {
-                    stockManager.RemoveStock(detail.ProduitID.Value, detail.QuantiteAchetee, OperationType.Vente);
+                    stockManager.RemoveStock(detail.ProduitID.Value, detail.QuantiteAchetee, OperationType.Achat);
                 }
                 //Annulation des reglements
                 var caisseManager = new CaisseManager(db);

@@ -17,5 +17,6 @@ namespace AssistVente.Models.ViewModels
         public double QteVendue { get; set; }
         [Display(Name = "Total")]
         public double TotalVente { get; set; }
+        public string CategorieName { get; set; }
     }
 }

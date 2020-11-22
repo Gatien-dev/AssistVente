@@ -12,6 +12,7 @@ using AssistVente.Models.ViewModels;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using IdentitySample.Models;
+using System.Text.RegularExpressions;
 
 namespace AssistVente.Controllers
 {
@@ -75,17 +76,123 @@ namespace AssistVente.Controllers
             ViewBag.fin = fin;
             return View(resume);
         }
+
+        public ActionResult VentesJourneeParCategorie(DateTime? date, DateTime? fin)
+        {
+            var operations = db.Operations.OfType<Vente>().Include(v => v.Client).Include(v => v.Details.Select(d => d.Produit).Select(c => c.Categorie))
+            .OrderByDescending(v => v.Date).ToList();
+
+            var produits = db.Produits.Include(p => p.Categorie).ToList();
+            if (date == null) date = DateTime.Now.Date;
+            if (fin == null)
+            {
+                fin = DateTime.Now.AddDays(1);
+            }
+            if (fin < date)
+            {
+                fin = date;
+            }
+
+            operations = operations.Where(v => v.Date >= date.Value.Date && v.Date <= fin.Value.Date).ToList();
+
+
+
+            var resume = new List<VenteProduitVM>();
+            foreach (var vente in operations)
+            {
+                foreach (var detail in vente.Details)
+                {
+                    var detailresume = resume.FirstOrDefault(r => r.IDProduit == detail.ProduitID);
+                    if (detailresume == null)
+                    {
+                        var venteVm = new VenteProduitVM()
+                        {
+                            IDProduit = detail.ProduitID,
+                            NomProduit = detail.Produit.Nom,
+                            PrixVente = detail.Produit.PrixVente,
+                            QteVendue = detail.QuantiteVendue,
+                        };
+                        var c = produits.First(p => p.ID == detail.ProduitID).Categorie;
+                        venteVm.CategorieName = c.Name;
+                        venteVm.TotalVente += venteVm.PrixVente * venteVm.QteVendue;
+                        resume.Add(venteVm);
+                    }
+                    else
+                    {
+                        detailresume.QteVendue += detail.QuantiteVendue;
+                        detailresume.TotalVente += detail.QuantiteVendue * detail.Produit.PrixVente;
+                    }
+                }
+            }
+            ViewBag.journee = date;
+            ViewBag.fin = fin;
+            var categories = db.CategorieProduits.Select(c => c.Name).ToList();
+            ViewBag.categories = categories;
+            return View(resume);
+        }
         [HttpPost, ActionName("ChangerDate")]
         [ValidateAntiForgeryToken]
-        public ActionResult ChangerDate(DateTime date, DateTime? fin)
+        public ActionResult ChangerDate(DateTime date, DateTime? fin, string option, Guid? idProduit)
         {
+            if (option == "VentesProduitPeriode")
+            {
 
+                return RedirectToAction("VentesProduitPeriode", new { date, fin, option, idProduit });
+            }
+            else
+            if (option == "VentesJourneeParCategorie")
+            {
+
+                return RedirectToAction("VentesJourneeParCategorie", new { date, fin, option, idProduit });
+            }
             return RedirectToAction("VentesJournee", new { date, fin });
+        }
+
+        public ActionResult VentesProduitPeriode(Guid idProduit, DateTime? date, DateTime? fin)
+        {
+            if (date == null) { date = DateTime.Now.Date; }
+            if (fin == null)
+            {
+                fin = DateTime.Now.AddDays(1).Date;
+            }
+            if (fin < date)
+            {
+                fin = date;
+            }
+            var produit = db.Produits.Find(idProduit);
+            ViewBag.produit = produit;
+            ViewBag.debut = date.Value.Date;
+            ViewBag.fin = fin.Value.Date;
+            var data = new List<VenteProduitPeriodeVM>();
+            var matchingSales = db.Ventes.Include(v => v.Details).Where(v => v.Details.Any(d => d.ProduitID == idProduit)).OrderBy(v => v.Date).ToList();
+            matchingSales = matchingSales.Where(c => c.Date > date.Value.Date && c.Date < fin.Value.Date).ToList();
+            int id = 0;
+            foreach (var vente in matchingSales)
+            {
+                id++;
+                var vm = new VenteProduitPeriodeVM()
+                {
+                    ID = id,
+                    Produit = produit,
+                    Client = vente.Client,
+                    Vente = vente,
+                    Date = vente.Date
+                };
+                var detail = vente.Details.First(d => d.ProduitID == idProduit);
+                vm.QteVendueProduit = detail.QuantiteVendue;
+                vm.Prix = produit.PrixVente;
+                vm.Montant = produit.PrixVente * detail.QuantiteVendue;
+                data.Add(vm);
+
+            }
+            ViewBag.produitId = idProduit;
+            return View(data);
         }
         public ActionResult VentesProduit(Guid idProduit)
         {
             var operations = db.Operations.OfType<Vente>().Where(v => v.Details.Any(d => d.Produit.ID == idProduit)).Include(v => v.Client).Include(v => v.Details).OrderByDescending(v => v.Date);
             ViewBag.caisseDefined = db.Caisses.Any();
+            ViewBag.produit = db.Produits.Find(idProduit);
             return View(operations.ToList());
         }
         // GET: Ventes/Details/5
@@ -141,7 +248,7 @@ namespace AssistVente.Controllers
             {
                 Details = new List<DetailVenteVM>()
             };
-            var produits = db.Produits.OrderBy(p => p.Nom).ToList();
+            var produits = db.Produits.Include(p => p.Categorie).OrderBy(p => p.Nom).ToList();
             foreach (var produit in produits)
             {
                 venteVM.Details.Add(new DetailVenteVM()
@@ -149,8 +256,9 @@ namespace AssistVente.Controllers
                     NomProduit = produit.Nom,
                     ProduitId = produit.ID,
                     PU = produit.PrixVente,
-                    CategorieProduit = produit.Categorie.Name,
-                    Quantite = 0
+                    CategorieProduit = produit.Categorie?.Name,
+                    Quantite = 0,
+                    StockDisponible = produit.StockDisponible
                 });
             }
             return View(venteVM);
@@ -191,6 +299,13 @@ namespace AssistVente.Controllers
                     stockManager.RemoveStock(detail.ProduitId, detail.Quantite, OperationType.Vente);
                     total += detail.Quantite * db.Produits.Find(detail.ProduitId).PrixVente;
                 }
+
+                //Application du montant manuel
+                if (vente.MontantCommande > 0)
+                {
+                    total = vente.MontantCommande;
+                }
+
                 newVente.Montant = total;
                 newVente.MontantRestant = total;
 
@@ -232,7 +347,8 @@ namespace AssistVente.Controllers
                     NomProduit = produit.Nom,
                     ProduitId = produit.ID,
                     PU = produit.PrixVente,
-                    Quantite = 0
+                    Quantite = 0,
+                    StockDisponible = produit.StockDisponible
                 });
                 var detail = vente.Details.FirstOrDefault(d => d.Produit.ID == produit.ID);
                 if (detail != null)
@@ -266,33 +382,45 @@ namespace AssistVente.Controllers
                 oldVente.Montant = 0;
                 oldVente.MontantRegle = 0;
                 oldVente.MontantRestant = 0;
-                for (int i = 0; i < oldVente.Details.Count; i++)
+                for (int i = oldVente.Details.Count - 1; i >= 0; i--)
                 {
                     db.DetailsVente.Remove(oldVente.Details[i]);
                 }
+
                 db.SaveChanges();
+
                 //Enregistrement des nouveaux details commande
                 double total = 0;
                 foreach (var detail in vente.Details)
                 {
                     if (detail.Quantite > 0)
+                    {
                         oldVente.Details.Add(new DetailVente()
                         {
                             Produit = db.Produits.Find(detail.ProduitId),
                             QuantiteVendue = detail.Quantite,
                             ProduitID = detail.ProduitId,
+                            Vente = oldVente,
+                            VenteId = oldVente.Id,
                             ID = Guid.NewGuid()
                         });
-                    //Sortie de stock
-                    stockManager.RemoveStock(detail.ProduitId, detail.Quantite, OperationType.Vente);
-                    total += detail.Quantite * db.Produits.Find(detail.ProduitId).PrixVente;
+                        //Sortie de stock
+                        stockManager.RemoveStock(detail.ProduitId, detail.Quantite, OperationType.Vente);
+                        total += detail.Quantite * db.Produits.Find(detail.ProduitId).PrixVente;
+                    }
+
                 }
 
-                //Reglements
+                //Application du montant manuel
+                if (vente.MontantCommande > 0)
+                {
+                    total = vente.MontantCommande;
+                }
 
                 oldVente.Montant = total;
                 oldVente.MontantRestant = total;
                 db.SaveChanges();
+                //Reglements
                 caisseManager.reglerVente(vente.MontantPaye, oldVente, "Paiement de vente", reglement);
                 return RedirectToAction("Confirmer", new { id = oldVente.Id });
             }
@@ -360,7 +488,8 @@ namespace AssistVente.Controllers
             var caisseManager = new CaisseManager(db);
             //Ne pas annuler de reglements dans le cas de ventes d'abonnement puisqu'elles ne sont pas reglees. L'abonnement fait le reglement.
             //Ces ventes servent juste pour les traces.
-            if (!db.Forfaits.Any(f => f.Nom == vente.Details.First().Produit.Nom))
+            var prod = vente.Details.First().Produit.Nom;
+            if (!db.Forfaits.Any(f => f.Nom == prod))
             {
                 caisseManager.AnnulerReglementsVente(vente, "suppression");
             }

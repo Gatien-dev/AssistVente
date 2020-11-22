@@ -17,7 +17,37 @@
         }
 
         * {
-            font-size: small
+            font-size: medium
+        }
+
+        @@page {
+            /* dimensions for the whole page */
+            size: A4;
+            margin: 0 auto;
+        }
+
+        html {
+            /* off-white, so body edge is visible in browser */
+            background: #eee;
+        }
+
+        body {
+            /* A5 dimensions */
+            /*height: 210mm;
+            width: 148.5mm;
+            margin: 0;*/
+        }
+
+        /* fill half the height with each face */
+        .face {
+            height: 100%;
+            width: 100%;
+            position: relative;
+        }
+
+        /* the back face */
+        .face-back {
+            background: #f6f6f6;
         }
     </style>
     <link href="~/Content/css/all.css" rel="stylesheet" />
@@ -29,182 +59,65 @@
     <link href="~/assets/css/demo.css" rel="stylesheet" />
     <link href="~/Content/custom-checkboxes.css" rel="stylesheet" />
     <link href="~/Content/css/datatables.min.css" rel="stylesheet" />
+
+    @*You could uset paper-css library as it will help you easily define the paper size by paper-css lib load the css file*@
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/paper-css/0.3.0/paper.css">
 </head>
-<body style="width:100%;  text-align:center;">
-    @*<div style="width:100%;  text-align:center; @if (Model.Details.Count > 5) { @("min-height: 90vh;") } else {@("min-height: 20vh;") } ">
-            <h4 style="display:inline-block; margin-top:3px;margin-bottom:2px;"><img src="~/assets/img/eyiwa.jpg" width="100px" /> Recu de Vente Eyiwa Land</h4>
+<body>
 
-            <p></p>
-            <p>Date : @Model.DateOperation.ToShortDateString() | Client: @Model.Client.Nom | Montant : @Model.Montant</p>
-            <p>
 
-            </p>
-            <p>
+    <section>
 
-            </p>
+        <div style="margin:0 auto; text-align:center;">
+            <div style="margin:0 auto;">
+                <p style="display:inline-block; margin-top:3px;margin-bottom:2px;"><img src="~/assets/img/eyiwa.jpg" width="100px" /></p>
+                <p> Recu de Vente Eyiwa Land</p>
+                <p></p>
+                <p>Date : @Model.Date</p>
+                <p>
+                    Client: @Model.Client.Nom
+                </p>
+            </div>
+
             <table border="1" cellpadding="4" style="margin:auto">
                 <thead>
-                <th>Produit</th>
-                <th>Quantité</th>
-                <th>P.U.</th>
-                <th>Montant</th>
+                    <tr>
+                        <th>Article</th>
+                        <th>Qte</th>
+                        <th>P.U.</th>
+                        <th>Prix</th>
+                    </tr>
+
                 </thead>
                 <tbody>
                     @foreach (var item in Model.Details)
                     {
-                        <tr>
-                            <td>@item.Produit.Nom</td>
-                            <td>@item.QuantiteVendue</td>
-                            <td>@item.Produit.PrixVente</td>
-                            <td>@(item.Produit.PrixVente * item.QuantiteVendue)</td>
-                        </tr>
+                    <tr>
+                        <td style="font-size:12px;">@item.Produit.Nom</td>
+                        <td style="font-size:12px;text-align:right;">@item.QuantiteVendue</td>
+                        <td style="font-weight:bold;font-size:10px;text-align:right;">@String.Format("{0:### ### ###}", item.Produit.PrixVente)</td>
+                        <td style="font-weight:bold;font-size:10px;text-align:right;">@String.Format("{0:### ### ###}", (item.Produit.PrixVente * item.QuantiteVendue))</td>
+                    </tr>
 
                     }
+                    <tr>
+                        <td>Total</td>
+                        <td colspan="3" style="text-align:center; font-weight:bold">
+                            @String.Format("{0:### ### ###}", Model.Montant > 0 ? Model.Montant : Model.MontantRegle)
+                        </td>
+                    </tr>
                 </tbody>
-
             </table>
-            <p style="font-weight:bold; margin-top:12px;">Total: @Model.Montant </p>
-            <p>  Merci de votre confiance.</p>
-            <br />
+
+            <p style="margin-top:20px;">  Merci de votre confiance.</p>
         </div>
-        @if (Model.Details.Count < 5)
-        {
-            <hr style="color:black; background-color:black; min-height:1px; margin-top:1px; margin-bottom: 1px;" />
-        }
-        <div style="width:100%;  text-align:center; @if (Model.Details.Count > 5) { @("min-height: 90vh;") } else {@("min-height: 20vh;") }  ">
-            <h4 style="display:inline-block"><img src="~/assets/img/eyiwa.jpg" width="100px" /> Recu de Vente Eyiwa Land</h4>
 
-            <p></p>
-            <p>Date : @Model.DateOperation.ToShortDateString() | Client: @Model.Client.Nom | Montant : @Model.Montant</p>
-            <p>
-
-            </p>
-            <p>
-
-            </p>
-            <table border="1" cellpadding="4" style="margin:auto">
-                <thead>
-                <th>Produit</th>
-                <th>Quantité</th>
-                <th>P.U.</th>
-                <th>Montant</th>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Details)
-                    {
-                        <tr>
-                            <td>@item.Produit.Nom</td>
-                            <td>@item.QuantiteVendue</td>
-                            <td>@item.Produit.PrixVente</td>
-                            <td>@(item.Produit.PrixVente * item.QuantiteVendue)</td>
-                        </tr>
-
-                    }
-                </tbody>
-
-            </table>
-            <p style="font-weight:bold; margin-top:12px;">Total: @Model.Montant </p>
-            <p>  Merci de votre confiance.</p>
-            <br />
-        </div>*@
-    <div class="row">
-        @for (int i = 0; i < 3; i++)
-        {
-            if (i == 2)
-            {
-                <div class="col-md-3" style="max-width:32% ;">
-                    <p style="display:inline-block; margin-top:3px;margin-bottom:2px; font-size:small"><img src="~/assets/img/eyiwa.jpg" width="50px" /></p>
-                    <p style="font-size:small"> Recu de Vente Eyiwa Land</p>
-
-                    <p></p>
-                    <p style="font-size:small">Date : @Model.Date</p>
-                    <p>
-                        Client: @Model.Client.Nom
-                    </p>
-                    <table border="1" cellpadding="1" style="margin:auto">
-                        <thead>
-                        <th style="font-size:12px">Article</th>
-                        <th style="font-size:12px">Qte</th>
-                        <th style="font-size:12px">P.U.</th>
-                        <th style="font-size:12px">Prix</th>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.Details)
-                            {
-                                <tr>
-                                    <td style="font-size:12px;">@item.Produit.Nom</td>
-                                    <td style="font-size:12px">@item.QuantiteVendue</td>
-                                    <td style="font-size:8px">@String.Format("{0:### ### ###}", item.Produit.PrixVente)</td>
-                                    <td style="font-size:8px">@String.Format("{0:### ### ###}", (item.Produit.PrixVente * item.QuantiteVendue))</td>
-                                </tr>
-
-                            }
-                            <tr>
-                                <td>Total</td>
-                                <td colspan="3" style="text-align:right; font-weight:bold">
-                                    @String.Format("{0:### ### ###}", Model.Montant)
-                                </td>
-                            </tr>
-                        </tbody>
-
-                    </table>
-                    @*<p style="font-weight:bold; margin-top:12px;">Total: @Model.Montant </p>*@
-
-                    <p style="margin-top:20px;">  Merci de votre confiance.</p>
-                    <br />
-                </div>
-            }
-            else
-            {
-                <div class="col-md-3" style="max-width:32% ; border-right:2px black dashed;margin-left:10px;">
-                    <p style="display:inline-block; margin-top:3px;margin-bottom:2px; font-size:small"><img src="~/assets/img/eyiwa.jpg" width="50px" /></p>
-                    <p style="font-size:small"> Recu de Vente Eyiwa Land</p>
-
-                    <p></p>
-                    <p style="font-size:small">Date : @Model.Date</p>
-                    <p>
-                        Client: @Model.Client.Nom
-                    </p>
-                    <table border="1" cellpadding="1" style="margin:auto">
-                        <thead>
-                        <th style="font-size:12px">Article</th>
-                        <th style="font-size:12px">Qte</th>
-                        <th style="font-size:12px">P.U.</th>
-                        <th style="font-size:12px">Prix</th>
-                        </thead>
-                        <tbody>
-                            @foreach (var item in Model.Details)
-                            {
-                                <tr>
-                                    <td style="font-size:12px;">@item.Produit.Nom</td>
-                                    <td style="font-size:12px">@item.QuantiteVendue</td>
-                                    <td style="font-size:8px">@String.Format("{0:### ### ###}", item.Produit.PrixVente)</td>
-                                    <td style="font-size:8px">@String.Format("{0:### ### ###}", (item.Produit.PrixVente * item.QuantiteVendue))</td>
-                                </tr>
-
-                            }
-                            <tr>
-                                <td>Total</td>
-                                <td colspan="3" style="text-align:right; font-weight:bold">
-                                    @String.Format("{0:### ### ###}", Model.Montant)
-                                </td>
-                            </tr>
-                        </tbody>
-
-                    </table>
-                    @*<p style="font-weight:bold; margin-top:12px;">Total: @Model.Montant </p>*@
-
-                    <p style="margin-top:20px;">  Merci de votre confiance.</p>
-                    <br />
-                </div>
-            }
-
-        }
+    </section>
 
 
 
+    <div style="text-align:center">
+        <button onclick="window.print();return false;" class="no-print" style="margin-top:15px;">Imprimer</button>
     </div>
-
-    <button onclick="window.print();return false;" class="no-print" style="margin-top:15px;">Imprimer</button>
 </body>
 </html>
