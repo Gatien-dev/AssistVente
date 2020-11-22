@@ -65,59 +65,62 @@
 </head>
 <body>
 
+    <div style="text-align:center; margin-bottom:15px;">
+        <button onclick="window.print();return false;" class="no-print" style="margin-top:15px;">Imprimer</button>
+    </div>
 
     <section>
+        @*@for (int i = 0; i < 3; i++)
+        {*@
 
-        <div style="margin:0 auto; text-align:center;">
-            <div style="margin:0 auto;">
-                <p style="display:inline-block; margin-top:3px;margin-bottom:2px;"><img src="~/assets/img/eyiwa.jpg" width="100px" /></p>
-                <p> Recu de Vente Eyiwa Land</p>
-                <p></p>
-                <p>Date : @Model.Date</p>
-                <p>
-                    Client: @Model.Client.Nom
-                </p>
+            <div style="margin:0 auto; text-align:center; ">
+                <div style="margin:0 auto;">
+                    <p style="display:inline-block; margin-top:3px;margin-bottom:2px;"><img src="~/assets/img/eyiwa.jpg" width="100px" /></p>
+                    <p> Recu de Vente Eyiwa Land</p>
+                    <p></p>
+                    <p>Date : @Model.Date</p>
+                    <p>
+                        Client: @Model.Client.Nom
+                    </p>
+                </div>
+
+                <table border="1" cellpadding="4" style="margin:auto">
+                    <thead>
+                        <tr>
+                            <th>Article</th>
+                            <th>Qte</th>
+                            <th>P.U.</th>
+                            <th>Prix</th>
+                        </tr>
+
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Details)
+                        {
+                            <tr>
+                                <td style="font-size:12px;">@item.Produit.Nom</td>
+                                <td style="font-size:12px;text-align:right;">@item.QuantiteVendue</td>
+                                <td style="font-weight:bold;font-size:10px;text-align:right;">@String.Format("{0:### ### ###}", item.Produit.PrixVente)</td>
+                                <td style="font-weight:bold;font-size:10px;text-align:right;">@String.Format("{0:### ### ###}", (item.Produit.PrixVente * item.QuantiteVendue))</td>
+                            </tr>
+
+                        }
+                        <tr>
+                            <td>Total</td>
+                            <td colspan="3" style="text-align:center; font-weight:bold">
+                                @String.Format("{0:### ### ###}", Model.Montant > 0 ? Model.Montant : Model.MontantRegle)
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <p style="margin-top:20px;">  Merci de votre confiance.</p>
             </div>
-
-            <table border="1" cellpadding="4" style="margin:auto">
-                <thead>
-                    <tr>
-                        <th>Article</th>
-                        <th>Qte</th>
-                        <th>P.U.</th>
-                        <th>Prix</th>
-                    </tr>
-
-                </thead>
-                <tbody>
-                    @foreach (var item in Model.Details)
-                    {
-                    <tr>
-                        <td style="font-size:12px;">@item.Produit.Nom</td>
-                        <td style="font-size:12px;text-align:right;">@item.QuantiteVendue</td>
-                        <td style="font-weight:bold;font-size:10px;text-align:right;">@String.Format("{0:### ### ###}", item.Produit.PrixVente)</td>
-                        <td style="font-weight:bold;font-size:10px;text-align:right;">@String.Format("{0:### ### ###}", (item.Produit.PrixVente * item.QuantiteVendue))</td>
-                    </tr>
-
-                    }
-                    <tr>
-                        <td>Total</td>
-                        <td colspan="3" style="text-align:center; font-weight:bold">
-                            @String.Format("{0:### ### ###}", Model.Montant > 0 ? Model.Montant : Model.MontantRegle)
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-
-            <p style="margin-top:20px;">  Merci de votre confiance.</p>
-        </div>
-
+        @*}*@
     </section>
 
 
 
-    <div style="text-align:center">
-        <button onclick="window.print();return false;" class="no-print" style="margin-top:15px;">Imprimer</button>
-    </div>
+
 </body>
 </html>
